@@ -5,10 +5,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{B6A13B69-72AA-40B3-B6B9-CF1F02D90F62}|BTL_Car\\BTL_Car.csproj|d:\\download\\aspnetmvc\\webnangcao\\btl_car\\btl_car\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{B6A13B69-72AA-40B3-B6B9-CF1F02D90F62}|BTL_Car\\BTL_Car.csproj|solutionrelative:btl_car\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B6A13B69-72AA-40B3-B6B9-CF1F02D90F62}|BTL_Car\\BTL_Car.csproj|d:\\download\\aspnetmvc\\webnangcao\\btl_car\\btl_car\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{B6A13B69-72AA-40B3-B6B9-CF1F02D90F62}|BTL_Car\\BTL_Car.csproj|solutionrelative:btl_car\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -36,22 +32,10 @@
               "RelativeDocumentMoniker": "BTL_Car\\Views\\Shared\\_Layout.cshtml",
               "ToolTip": "D:\\Download\\ASPNetMVC\\WebNangCao\\BTL_Car\\BTL_Car\\Views\\Shared\\_Layout.cshtml",
               "RelativeToolTip": "BTL_Car\\Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAAAAAAA",
+              "ViewState": "AQIAAFkBAAAAAAAAAAAAAGQBAAA7AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-08-01T07:35:48.669Z",
+              "WhenOpened": "2024-08-01T14:55:09.75Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\Download\\ASPNetMVC\\WebNangCao\\BTL_Car\\BTL_Car\\Views\\Home\\Index.cshtml",
-              "RelativeDocumentMoniker": "BTL_Car\\Views\\Home\\Index.cshtml",
-              "ToolTip": "D:\\Download\\ASPNetMVC\\WebNangCao\\BTL_Car\\BTL_Car\\Views\\Home\\Index.cshtml",
-              "RelativeToolTip": "BTL_Car\\Views\\Home\\Index.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAB8AAAATAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-08-01T07:31:34.613Z"
             }
           ]
         }

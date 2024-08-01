@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "iSse6cKSF22/RIWPDmovpLauZ3K3PCxzAqbrL5tSPm64gK2NCk+1AJo9yH34TeqLuzSH8IckWTCv2qr4JQzGgA==",
+  "dgSpecHash": "2CYoz5OlZ0HPIsNrjSmMI90OArtbC62z8BvpX8/kX1TPrkMS5C9B0bBdrjkZX0f7Munc7zh7iy4zLPkroj8AlQ==",
   "success": true,
-  "projectFilePath": "D:\\Download\\ASPNetMVC\\BTL\\BTL_Car\\BTL_Car\\BTL_Car.csproj",
+  "projectFilePath": "D:\\Download\\ASPNetMVC\\WebNangCao\\BTL_Car\\BTL_Car\\BTL_Car.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\nguye\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\nguye\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",

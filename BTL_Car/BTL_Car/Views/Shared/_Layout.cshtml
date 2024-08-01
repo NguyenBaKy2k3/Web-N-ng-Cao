@@ -40,6 +40,14 @@
             background-color: #fff;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
         }
+
+        .navbar-title {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -55,6 +63,7 @@
                     <ul class="navbar-nav flex-grow-1">
                         <!-- Your navigation items here -->
                     </ul>
+                    <span class="navbar-title">@ViewData["Title"]</span>
                 </div>
                 @if (isLoggedIn)
                 {
@@ -101,7 +110,7 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
-</html> 
+</html>   
 
 
 
@@ -130,6 +139,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <style>
+
+
+        /* Thanh sidebar nằm dọc */
+
         .container-fluid {
             display: flex;
         }
@@ -144,6 +157,39 @@
             background-color: #f8f9fa;
             padding: 20px;
         }
+
+
+
+        /* Thanh sidebar nằm ngang */
+        
+        /* .sidebar {
+            width: 100%;
+            background-color: #f8f9fa;
+            padding: 20px;
+            display: flex;
+            justify-content: center; 
+            box-sizing: border-box; 
+        }
+
+        .sidebar .nav {
+            display: flex; 
+            flex-direction: row; 
+            justify-content: center; 
+            width: 100%;
+        }
+
+        .sidebar .nav-item {
+            margin: 0 10px; 
+        }
+
+        .sidebar .nav-link {
+            white-space: nowrap; 
+        } */
+
+
+        /* ..................................... */
+
+
 
         .content {
             flex-grow: 1;
@@ -178,6 +224,14 @@
         .custom-button:hover {
                 color: #007bff;
         }
+
+        .navbar-title {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -193,6 +247,7 @@
                     <ul class="navbar-nav flex-grow-1">
                         <!-- Các mục điều hướng của bạn ở đây -->
                     </ul>
+                    <span class="navbar-title">@ViewData["Title"]</span>
                 </div>
                 @if (isLoggedIn)
                 {
@@ -217,8 +272,43 @@
         </nav>
     </header>
 
-    <div class="container-fluid">
-        <nav class="sidebar">
+    <div class="container-fluid">  *@
+
+        @* Thanh sidebar nằm ngang *@
+        @* <nav class="sidebar">
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/">Trang chủ</a>
+                </li>
+                @if (userRole == 1)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Cars/Index">Danh sách xe</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Cars/Create">Tạo xe mới</a>
+                    </li>
+                }
+                @if (!isLoggedIn)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Login">Đăng nhập</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Register">Đăng ký</a>
+                    </li>
+                }
+                <!-- Thêm các mục điều hướng khác ở đây -->
+            </ul>
+        </nav>  *@
+
+
+
+
+
+        @* Thanh sidebar nằm dọc *@
+
+        @* <nav class="sidebar">
             <ul class="nav flex-column">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/">Trang chủ</a>
@@ -244,6 +334,8 @@
                 <!-- Thêm các mục điều hướng khác ở đây -->
             </ul>
         </nav>
+
+
         <div class="content">
             <main role="main" class="pb-3">
                 @RenderBody()
@@ -267,8 +359,7 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
-</html>    *@
-
+</html>     *@
 
 
 

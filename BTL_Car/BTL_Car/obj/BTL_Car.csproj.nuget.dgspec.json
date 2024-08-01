@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Download\\ASPNetMVC\\BTL\\BTL_Car\\BTL_Car\\BTL_Car.csproj": {}
+    "D:\\Download\\ASPNetMVC\\WebNangCao\\BTL_Car\\BTL_Car\\BTL_Car.csproj": {}
   },
   "projects": {
-    "D:\\Download\\ASPNetMVC\\BTL\\BTL_Car\\BTL_Car\\BTL_Car.csproj": {
+    "D:\\Download\\ASPNetMVC\\WebNangCao\\BTL_Car\\BTL_Car\\BTL_Car.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Download\\ASPNetMVC\\BTL\\BTL_Car\\BTL_Car\\BTL_Car.csproj",
+        "projectUniqueName": "D:\\Download\\ASPNetMVC\\WebNangCao\\BTL_Car\\BTL_Car\\BTL_Car.csproj",
         "projectName": "BTL_Car",
-        "projectPath": "D:\\Download\\ASPNetMVC\\BTL\\BTL_Car\\BTL_Car\\BTL_Car.csproj",
+        "projectPath": "D:\\Download\\ASPNetMVC\\WebNangCao\\BTL_Car\\BTL_Car\\BTL_Car.csproj",
         "packagesPath": "C:\\Users\\nguye\\.nuget\\packages\\",
-        "outputPath": "D:\\Download\\ASPNetMVC\\BTL\\BTL_Car\\BTL_Car\\obj\\",
+        "outputPath": "D:\\Download\\ASPNetMVC\\WebNangCao\\BTL_Car\\BTL_Car\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\nguye\\AppData\\Roaming\\NuGet\\NuGet.Config",
