@@ -1,0 +1,276 @@
+﻿@*Defaut*@
+
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    int? userRole = HttpContextAccessor.HttpContext.Session.GetInt32("Role");
+    bool isLoggedIn = HttpContextAccessor.HttpContext.Session.GetString("UserName") != null; // Kiểm tra nếu người dùng đã đăng nhập
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+    <title>@ViewData["Title"] - BTL_Car</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/BTL_Car.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <style>
+        .navbar-brand {
+            font-family: 'Roboto', sans-serif;
+            font-size: 1.5rem; 
+            font-weight: 700;
+            color: #007bff; 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+            transition: color 0.3s ease-in-out; 
+        }
+
+        .navbar-brand:hover {
+            color: #0056b3;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); 
+        }
+
+        
+        .navbar {
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">THUÊ Ô TÔ</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <!-- Your navigation items here -->
+                    </ul>
+                </div>
+                @if (isLoggedIn)
+                {
+                    <div class="icon-buttons">
+                        @if (userRole != 1)
+                        {
+                            <a href="/Booking/Index" title="Danh sách xe"><i class="fas fa-list"></i></a>
+                            <a href="/Booking/hiendsBooking" title="Giỏ hàng"><i class="fas fa-shopping-cart"></i></a>
+                        }
+                        @if (userRole == 1)
+                        {
+                            <a href="/Cars/Index" title="Danh sách xe"><i class="fas fa-list"></i></a>
+                        }
+                        <form asp-controller="Users" asp-action="Logout" method="post" class="d-inline logout-button">
+                            <button type="submit" class="btn btn-link text-decoration-none">
+                                <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                            </button>
+                        </form>
+                    </div>
+                }
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <p class="text-muted">
+                <a href="https://www.facebook.com/kynguyenNe" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a> |
+                <a href="https://www.google.com" target="_blank"><i class="fab fa-google"></i> Google</a> |
+                <a href="https://www.instagram.com/kynguyen491/?igsh=Z3k4OW5zMXpvbnJ6&utm_source=qr" target="_blank"><i class="fab fa-instagram"></i> Instagram</a> |
+                <a href="https://www.tiktok.com" target="_blank"><i class="fab fa-tiktok"></i> TikTok</a> |
+                <a href="https://drive.google.com/file/d/1izA9RiZP9XnW9qImmBHsxFmXJvw__4cP/view" target="_blank"><i class="fas fa-comment-dots"></i> Zalo</a> |
+                <a href="https://github.com/NguyenBaKy2k3" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+            </p>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html> 
+
+
+
+
+
+@*Navigator*@
+
+
+@* @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    int? userRole = HttpContextAccessor.HttpContext.Session.GetInt32("Role");
+    bool isLoggedIn = HttpContextAccessor.HttpContext.Session.GetString("UserName") != null; // Kiểm tra nếu người dùng đã đăng nhập
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+    <title>@ViewData["Title"] - BTL_Car</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/BTL_Car.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <style>
+        .container-fluid {
+            display: flex;
+        }
+
+        .navbar {
+            flex-grow: 1;
+            position: relative;
+        }
+
+        .sidebar {
+            width: 200px;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+
+        .content {
+            flex-grow: 1;
+            padding: 20px;
+        }
+
+        .icon-buttons {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+        }
+
+        .icon-buttons a {
+            margin-left: 10px;
+            color: #000;
+        }
+
+        .icon-buttons a:hover {
+            color: #007bff;
+        }
+
+        .icon-buttons button:hover {
+            color: #007bff;
+        }
+
+        .custom-button {
+            color: black; 
+            background-color: transparent;
+            border: none;
+        }
+
+        .custom-button:hover {
+                color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Thuê Ô Tô</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <!-- Các mục điều hướng của bạn ở đây -->
+                    </ul>
+                </div>
+                @if (isLoggedIn)
+                {
+                    <div class="icon-buttons">
+                        @if (userRole != 1)
+                        {
+                            <a href="/Booking/Index" title="Danh sách xe"><i class="fas fa-list"></i></a>
+                            <a href="/Booking/hiendsBooking" title="Giỏ hàng"><i class="fas fa-shopping-cart"></i></a>
+                        }
+                        @if (userRole == 1)
+                        {
+                            <a href="/Cars/Index" title="Danh sách xe"><i class="fas fa-list"></i></a>
+                        }
+                        <form asp-controller="Users" asp-action="Logout" method="post" class="d-inline logout-button">
+                            <button type="submit" class="btn btn-link text-decoration-none custom-button">
+                                <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                            </button>
+                        </form>
+                    </div>
+                }
+            </div>
+        </nav>
+    </header>
+
+    <div class="container-fluid">
+        <nav class="sidebar">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/">Trang chủ</a>
+                </li>
+                @if (userRole == 1)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Cars/Index">Danh sách xe</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Cars/Create">Tạo xe mới</a>
+                    </li>
+                }
+                @if (!isLoggedIn)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Login">Đăng nhập</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Register">Đăng ký</a>
+                    </li>
+                }
+                <!-- Thêm các mục điều hướng khác ở đây -->
+            </ul>
+        </nav>
+        <div class="content">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="container text-center">
+            <p class="text-muted">
+                <a href="https://www.facebook.com/kynguyenNe" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a> |
+                <a href="https://www.google.com" target="_blank"><i class="fab fa-google"></i> Google</a> |
+                <a href="https://www.instagram.com/kynguyen491/?igsh=Z3k4OW5zMXpvbnJ6&utm_source=qr" target="_blank"><i class="fab fa-instagram"></i> Instagram</a> |
+                <a href="https://www.tiktok.com" target="_blank"><i class="fab fa-tiktok"></i> TikTok</a> |
+                <a href="https://drive.google.com/file/d/1izA9RiZP9XnW9qImmBHsxFmXJvw__4cP/view" target="_blank"><i class="fas fa-comment-dots"></i> Zalo</a> |
+                <a href="https://github.com/NguyenBaKy2k3" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+            </p>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>    *@
+
+
+
+
+
+

@@ -1,0 +1,45 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    ViewData["Title"] = "Home Page";
+    bool isLoggedIn = HttpContextAccessor.HttpContext.Session.GetString("UserName") != null; // Kiểm tra nếu người dùng đã đăng nhập
+}
+
+<style>
+    .background-image {
+        background-image: url('https://th.bing.com/th/id/R.dc528ea3d9d1f7ef3e8e8795dc316b53?rik=HHGaD%2fLDbJ8KaA&pid=ImgRaw&r=0');
+        background-size: cover; /* Bao phủ toàn bộ phần tử */
+        background-position: center; /* Căn giữa hình nền */
+        background-repeat: no-repeat; /* Không lặp lại hình nền */
+        min-height: 100vh; /* Đảm bảo hình nền bao phủ toàn bộ chiều cao của trang */
+        width: 100%; /* Đảm bảo hình nền bao phủ toàn bộ chiều rộng của trang */
+        margin: 0; /* Xóa lề */
+        padding: 0; /* Xóa khoảng cách bên trong */
+        position: relative; /* Để có thể định vị các phần tử con */
+    }
+
+    .login-button {
+        position: absolute; /* Định vị tuyệt đối trong phần tử chứa */
+        top: 20px; /* Khoảng cách từ trên cùng */
+        right: 20px; /* Khoảng cách từ bên phải */
+        padding: 10px 20px; /* Khoảng cách bên trong nút */
+        background-color: #007bff; /* Màu nền của nút */
+        color: white; /* Màu chữ của nút */
+        border: none; /* Xóa viền của nút */
+        border-radius: 5px; /* Bo tròn góc của nút */
+        cursor: pointer; /* Con trỏ chuột khi di chuột qua nút */
+        text-decoration: none; /* Xóa gạch chân của liên kết nếu có */
+    }
+
+    .login-button:hover {
+        background-color: #0056b3; /* Màu nền khi di chuột qua */
+    }
+</style>
+
+<div class="background-image">
+    @if (!isLoggedIn)
+    {
+        <a href="/Login" class="login-button">Đăng Nhập</a>
+    }
+</div>

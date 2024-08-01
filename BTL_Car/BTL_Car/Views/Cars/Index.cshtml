@@ -1,0 +1,140 @@
+﻿@* 
+
+@model IEnumerable<BTL_Car.Models.Cars>
+
+@{
+    ViewData["Title"] = "Danh sách xe";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="container">
+    <div class="mb-4">
+        <a class="btn btn-primary" href="@Url.Action("Create", "Cars")">Thêm xe mới</a>
+    </div>
+    <div class="row">
+        @foreach (var car in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm border-light">
+                    <img class="card-img-top" src="@car.image_url" alt="Ảnh xe">
+                    <div class="card-body">
+                        <h5 class="card-title">@car.car_make @car.car_model</h5>
+                        <div class="d-flex justify-content-between">
+                            <div class="w-50 pr-2">
+                                <p class="card-text"><i class="fas fa-calendar-alt"></i> Năm sản xuất: @car.year_production</p>
+                                <p class="card-text"><i class="fas fa-paint-brush"></i> Màu sắc: @car.color</p>
+                                <p class="card-text"><i class="fas fa-tag"></i> Giá thuê/ngày: @car.price_per_day</p>
+                                <p class="card-text"><i class="fas fa-star"></i> Đánh giá: @car.rating</p>
+                            </div>
+                            <div class="w-50 pl-2">
+                                <p class="card-text"><i class="fas fa-plate"></i> Biển số: @car.license_plate</p>
+                                <p class="card-text"><i class="fas fa-chair"></i> Số ghế: @car.seats</p>
+                                <p class="card-text"><i class="fas fa-cogs"></i> Truyền động: @car.transmission</p>
+                                <p class="card-text"><i class="fas fa-gas-pump"></i> Loại nhiên liệu: @car.fuel_type</p>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between mt-3">
+                            <a class="btn btn-warning" href="@Url.Action("Edit", "Cars", new { id = car.car_id })">Sửa</a>
+                            <form asp-action="Delete" asp-controller="Cars" asp-route-id="@car.car_id" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-danger">Xóa</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <text>toastr.success('@TempData["SuccessMessage"]'); </text>
+        }
+
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <text>toastr.error('@TempData["ErrorMessage"]'); </text>
+        }
+                });
+    </script>
+}
+ *@
+
+
+
+
+
+
+
+@model IEnumerable<BTL_Car.Models.Cars>
+
+@{
+    ViewData["Title"] = "Danh sách xe";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="container">
+    <div class="mb-4">
+        <a class="btn btn-primary" href="@Url.Action("Create", "Cars")">Thêm xe mới</a>
+    </div>
+    <div class="row">
+        @foreach (var car in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm border-light">
+                    <img class="card-img-top" src="@car.image_url" alt="Ảnh xe">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">@car.car_make @car.car_model</h5>
+                        <div class="d-flex justify-content-between">
+                            <div class="w-50 pr-2">
+                                <p class="card-text"><i class="fas fa-calendar-alt"></i> Năm sản xuất: @car.year_production</p>
+                                <p class="card-text"><i class="fas fa-paint-brush"></i> Màu sắc: @car.color</p>
+                                <p class="card-text"><i class="fas fa-tag"></i> Giá thuê/ngày: @car.price_per_day</p>
+                                <p class="card-text"><i class="fas fa-star"></i> Đánh giá: @car.rating</p>
+                            </div>
+                            <div class="w-50 pl-2">
+                                <p class="card-text"><i class="fas fa-plate"></i> Biển số: @car.license_plate</p>
+                                <p class="card-text"><i class="fas fa-chair"></i> Số ghế: @car.seats</p>
+                                <p class="card-text"><i class="fas fa-cogs"></i> Truyền động: @car.transmission</p>
+                                <p class="card-text"><i class="fas fa-gas-pump"></i> Loại nhiên liệu: @car.fuel_type</p>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between mt-3">
+                            <a class="btn btn-warning" href="@Url.Action("Edit", "Cars", new { id = car.car_id })">Sửa</a>
+                            <form asp-action="Delete" asp-controller="Cars" asp-route-id="@car.car_id" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-danger">Xóa</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <text>toastr.success('@TempData["SuccessMessage"]'); </text>
+        }
+
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <text>toastr.error('@TempData["ErrorMessage"]'); </text>
+        }
+                    });
+    </script>
+}

@@ -1,0 +1,78 @@
+﻿
+@model IEnumerable<BTL_Car.Models.Cars>
+
+@{
+    ViewData["Title"] = "Danh sách xe";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<!-- Form Tìm Kiếm -->
+<form asp-action="Index" method="get" class="form-search mb-4 mb-md-0">
+    <div class="form-group">
+        <label for="minPrice">Giá tối thiểu:</label>
+        <input type="number" id="minPrice" name="minPrice" class="form-control" step="0.01" value="@ViewData["MinPrice"]" />
+    </div>
+    <div class="form-group">
+        <label for="maxPrice">Giá tối đa:</label>
+        <input type="number" id="maxPrice" name="maxPrice" class="form-control" step="0.01" value="@ViewData["MaxPrice"]" />
+    </div>
+    <div class="form-group">
+        <label for="minSeats">Số ghế tối thiểu:</label>
+        <input type="number" id="minSeats" name="minSeats" class="form-control" value="@ViewData["MinSeats"]" />
+    </div>
+    <div class="form-group">
+        <label for="maxSeats">Số ghế tối đa:</label>
+        <input type="number" id="maxSeats" name="maxSeats" class="form-control" value="@ViewData["MaxSeats"]" />
+    </div>
+    <button type="submit" style="margin-top: 10px;" class="btn btn-primary">Tìm kiếm</button>
+</form>
+
+
+
+<!-- Liên kết phân loại -->
+<div class="mb-4">
+    <a href="@Url.Action("Index", new { sortOrder = ViewBag.PriceSort })">Sắp xếp theo Giá</a> |
+    <a href="@Url.Action("Index", new { sortOrder = ViewBag.SeatSort })">Sắp xếp theo Số Ghế</a>
+</div>
+
+<div class="container">
+    <div class="row">
+        @foreach (var car in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm border-light">
+                    <a href="@Url.Action("Details", "Booking", new { id = car.car_id })">
+                        <img class="card-img-top" src="@car.image_url" alt="Ảnh xe">
+                    </a>
+                    <div class="card-body">
+                        <h5 class="card-title">@car.car_make @car.car_model</h5>
+                        <div class="d-flex justify-content-between">
+                            <div class="w-50 pr-2">
+                                <p class="card-text"><i class="fas fa-calendar-alt"></i> Năm sản xuất: @car.year_production</p>
+                                <p class="card-text"><i class="fas fa-paint-brush"></i> Màu sắc: @car.color</p>
+                                <p class="card-text"><i class="fas fa-tag"></i> Giá thuê/ngày: @car.price_per_day</p>
+                                <p class="card-text"><i class="fas fa-star"></i> Đánh giá: @car.rating</p>
+                            </div>
+                            <div class="w-50 pl-2">
+                                <p class="card-text"><i class="fas fa-plate"></i> Biển số: @car.license_plate</p>
+                                <p class="card-text"><i class="fas fa-chair"></i> Số ghế: @car.seats</p>
+                                <p class="card-text"><i class="fas fa-cogs"></i> Truyền động: @car.transmission</p>
+                                <p class="card-text"><i class="fas fa-gas-pump"></i> Loại nhiên liệu: @car.fuel_type</p>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <a class="btn btn-primary" href="@Url.Action("Book", "Booking", new { id = car.car_id })">Đặt xe</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+}

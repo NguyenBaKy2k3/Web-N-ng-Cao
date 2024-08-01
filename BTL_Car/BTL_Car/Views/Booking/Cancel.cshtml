@@ -1,0 +1,17 @@
+﻿@model BTL_Car.Models.Booking
+
+@{
+    ViewData["Title"] = "Hủy đặt xe";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="container">
+    <h4>Xác nhận hủy đặt xe</h4>
+    <p>Bạn có chắc chắn muốn hủy đặt xe này không?</p>
+    <form asp-action="CancelConfirmed" method="post">
+        <input type="hidden" asp-for="booking_id" />
+        <button type="submit" class="btn btn-danger">Hủy đặt xe</button>
+        <a href="@Url.Action("Index", "Cars")" class="btn btn-secondary">Quay lại</a>
+    </form>
+</div>

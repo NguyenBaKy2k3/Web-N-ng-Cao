@@ -1,0 +1,51 @@
+﻿@model BTL_Car.Models.CarDetailsViewModel
+
+@{
+    ViewData["Title"] = "Chi tiết xe";
+    var userNames = ViewBag.UserNames as Dictionary<int, string>; // Lấy tên người dùng từ ViewBag
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <img class="img-fluid" src="@Model.Car.image_url" alt="Ảnh xe">
+        </div>
+        <div class="col-md-4">
+            <h3>@Model.Car.car_make @Model.Car.car_model</h3>
+            <p><strong>Năm sản xuất:</strong> @Model.Car.year_production</p>
+            <p><strong>Màu sắc:</strong> @Model.Car.color</p>
+            <p><strong>Giá thuê/ngày:</strong> @Model.Car.price_per_day</p>
+            <p><strong>Đánh giá:</strong> @Model.Car.rating</p>
+            <p><strong>Biển số:</strong> @Model.Car.license_plate</p>
+            <p><strong>Số ghế:</strong> @Model.Car.seats</p>
+            <p><strong>Truyền động:</strong> @Model.Car.transmission</p>
+            <p><strong>Loại nhiên liệu:</strong> @Model.Car.fuel_type</p>
+            <a class="btn btn-primary" href="@Url.Action("Book", "Booking", new { id = Model.Car.car_id })">Đặt xe</a>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <h3>Bình luận</h3>
+            <form asp-action="AddComment" method="post">
+                <div class="form-group">
+                    <textarea class="form-control" name="Content" rows="3" placeholder="Nhập bình luận của bạn"></textarea>
+                </div>
+                <input type="hidden" name="CarId" value="@Model.Car.car_id" />
+                <button type="submit" class="btn btn-primary">Gửi bình luận</button>
+            </form>
+
+            <div class="mt-4">
+                @foreach (var comment in Model.Comments)
+                {
+                    <div class="comment mt-2">
+                        <p><strong>@(userNames.ContainsKey(comment.user_comment_id) ? userNames[comment.user_comment_id] : "Unknown User"):</strong> @comment.content</p>
+                        <p class="text-muted"><small>@comment.comment_date</small></p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

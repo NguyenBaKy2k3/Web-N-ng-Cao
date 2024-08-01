@@ -1,0 +1,78 @@
+﻿@model IEnumerable<BTL_Car.Models.Booking>
+
+@{
+    ViewData["Title"] = "hiendsBooking";
+}
+
+@if (ViewBag.SuccessMessage != null)
+{
+    <div class="alert alert-success">
+        @ViewBag.SuccessMessage
+    </div>
+}
+
+<h1>Lịch sử đặt xe trên hệ thống</h1>
+<p>
+    <a asp-action="Index" asp-controller="Booking">Đặt thêm xe mới</a>
+</p>
+<!-- Cart Page Start -->
+<div class="container-fluid py-5">
+    <div class="container py-5">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Mã xe
+                        </th>
+                        <th>
+                            Ngày đặt xe
+                        </th>
+                        <th>
+                            Ngày bắt đầu
+                        </th>
+                        <th>
+                            Ngày kết thúc
+                        </th>
+                        <th>
+                            Tổng chi phí thuê
+                        </th>
+                        <th>
+                            Trạng thái
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.car_booking_id)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.booking_date)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.rental_start_date)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.rental_end_date)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.total_cost)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.status_car)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Hủy thuê xe", "Cancel", new { id = item.booking_id })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- Cart Page End -->

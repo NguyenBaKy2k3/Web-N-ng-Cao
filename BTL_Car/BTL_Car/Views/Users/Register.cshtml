@@ -1,0 +1,50 @@
+﻿@model BTL_Car.Models.Users
+
+@{
+    ViewData["Title"] = "Đăng Ký";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="Register" method="post">
+    <div class="form-group">
+        <label asp-for="username"></label>
+        <input asp-for="username" class="form-control" />
+        <span asp-validation-for="username" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="email"></label>
+        <input asp-for="email" class="form-control" />
+        <span asp-validation-for="email" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="password"></label>
+        <input asp-for="password" type="password" class="form-control" />
+        <span asp-validation-for="password" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="full_name"></label>
+        <input asp-for="full_name" class="form-control" />
+        <span asp-validation-for="full_name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="phone_number"></label>
+        <input asp-for="phone_number" class="form-control" />
+        <span asp-validation-for="phone_number" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="address"></label>
+        <input asp-for="address" class="form-control" />
+        <span asp-validation-for="address" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="date_of_birth"></label>
+        <input asp-for="date_of_birth" type="date" class="form-control" />
+        <span asp-validation-for="date_of_birth" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Đăng Ký</button>
+</form>
+
+<!-- Đảm bảo rằng bạn đã thêm các script cần thiết cho jQuery Validation -->
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.3/jquery.validate.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate.unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script> 
