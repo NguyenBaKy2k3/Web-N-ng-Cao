@@ -1,6 +1,6 @@
 ﻿@*Defaut*@
 
-@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@*@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @{
     int? userRole = HttpContextAccessor.HttpContext.Session.GetInt32("Role");
     bool isLoggedIn = HttpContextAccessor.HttpContext.Session.GetString("UserName") != null; // Kiểm tra nếu người dùng đã đăng nhập
@@ -110,7 +110,7 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
-</html>   
+</html>   *@
 
 
 
@@ -119,7 +119,7 @@
 @*Navigator*@
 
 
-@* @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @{
     int? userRole = HttpContextAccessor.HttpContext.Session.GetInt32("Role");
     bool isLoggedIn = HttpContextAccessor.HttpContext.Session.GetString("UserName") != null; // Kiểm tra nếu người dùng đã đăng nhập
@@ -143,7 +143,7 @@
 
         /* Thanh sidebar nằm dọc */
 
-        .container-fluid {
+        /*.container-fluid {
             display: flex;
         }
 
@@ -156,13 +156,13 @@
             width: 200px;
             background-color: #f8f9fa;
             padding: 20px;
-        }
+        }*/
 
 
 
         /* Thanh sidebar nằm ngang */
         
-        /* .sidebar {
+        .sidebar {
             width: 100%;
             background-color: #f8f9fa;
             padding: 20px;
@@ -184,7 +184,7 @@
 
         .sidebar .nav-link {
             white-space: nowrap; 
-        } */
+        } 
 
 
         /* ..................................... */
@@ -272,10 +272,10 @@
         </nav>
     </header>
 
-    <div class="container-fluid">  *@
+    <div class="container-fluid"> 
 
         @* Thanh sidebar nằm ngang *@
-        @* <nav class="sidebar">
+        <nav class="sidebar">
             <ul class="nav">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/">Trang chủ</a>
@@ -289,6 +289,12 @@
                         <a class="nav-link" href="/Cars/Create">Tạo xe mới</a>
                     </li>
                 }
+                @if (userRole == 2)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Booking/Thi">Danh sách xe</a>
+                    </li>
+                }
                 @if (!isLoggedIn)
                 {
                     <li class="nav-item">
@@ -300,7 +306,7 @@
                 }
                 <!-- Thêm các mục điều hướng khác ở đây -->
             </ul>
-        </nav>  *@
+        </nav>  
 
 
 
@@ -333,7 +339,7 @@
                 }
                 <!-- Thêm các mục điều hướng khác ở đây -->
             </ul>
-        </nav>
+        </nav> *@
 
 
         <div class="content">
@@ -359,7 +365,7 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
-</html>     *@
+</html>     
 
 
 

@@ -28,7 +28,7 @@ namespace BTL_Car.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("car_id,car_make,car_model,year_production,color,price_per_day,rating,license_plate,seats,transmission,fuel_type,image_url")] Cars car)
+        public IActionResult Create([Bind("car_id,car_make,car_model,year_production,color,price_per_day,rating,license_plate,seats,transmission,fuel_type,image_url,verifyKey")] Cars car)
         {
             if (ModelState.IsValid)
             {
@@ -55,7 +55,7 @@ namespace BTL_Car.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("car_id,car_make,car_model,year_production,color,price_per_day,rating,license_plate,seats,transmission,fuel_type,image_url")] Cars car)
+        public IActionResult Edit(int id, [Bind("car_id,car_make,car_model,year_production,color,price_per_day,rating,license_plate,seats,transmission,fuel_type,image_url,verifyKey")] Cars car)
         {
             if (id != car.car_id)
             {

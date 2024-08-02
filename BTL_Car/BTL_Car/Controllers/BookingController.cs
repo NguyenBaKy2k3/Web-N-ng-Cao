@@ -146,12 +146,12 @@ namespace BTL_Car.Controllers
             return RedirectToAction("hiendsBooking");
         }
 
-        /*public IActionResult Index()
+        public IActionResult Thi()
         {
-            var cars = _dbContext.Cars.ToList(); // Lấy danh sách xe từ cơ sở dữ liệu
-                                                 //var cars =_dbContext.Bookings.ToList();
+            var cars = _dbContext.Cars.ToList(); 
+                                                 
             return View(cars);
-        }*/
+        }
 
 
         public IActionResult Index(string sortOrder, decimal? minPrice, decimal? maxPrice, int? minSeats, int? maxSeats)
@@ -294,6 +294,23 @@ namespace BTL_Car.Controllers
             _dbContext.SaveChanges();
 
             return RedirectToAction("Details", new { id = carId });
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id)
+        {
+            var car = _dbContext.Cars.Find(id);
+            if (car == null)
+            {
+                return Json(new { success = false });
+            }
+
+            _dbContext.Cars.Remove(car);
+            _dbContext.SaveChanges();
+
+            return Json(new { success = true });
         }
 
 

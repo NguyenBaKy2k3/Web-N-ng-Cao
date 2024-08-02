@@ -53,5 +53,10 @@ namespace BTL_Car.Models
         [StringLength(20, ErrorMessage = "Fuel type cannot be longer than 20 characters")]
         public string fuel_type { get; set; }
 
+        [Required]
+        [StringLength(10, MinimumLength = 10)]
+        [RegularExpression(@"^[0-9].{9}$",ErrorMessage = "Verifykey phải bắt đầu bằng 1 số và có 10 ký tự.")]
+        public string verifyKey { get; set; }
+
     }
 }

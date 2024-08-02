@@ -64,6 +64,11 @@
             <span asp-validation-for="image_url" class="text-danger"></span>
         </div>
         <div class="form-group">
+            <label asp-for="verifyKey" class="control-label"></label>
+            <input asp-for="verifyKey" class="form-control" />
+            <span asp-validation-for="verifyKey" class="text-danger"></span>
+        </div>
+        <div class="form-group">
             <button type="submit" class="btn btn-primary">Lưu</button>
             <a href="@Url.Action("Index", "Cars")" class="btn btn-secondary">Quay lại</a>
         </div>

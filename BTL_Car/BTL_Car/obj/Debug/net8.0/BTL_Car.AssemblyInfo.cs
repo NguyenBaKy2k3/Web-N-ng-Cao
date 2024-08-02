@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BTL_Car")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6ea8f1c213393d3daa8c0b43dfe1af8126df2037")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9e38ceb8e978662e7f5ab6e81bb6f28da0e5883e")]
 [assembly: System.Reflection.AssemblyProductAttribute("BTL_Car")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BTL_Car")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
