@@ -1,0 +1,76 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #ef2a54, #FF3A5C); /* Giữ gradient với màu mới */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white;
+        }
+
+
+        .container {
+            text-align: center;
+            width: 100%;
+            max-width: 400px; /* Giới hạn chiều rộng của container */
+            margin: auto;
+            z-index: 1;
+        }
+
+            .container img {
+                width: 100%; /* Đảm bảo logo chiếm toàn bộ chiều rộng */
+                max-width: 500px; /* Giới hạn chiều rộng của logo */
+                margin-bottom: 4rem; /* Khoảng cách dưới logo */
+                border-radius: 50%; /* Làm cho logo hình tròn */
+                object-fit: cover; /* Đảm bảo hình ảnh không bị méo */
+            }
+
+
+            .container h1 {
+                font-size: 2rem;
+                margin-bottom: 1rem;
+            }
+
+            .container button {
+                background-color: white;
+                color: #FF3A5C;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 50px;
+                font-size: 1.2rem;
+                cursor: pointer;
+                margin-bottom: 20px; /* Khoảng cách giữa nút và link */
+                width: 50%; /* Chiều rộng giảm xuống 50% */
+                max-width: 300px; /* Giới hạn chiều rộng tối đa để tránh quá rộng */
+            }
+
+
+            .container a {
+                display: block;
+                margin-top: 10px;
+                color: #fff;
+                text-decoration: none;
+                font-size: 0.9rem;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="~/image/henho.png" alt="Logo">
+        <a href="/Login"><button>Đăng nhập</button></a>
+        <a href="/Users/Register"><button>Đăng ký ngay</button></a>
+    </div>
+</body>
+</html>

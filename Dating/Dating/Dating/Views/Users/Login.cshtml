@@ -1,0 +1,106 @@
+﻿@model Dating.Models.DangNhapViewModel
+
+@{
+    ViewData["Title"] = "Đăng Nhập";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #ef2a54, #FF3A5C);
+            font-family: Arial, sans-serif;
+        }
+
+        .login-container {
+            width: 400px;
+            margin: 100px auto;
+            padding: 30px;
+            background-color: #333;
+            border-radius: 8px;
+            color: white;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+            font-size: 16px;
+            z-index: 1; 
+        }
+
+            .login-container button {
+                margin-top: 20px;
+            }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+            .form-group label {
+                font-weight: bold;
+            }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            border: none;
+            margin-top: 5px;
+        }
+
+        .btn-primary {
+            background-color: #ff0066;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .text-danger {
+            color: #ff0000;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>@ViewData["Title"]</h1>
+
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+        }
+
+        <form asp-action="Login" method="post">
+            <div class="form-group">
+                <input asp-for="Email" class="form-control" placeholder="Email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="Password" type="password" class="form-control" id="password"
+                       placeholder="Nhập mật khẩu" onfocus="togglePasswordVisibility(true)" onblur="togglePasswordVisibility(false)" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div>
+                <a href="/ForgotPassword">Quên mật khẩu?</a>
+            </div>
+            <button type="submit" class="btn-primary">Tiếp theo</button>
+        </form>
+    </div>
+
+    <!-- Đảm bảo rằng bạn đã thêm các script cần thiết cho jQuery Validation -->
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.3/jquery.validate.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate.unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+
+    <script>
+        let isPasswordVisible = false;
+
+        function togglePasswordVisibility() {
+            var passwordField = document.getElementById("password");
+            isPasswordVisible = !isPasswordVisible;
+            passwordField.setAttribute("type", isPasswordVisible ? "text" : "password");
+        }
+    </script>
+</body>
+</html>

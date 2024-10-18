@@ -1,0 +1,96 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Download\\ASPNetMVC\\Dating\\Dating\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{B9B94A30-B5D6-4798-B737-BF36DBB83887}|Dating\\Dating.csproj|d:\\download\\aspnetmvc\\dating\\dating\\dating\\views\\users\\userlist.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{B9B94A30-B5D6-4798-B737-BF36DBB83887}|Dating\\Dating.csproj|solutionrelative:dating\\views\\users\\userlist.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B9B94A30-B5D6-4798-B737-BF36DBB83887}|Dating\\Dating.csproj|d:\\download\\aspnetmvc\\dating\\dating\\dating\\models\\usersmodels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B9B94A30-B5D6-4798-B737-BF36DBB83887}|Dating\\Dating.csproj|solutionrelative:dating\\models\\usersmodels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B9B94A30-B5D6-4798-B737-BF36DBB83887}|Dating\\Dating.csproj|d:\\download\\aspnetmvc\\dating\\dating\\dating\\views\\users\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{B9B94A30-B5D6-4798-B737-BF36DBB83887}|Dating\\Dating.csproj|solutionrelative:dating\\views\\users\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B9B94A30-B5D6-4798-B737-BF36DBB83887}|Dating\\Dating.csproj|d:\\download\\aspnetmvc\\dating\\dating\\dating\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B9B94A30-B5D6-4798-B737-BF36DBB83887}|Dating\\Dating.csproj|solutionrelative:dating\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Register.cshtml",
+              "DocumentMoniker": "D:\\Download\\ASPNetMVC\\Dating\\Dating\\Dating\\Views\\Users\\Register.cshtml",
+              "RelativeDocumentMoniker": "Dating\\Views\\Users\\Register.cshtml",
+              "ToolTip": "D:\\Download\\ASPNetMVC\\Dating\\Dating\\Dating\\Views\\Users\\Register.cshtml",
+              "RelativeToolTip": "Dating\\Views\\Users\\Register.cshtml",
+              "ViewState": "AgIAAFEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-18T15:23:41.45Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UsersModels.cs",
+              "DocumentMoniker": "D:\\Download\\ASPNetMVC\\Dating\\Dating\\Dating\\Models\\UsersModels.cs",
+              "RelativeDocumentMoniker": "Dating\\Models\\UsersModels.cs",
+              "ToolTip": "D:\\Download\\ASPNetMVC\\Dating\\Dating\\Dating\\Models\\UsersModels.cs",
+              "RelativeToolTip": "Dating\\Models\\UsersModels.cs",
+              "ViewState": "AgIAAD0AAAAAAAAAAAAqwEoAAABFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-18T15:15:23.24Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UserList.cshtml",
+              "DocumentMoniker": "D:\\Download\\ASPNetMVC\\Dating\\Dating\\Dating\\Views\\Users\\UserList.cshtml",
+              "RelativeDocumentMoniker": "Dating\\Views\\Users\\UserList.cshtml",
+              "ToolTip": "D:\\Download\\ASPNetMVC\\Dating\\Dating\\Dating\\Views\\Users\\UserList.cshtml",
+              "RelativeToolTip": "Dating\\Views\\Users\\UserList.cshtml",
+              "ViewState": "AgIAAJ8AAAAAAAAAAAAYwKEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-18T11:45:38.142Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "UsersController.cs",
+              "DocumentMoniker": "D:\\Download\\ASPNetMVC\\Dating\\Dating\\Dating\\Controllers\\UsersController.cs",
+              "RelativeDocumentMoniker": "Dating\\Controllers\\UsersController.cs",
+              "ToolTip": "D:\\Download\\ASPNetMVC\\Dating\\Dating\\Dating\\Controllers\\UsersController.cs",
+              "RelativeToolTip": "Dating\\Controllers\\UsersController.cs",
+              "ViewState": "AgIAABsBAAAAAAAAAAAuwDMBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-18T11:41:36.789Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

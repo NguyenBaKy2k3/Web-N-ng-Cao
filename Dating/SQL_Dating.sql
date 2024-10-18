@@ -1,0 +1,156 @@
+﻿CREATE DATABASE DATING
+
+CREATE TABLE tblRole
+(
+	iRoleID int IDENTITY,
+	sRoleName nvarchar(50),
+	CONSTRAINT PK_tblRole PRIMARY KEY (iRoleID),
+)
+
+CREATE TABLE Ad_Min
+(
+	iAdmin int IDENTITY,
+	sAdminName nvarchar(50) NOT NULL,
+	email VARCHAR(100) NOT NULL UNIQUE,
+	password VARCHAR(255) NOT NULL,
+	iRoleID INT
+	CONSTRAINT PK_Admin PRIMARY KEY (iAdmin)
+	CONSTRAINT FK_tblRole FOREIGN KEY (iRoleID) REFERENCES tblRole(iRoleID)
+)
+
+INSERT INTO Ad_Min(sAdminName, email, password, iRoleID)
+VALUES (N'Quản lý', 'vaicatrau@gmail.com', '17102003', 1);
+
+Select * from  Ad_Min
+
+INSERT INTO tblRole(sRoleName)
+VALUES ('Admin'), ('Customer');
+Select * from  tblRole
+
+SELECT TABLE_NAME 
+FROM INFORMATION_SCHEMA.TABLES 
+WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_CATALOG = 'DATING';
+
+DROP TABLE Users
+SELECT*FROM Users
+-- Tạo bảng Users
+CREATE TABLE Users (  -- Bảng chứa thông tin người dùng
+    user_id INT PRIMARY KEY IDENTITY(1,1),  -- Khóa chính, ID người dùng tự động tăng
+    username NVARCHAR(50) NOT NULL,  -- Tên người dùng
+    email VARCHAR(100) NOT NULL UNIQUE,  -- Địa chỉ email, không được trùng lặp
+    password VARCHAR(255) NOT NULL,  -- Mật khẩu của người dùng
+	sdt VARCHAR(12) NOT NULL,
+    gender NVARCHAR(10) CHECK (gender IN ('male', 'female', 'other')) NOT NULL,  -- Giới tính
+    date_of_birth DATE NOT NULL,  -- Ngày sinh
+    bio NVARCHAR(100),  -- Thông tin tiểu sử
+    profile_picture VARCHAR(255),  -- Đường dẫn ảnh đại diện
+    location NVARCHAR(100),  -- Địa điểm
+    created_at DATETIME DEFAULT GETDATE(),  -- Thời gian tạo tài khoản
+	latitude FLOAT,  -- Vĩ độ
+	longitude FLOAT,  -- Kinh độ
+	iUsersRoleID INT,
+	--PasswordResetToken VARCHAR(100) NULL  -- Token đặt lại mật khẩu
+	CONSTRAINT FK_Users_tblRole FOREIGN KEY (iUsersRoleID) REFERENCES tblRole(iRoleID)
+);
+
+
+DROP TABLE User_Profile
+
+-- Tạo bảng User_Profile
+CREATE TABLE User_Profile (  -- Bảng chứa thông tin hồ sơ chi tiết của người dùng
+    profile_id INT PRIMARY KEY IDENTITY(1,1),  -- Khóa chính, ID hồ sơ tự động tăng
+    user_id INT,  -- Khóa ngoại liên kết với bảng Users
+    occupation NVARCHAR(100),  -- Nghề nghiệp của người dùng
+    relationship_status VARCHAR(20) CHECK (relationship_status IN ('single', 'in a relationship', 'married', 'complicated')),  -- Tình trạng mối quan hệ
+    looking_for NVARCHAR(100),  -- Mục tiêu tìm kiếm của người dùng
+    hobbies NVARCHAR(100),  -- Sở thích cá nhân
+    height DECIMAL(5,2),  -- Chiều cao
+    weight DECIMAL(5,2),  -- Cân nặng
+    FOREIGN KEY (user_id) REFERENCES Users(user_id)  -- Ràng buộc khóa ngoại
+);
+
+
+DROP TABLE Matches
+
+-- Tạo bảng Matches
+CREATE TABLE Matches (  -- Bảng ghi nhận các cặp đôi đã ghép
+    match_id INT PRIMARY KEY IDENTITY(1,1),  -- Khóa chính, ID cặp đôi tự động tăng
+    user1_id INT,  -- Khóa ngoại cho người dùng 1
+    user2_id INT,  -- Khóa ngoại cho người dùng 2
+    match_date DATETIME DEFAULT GETDATE(),  -- Thời gian ghép đôi
+    FOREIGN KEY (user1_id) REFERENCES Users(user_id),  -- Ràng buộc khóa ngoại
+    FOREIGN KEY (user2_id) REFERENCES Users(user_id)   -- Ràng buộc khóa ngoại
+);
+
+
+DROP TABLE MessagesS
+
+-- Tạo bảng Messages
+CREATE TABLE MessagesS (  -- Bảng lưu trữ các tin nhắn giữa người dùng
+    message_id INT PRIMARY KEY IDENTITY(1,1),  -- Khóa chính, ID tin nhắn tự động tăng
+    sender_id INT,  -- Khóa ngoại cho người gửi
+    receiver_id INT,  -- Khóa ngoại cho người nhận
+    content TEXT NOT NULL,  -- Nội dung tin nhắn
+    sent_at DATETIME DEFAULT GETDATE(),  -- Thời gian gửi tin nhắn
+    FOREIGN KEY (sender_id) REFERENCES Users(user_id),  -- Ràng buộc khóa ngoại
+    FOREIGN KEY (receiver_id) REFERENCES Users(user_id)  -- Ràng buộc khóa ngoại
+);
+
+
+DROP TABLE Likes
+
+-- Tạo bảng Likes
+CREATE TABLE Likes (  -- Bảng theo dõi người dùng thích nhau
+    like_id INT PRIMARY KEY IDENTITY(1,1),  -- Khóa chính, ID sở thích tự động tăng
+    user_id INT,  -- Khóa ngoại cho người dùng thích
+    liked_user_id INT,  -- Khóa ngoại cho người dùng được thích
+    created_at DATETIME DEFAULT GETDATE(),  -- Thời gian thích
+    FOREIGN KEY (user_id) REFERENCES Users(user_id),  -- Ràng buộc khóa ngoại
+    FOREIGN KEY (liked_user_id) REFERENCES Users(user_id)  -- Ràng buộc khóa ngoại
+);
+
+
+DROP TABLE Content
+
+-- Tạo bảng Photos
+CREATE TABLE Content (  -- Bảng lưu trữ ảnh của người dùng
+    content_id INT PRIMARY KEY IDENTITY(1,1),  -- Khóa chính, ID ảnh tự động tăng
+    user_id INT,  -- Khóa ngoại liên kết với bảng Users
+    photo_url VARCHAR(255) NOT NULL,  -- Đường dẫn đến ảnh
+    is_profile_picture BIT DEFAULT 0,  -- Cờ đánh dấu ảnh đại diện
+    uploaded_at DATETIME DEFAULT GETDATE(),  -- Thời gian tải lên ảnh
+    FOREIGN KEY (user_id) REFERENCES Users(user_id)  -- Ràng buộc khóa ngoại
+);
+
+
+DROP TABLE Reports
+
+-- Tạo bảng Reports
+CREATE TABLE Reports (  -- Bảng ghi nhận các báo cáo vi phạm
+    report_id INT PRIMARY KEY IDENTITY(1,1),  -- Khóa chính, ID báo cáo tự động tăng
+    reporter_id INT,  -- Khóa ngoại cho người báo cáo
+    reported_user_id INT,  -- Khóa ngoại cho người bị báo cáo
+    reason TEXT NOT NULL,  -- Lý do báo cáo
+    created_at DATETIME DEFAULT GETDATE(),  -- Thời gian tạo báo cáo
+    FOREIGN KEY (reporter_id) REFERENCES Users(user_id),  -- Ràng buộc khóa ngoại
+    FOREIGN KEY (reported_user_id) REFERENCES Users(user_id)  -- Ràng buộc khóa ngoại
+);
+
+
+CREATE TABLE tblNotification (  
+    notification_id INT PRIMARY KEY IDENTITY(1,1), 
+    notification_receiver_id INT, 
+    admin_id INT,  
+    notification_content TEXT NOT NULL, 
+    created_at DATETIME DEFAULT GETDATE(), 
+    FOREIGN KEY (notification_receiver_id) REFERENCES Users(user_id), 
+    FOREIGN KEY (admin_id) REFERENCES Ad_Min(iAdmin)  
+);
+
+
+CREATE TABLE Feedback (  
+    feedback_id INT PRIMARY KEY IDENTITY(1,1), 
+    user_feeback_id INT, 
+    feedback_content TEXT NOT NULL
+    FOREIGN KEY (user_feeback_id) REFERENCES Users(user_id)
+);

@@ -1,0 +1,221 @@
+﻿@*<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Dating</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Dating.styles.css" asp-append-version="true" />
+    <style>
+        /* Đặt lại lề và padding cho toàn trang */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Đảm bảo trang không bị cuộn dọc */
+        body {
+            overflow: hidden; /* Ẩn cuộn nếu có nội dung tràn ra */
+            min-height: 100vh; /* Đảm bảo chiều cao
+    </style>
+</head>
+<body>
+    @*<header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Dating</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>*@
+
+
+@*</header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>*@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Dating</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Dating.styles.css" asp-append-version="true" />
+    <style>
+        /* Đặt lại lề và padding cho toàn trang */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Đảm bảo trang không bị cuộn dọc */
+        body {
+            overflow: hidden; /* Ẩn cuộn nếu có nội dung tràn ra */
+            min-height: 100vh; /* Đảm bảo chiều cao tối thiểu */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #ef2a54, #FF3A5C);
+            position: relative; /* Để tạo hiệu ứng tuyết và mưa */
+        }
+
+        .snow-container, .rain-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh; /* Chiều cao toàn bộ màn hình */
+            pointer-events: none; /* Không ảnh hưởng đến sự kiện chuột */
+            overflow: hidden;
+            z-index: 0; /* Đặt z-index thấp hơn */
+        }
+
+        /* Bông tuyết */
+        .snow {
+            position: absolute;
+            top: -10%;
+            width: 10px;
+            height: 10px;
+            background-color: white;
+            opacity: 0.8;
+            animation: fall linear infinite; /* Hiệu ứng rơi */
+            clip-path: polygon(
+                50% 0%,  61% 35%,  98% 35%, 
+                68% 57%,  79% 91%,  50% 70%, 
+                21% 91%,  32% 57%,  2% 35%, 
+                39% 35%
+            ); /* Tạo hình bông tuyết 5 cánh */
+        }
+
+        @@keyframes fall {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(100vh); /* Rơi xuống đáy màn hình */
+            }
+        }
+
+        /* Mưa */
+        .rain {
+            position: absolute;
+            top: -20%;
+            width: 2px;
+            height: 20px;
+            background-color: rgba(255, 255, 255, 0.5);
+            animation: rain-fall linear infinite; /* Hiệu ứng rơi */
+        }
+
+        @@keyframes rain-fall {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(100vh); /* Rơi xuống đáy màn hình */
+            }
+        }
+
+        /* Container cho nội dung chính */
+        .container {
+            position: relative; /* Để cho phép z-index hoạt động */
+            z-index: 1; /* Đặt z-index cao hơn mưa và tuyết */
+        }
+    </style>
+</head>
+<body>
+    <!-- Containers for snow and rain -->
+    <div class="snow-container"></div>
+    <div class="rain-container"></div>
+
+    <!-- Original content -->
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+        const snowContainer = document.querySelector('.snow-container');
+        const rainContainer = document.querySelector('.rain-container');
+
+        function createSnowflake() {
+            const snowflake = document.createElement('div');
+            snowflake.classList.add('snow');
+
+            // Đặt kích thước ngẫu nhiên cho bông tuyết
+            const size = Math.random() * 10 + 10; // Kích thước từ 10px đến 20px
+            snowflake.style.width = size + 'px';
+            snowflake.style.height = size + 'px';
+            snowflake.style.left = Math.random() * 100 + 'vw'; // Đặt vị trí ngang ngẫu nhiên
+            snowflake.style.animationDuration = (Math.random() * 3 + 2) + 's'; // Thay đổi thời gian rơi ngẫu nhiên
+
+            snowContainer.appendChild(snowflake);
+
+            // Xóa tuyết khi nó đã rơi xong
+            setTimeout(() => {
+                snowflake.remove();
+            }, 5000); // Thời gian rơi
+        }
+
+        function createRaindrop() {
+            const raindrop = document.createElement('div');
+            raindrop.classList.add('rain');
+
+            // Đặt kích thước ngẫu nhiên cho giọt mưa
+            raindrop.style.left = Math.random() * 100 + 'vw'; // Đặt vị trí ngang ngẫu nhiên
+            raindrop.style.animationDuration = (Math.random() * 1 + 0.5) + 's'; // Thay đổi thời gian rơi ngẫu nhiên
+            raindrop.style.height = Math.random() * 10 + 10 + 'px'; // Kích thước từ 10px đến 20px
+
+            rainContainer.appendChild(raindrop);
+
+            // Xóa giọt mưa khi nó đã rơi xong
+            setTimeout(() => {
+                raindrop.remove();
+            }, 2000); // Thời gian rơi
+        }
+
+        setInterval(createSnowflake, 200); // Tạo tuyết mới mỗi 200ms
+        setInterval(createRaindrop, 100); // Tạo mưa mới mỗi 100ms
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,297 @@
+﻿@model IEnumerable<Dating.Models.UsersModels>
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh Sách Người Dùng</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .card {
+            width: 350px;
+            background-color: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 1;
+            transition: transform 0.3s ease; /* Thêm hiệu ứng chuyển động */
+        }
+
+            .card.drag-right {
+                transform: translateX(100px) rotate(10deg); /* Vuốt phải */
+            }
+
+            .card.drag-left {
+                transform: translateX(-100px) rotate(-10deg); /* Vuốt trái */
+            }
+
+            .card img {
+                width: 100%;
+                height: 250px;
+                object-fit: cover;
+            }
+
+        .profile-info {
+            padding: 15px;
+        }
+
+            .profile-info h2 {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+
+            .profile-info p {
+                font-size: 14px;
+                color: #666;
+                margin-bottom: 5px;
+            }
+
+                .profile-info p.location {
+                    color: #333;
+                    margin-bottom: 15px;
+                }
+
+        .actions {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            background-color: #f7f7f7;
+        }
+
+            .actions button {
+                border: none;
+                background-color: white;
+                padding: 10px;
+                border-radius: 50%;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                cursor: pointer;
+            }
+
+                .actions button img {
+                    width: 24px;
+                    height: 24px;
+                }
+
+                .actions button:hover {
+                    background-color: #e7e7e7;
+                }
+
+        .reject {
+            color: red;
+        }
+
+        .super-like {
+            color: blue;
+        }
+
+        .like {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card" id="userCard">
+            <img id="profileImage" src="" alt="Profile Image">
+            <div class="profile-info">
+                <h2 id="username"></h2>
+                <p id="gender"></p>
+                <p id="bio"></p>
+                <p id="location" class="location"></p>
+            </div>
+            <div class="actions">
+                <button class="reject" onclick="rejectUser()"><img src="https://img.icons8.com/ios-filled/50/ff0000/delete-sign.png" alt="Reject"></button>
+                <button class="super-like" onclick="superLikeUser()"><img src="https://img.icons8.com/ios-filled/50/0000ff/star--v1.png" alt="Super Like"></button>
+                <button class="like" onclick="likeUser()"><img src="https://img.icons8.com/ios-filled/50/00ff00/like.png" alt="Like"></button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var users = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
+        var currentIndex = 0;
+        var startX;
+
+        function translateGender(gender) {
+            switch (gender) {
+                case 'male':
+                    return 'Nam';
+                case 'female':
+                    return 'Nữ';
+                default:
+                    return 'Khác'; // Hoặc bất kỳ giá trị nào bạn muốn hiển thị
+            }
+        }
+
+        // Hàm hiển thị người dùng hiện tại
+        function showUser(index) {
+            var user = users[index];
+            document.getElementById('profileImage').src = user.profile_picture;
+            document.getElementById('username').innerText = user.username + ", " + user.Age;
+            document.getElementById('gender').innerText = translateGender(user.gender);
+            document.getElementById('bio').innerText = user.bio;
+            document.getElementById('location').innerText = user.location;
+            document.getElementById('userCard').style.transform = 'translateX(0)'; // Reset vị trí
+        }
+
+        // Hàm chuyển sang người tiếp theo
+        function nextUser() {
+            currentIndex++;
+            if (currentIndex >= users.length) {
+                currentIndex = 0; // Quay lại người đầu tiên nếu hết danh sách
+            }
+            showUser(currentIndex);
+        }
+        // Hàm xử lý hành động reject
+        function rejectUser() {
+            document.getElementById('userCard').style.transform = 'translateX(-400px)'; // Di chuyển thẻ sang trái
+            showNotification("Bạn đã bỏ qua " + users[currentIndex].username); // Hiển thị thông báo
+            setTimeout(nextUser, 300); // Chờ 300ms trước khi chuyển sang người tiếp theo
+        }
+
+        // Hàm xử lý hành động like
+        function likeUser() {
+            document.getElementById('userCard').style.transform = 'translateX(400px)'; // Di chuyển thẻ sang phải
+            showNotification("Bạn đã thích " + users[currentIndex].username); // Hiển thị thông báo
+            setTimeout(nextUser, 300); // Chờ 300ms trước khi chuyển sang người tiếp theo
+        }
+
+        // Hàm xử lý hành động super like
+        function superLikeUser() {
+            const message = "Bạn đã siêu thích " + users[currentIndex].username;
+            showNotification(message); // Hiển thị thông báo
+            nextUser(); // Chuyển ngay sang người dùng tiếp theo
+        }
+
+        // Hàm hiển thị thông báo
+        function showNotification(message) {
+            // Tạo một thông báo tạm thời
+            const notification = document.createElement('div');
+            notification.innerText = message;
+            notification.style.position = 'fixed';
+            notification.style.top = '20px';
+            notification.style.right = '20px';
+            notification.style.backgroundColor = 'black'; // Màu nền đen
+            notification.style.color = 'white'; // Màu chữ trắng
+            notification.style.padding = '10px 20px';
+            notification.style.borderRadius = '5px';
+            notification.style.zIndex = '1000';
+            document.body.appendChild(notification);
+
+            // Xóa thông báo sau 1 giây
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 1000); // Hiển thị thông báo trong 1 giây
+        }
+
+        // Thêm sự kiện vuốt
+        var userCard = document.getElementById('userCard');
+
+        userCard.addEventListener('touchstart', handleTouchStart);
+        userCard.addEventListener('touchmove', handleTouchMove);
+        userCard.addEventListener('touchend', handleTouchEnd);
+        userCard.addEventListener('mousedown', handleMouseDown);
+        userCard.addEventListener('mousemove', handleMouseMove);
+        userCard.addEventListener('mouseup', handleMouseUp);
+
+        var touchStartX = null;
+        var mouseStartX = null;
+        var isDragging = false;
+
+        function handleTouchStart(event) {
+            const touch = event.touches[0];
+            touchStartX = touch.clientX;
+            isDragging = true; // Bắt đầu kéo
+        }
+
+        function handleTouchMove(event) {
+            if (!isDragging || !touchStartX) {
+                return;
+            }
+
+            const touch = event.touches[0];
+            const deltaX = touch.clientX - touchStartX;
+
+            // Nếu vuốt sang trái hoặc sang phải
+            if (Math.abs(deltaX) > 50) { // Kiểm tra nếu đã vuốt đủ xa
+                if (deltaX > 0) {
+                    likeUser(); // Vuốt phải
+                } else {
+                    rejectUser(); // Vuốt trái
+                }
+                isDragging = false; // Kết thúc kéo
+            }
+        }
+
+        function handleTouchEnd() {
+            isDragging = false; // Kết thúc kéo
+        }
+
+        function handleMouseDown(event) {
+            mouseStartX = event.clientX;
+            isDragging = true; // Bắt đầu kéo
+        }
+
+        function handleMouseMove(event) {
+            if (!isDragging) {
+                return;
+            }
+
+            const deltaX = event.clientX - mouseStartX;
+
+            // Nếu vuốt sang trái hoặc sang phải
+            if (Math.abs(deltaX) > 50) { // Kiểm tra nếu đã vuốt đủ xa
+                if (deltaX > 0) {
+                    likeUser(); // Vuốt phải
+                } else {
+                    rejectUser(); // Vuốt trái
+                }
+                isDragging = false; // Kết thúc kéo
+            }
+        }
+
+        function handleMouseUp() {
+            isDragging = false; // Kết thúc kéo
+        }
+
+
+
+
+
+        // Hiển thị người dùng đầu tiên khi trang được tải
+        document.addEventListener('DOMContentLoaded', function () {
+            showUser(currentIndex);
+        });
+    </script>
+    <!-- Thêm thư viện Bootstrap JS nếu cần -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

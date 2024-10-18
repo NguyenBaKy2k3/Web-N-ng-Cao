@@ -1,0 +1,89 @@
+﻿@model IEnumerable<Dating.Models.UsersModels>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <title>Swipe User</title>
+    <style>
+        body {
+            background-color: #ff4d6d;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .profile-card {
+            background-color: white;
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            width: 300px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin: 10px;
+            position: relative;
+        }
+
+        .profile-image {
+            width: 100%;
+            border-radius: 15px;
+        }
+
+        .profile-info h2 {
+            margin: 10px 0;
+            font-size: 22px;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 10px;
+        }
+
+            .actions .btn {
+                background: none;
+                border: none;
+                font-size: 24px;
+                cursor: pointer;
+            }
+
+            .actions .like {
+                color: green;
+            }
+
+            .actions .dislike {
+                color: red;
+            }
+
+            .actions .btn i {
+                font-size: 30px;
+            }
+    </style>
+</head>
+<body>
+    @foreach (var user in Model)
+    {
+        <div class="profile-card">
+            <img src="@user.profile_picture" alt="Profile Image" class="profile-image">
+            <div class="profile-info">
+                <h2>@user.username, @ViewBag.UserAge</h2>
+                <p>@user.gender</p>
+                <p>@user.bio</p>
+                <p>@user.location</p>
+            </div>
+            <div class="actions">
+                <form method="get" asp-action="Swipe" asp-route-like="false" asp-route-userIndex="@ViewBag.UserIndex">
+                    <button class="btn dislike"><i class="fa fa-times"></i></button>
+                </form>
+                <form method="get" asp-action="Swipe" asp-route-like="true" asp-route-userIndex="@ViewBag.UserIndex">
+                    <button class="btn like"><i class="fa fa-heart"></i></button>
+                </form>
+            </div>
+        </div>
+    }
+</body>
+</html>

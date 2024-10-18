@@ -1,0 +1,202 @@
+﻿@model Dating.Models.UsersModels
+
+@{
+    ViewData["Title"] = "Đăng Ký";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #ef2a54, #FF3A5C);
+            font-family: Arial, sans-serif;
+        }
+
+        .register-container {
+            width: 400px;
+            margin: 100px auto;
+            padding: 30px;
+            background-color: #333;
+            border-radius: 8px;
+            color: white;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+            font-size: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+            .form-group label {
+                font-weight: bold;
+            }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            border: none;
+            margin-top: 5px;
+        }
+
+        .btn-primary {
+            background-color: #ff0066;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .text-danger {
+            color: #ff0000;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <h1>@ViewData["Title"]</h1>
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <form id="registerForm" asp-action="Register" method="post" enctype="multipart/form-data">
+            <!-- Phần nhập thông tin cơ bản -->
+            <div id="basicInfo">
+                <div class="form-group">
+                    <input asp-for="username" class="form-control" placeholder="Tên người dùng" required />
+                    <span asp-validation-for="username" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input asp-for="sdt" class="form-control" placeholder="Số điện thoại" required />
+                    <span asp-validation-for="sdt" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input asp-for="email" class="form-control" placeholder="Email đăng nhập" required />
+                    <span asp-validation-for="email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input asp-for="password" type="password" class="form-control" placeholder="Mật khẩu" id="password"
+                           required onfocus="togglePasswordVisibility(true)" onblur="togglePasswordVisibility(false)" />
+                    <span asp-validation-for="password" class="text-danger"></span>
+                </div>
+                <button type="button" class="btn-primary" id="nextButton">Next</button>
+            </div>
+
+            <!-- Phần nhập thông tin bổ sung, ẩn mặc định -->
+            <div id="additionalInfo" class="hidden">
+                <div class="form-group">
+                    <select asp-for="gender" class="form-control" required>
+                        <option value="male">Nam</option>
+                        <option value="female">Nữ</option>
+                        <option value="other">Khác</option>
+                    </select>
+                    <span asp-validation-for="gender" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input asp-for="date_of_birth" type="date" class="form-control" required />
+                    <span asp-validation-for="date_of_birth" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <textarea asp-for="bio" class="form-control" placeholder="Tiểu sử" required></textarea>
+                    <span asp-validation-for="bio" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input asp-for="ProfileImage" type="file" class="form-control" accept="image/*" />
+                    <span asp-validation-for="ProfileImage" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input asp-for="location" class="form-control" placeholder="Location(Địa chỉ)" required />
+                    <span asp-validation-for="location" class="text-danger"></span>
+                </div>
+                <input type="hidden" id="latitude" name="latitude">
+                <input type="hidden" id="longitude" name="longitude">
+                <button type="submit" class="btn-primary">Hoàn tất đăng ký</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("nextButton").addEventListener("click", function () {
+            var form = document.getElementById("registerForm");
+            var inputs = document.querySelectorAll('#basicInfo input'); // Chỉ lấy các input trong phần thông tin cơ bản
+            var isValid = true; // Biến kiểm tra tính hợp lệ
+
+            inputs.forEach(function (input) {
+                if (!input.value) {
+                    // Đặt thông báo tùy chỉnh nếu trường chưa điền
+                    input.setCustomValidity("Bạn chưa điền trường: " + input.getAttribute('placeholder'));
+                    input.reportValidity(); // Hiển thị thông báo
+                    input.focus(); // Focus vào trường chưa điền
+                    isValid = false;
+                    return false; // Dừng lại khi gặp trường chưa được điền
+                } else {
+                    // Đặt lại thông báo mặc định khi trường đã điền
+                    input.setCustomValidity('');
+                }
+            });
+
+            if (isValid) {
+                // Nếu tất cả các trường đã hợp lệ, chuyển sang phần thông tin bổ sung
+                document.getElementById("basicInfo").classList.add("hidden");
+                document.getElementById("additionalInfo").classList.remove("hidden");
+            }
+        });
+
+
+
+
+        // Hàm hiển thị mật khẩu khi focus và ẩn khi blur
+        function togglePasswordVisibility(isFocused) {
+            var passwordField = document.getElementById("password");
+            if (isFocused) {
+                passwordField.setAttribute("type", "text");
+            } else {
+                passwordField.setAttribute("type", "password");
+            }
+        }
+
+        // Lấy vị trí người dùng khi tải trang
+        window.onload = function () {
+            getLocation();
+        };
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                alert("Trình duyệt của bạn không hỗ trợ Geolocation.");
+            }
+        }
+
+        function showPosition(position) {
+            document.getElementById("latitude").value = position.coords.latitude;
+            document.getElementById("longitude").value = position.coords.longitude;
+        }
+
+        function showError(error) {
+            switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    alert("Người dùng từ chối quyền lấy vị trí.");
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    alert("Thông tin vị trí không khả dụng.");
+                    break;
+                case error.TIMEOUT:
+                    alert("Yêu cầu lấy vị trí bị hết thời gian.");
+                    break;
+                case error.UNKNOWN_ERROR:
+                    alert("Lỗi không xác định.");
+                    break;
+            }
+        }
+    </script>
+</body>
+</html>
+
