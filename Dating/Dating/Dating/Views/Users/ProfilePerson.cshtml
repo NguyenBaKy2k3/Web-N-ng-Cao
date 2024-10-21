@@ -1,0 +1,75 @@
+﻿@model Dating.Models.UserProfileViewModel
+
+
+<div class="profile-container">
+    <div class="profile-image-wrapper">
+        
+         <img src="@Model.ProfilePicture" alt="Ảnh đại diện" class="profile-image" />
+        
+    </div>
+
+    <div class="profile-name-age">
+        <h2>@Model.Username, @Model.Age tuổi</h2>
+    </div>
+
+    <div class="profile-details">
+        <p><strong>Nghề nghiệp:</strong> @Model.Occupation</p>
+        <p><strong>Tình trạng mối quan hệ:</strong> @Model.RelationshipStatus</p>
+        <p><strong>Mục tiêu tìm kiếm:</strong> @Model.LookingFor</p>
+        <p><strong>Sở thích:</strong> @Model.Hobbies</p>
+        <p><strong>Chiều cao:</strong> @Model.Height cm</p>
+        <p><strong>Cân nặng:</strong> @Model.Weight kg</p>
+        <p><strong>Giới tính:</strong> @Model.Gender</p>
+        <p><strong>Tiểu sử:</strong> @Model.Bio</p>
+        <p><strong>Quê quán:</strong> @Model.Location</p>
+    </div>
+
+
+</div>
+
+
+<style>
+    .profile-container {
+        text-align: center;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-image-wrapper {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 15px;
+    }
+
+    .profile-image {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid #ddd;
+    }
+
+    .profile-name-age {
+        margin-bottom: 20px;
+    }
+
+    .profile-name-age h2 {
+        font-size: 24px;
+        font-weight: bold;
+        margin: 0;
+    }
+
+    .profile-details p {
+        font-size: 16px;
+        margin: 8px 0;
+        text-align: left;
+    }
+
+    .btn-primary {
+        margin-top: 20px;
+    }
+</style>

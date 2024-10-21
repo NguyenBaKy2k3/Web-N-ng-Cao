@@ -8,7 +8,8 @@ namespace Dating.Data
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) {}
         public DbSet<UsersModels> Users { get; set; }
-        //public DbSet<MainInterfaceController> MainInterface { get; set; }
-        //public DbSet<UserProfileViewModel> UserProfiles { get; set; }
+        public DbSet<LikeModels> Likes { get; set; }
+        public DbSet<UserProfile> Profiles { get; set; }
+        public DbSet<AdminModel> Admins { get; set; }
     }
 }

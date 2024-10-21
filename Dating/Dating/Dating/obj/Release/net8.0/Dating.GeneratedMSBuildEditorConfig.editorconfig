@@ -9,51 +9,63 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Dating
 build_property.RootNamespace = Dating
-build_property.ProjectDir = D:\Download\ASPNetMVC\Dating\Dating\Dating\
+build_property.ProjectDir = D:\Download\ASPNetMVC\WebNangCao\Dating\Dating\Dating\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = D:\Download\ASPNetMVC\Dating\Dating\Dating
+build_property.MSBuildProjectDirectory = D:\Download\ASPNetMVC\WebNangCao\Dating\Dating\Dating
 build_property._RazorSourceGeneratorDebug = 
 
-[D:/Download/ASPNetMVC/Dating/Dating/Dating/Views/Home/Index.cshtml]
+[D:/Download/ASPNetMVC/WebNangCao/Dating/Dating/Dating/Views/Account/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Download/ASPNetMVC/WebNangCao/Dating/Dating/Dating/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Download/ASPNetMVC/Dating/Dating/Dating/Views/Home/Privacy.cshtml]
+[D:/Download/ASPNetMVC/WebNangCao/Dating/Dating/Dating/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Download/ASPNetMVC/Dating/Dating/Dating/Views/Shared/Error.cshtml]
+[D:/Download/ASPNetMVC/WebNangCao/Dating/Dating/Dating/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Download/ASPNetMVC/Dating/Dating/Dating/Views/Shared/_ValidationScriptsPartial.cshtml]
+[D:/Download/ASPNetMVC/WebNangCao/Dating/Dating/Dating/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Download/ASPNetMVC/Dating/Dating/Dating/Views/Users/Login.cshtml]
+[D:/Download/ASPNetMVC/WebNangCao/Dating/Dating/Dating/Views/Users/ForgotPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcRm9yZ290UGFzc3dvcmQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Download/ASPNetMVC/WebNangCao/Dating/Dating/Dating/Views/Users/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcTG9naW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Download/ASPNetMVC/Dating/Dating/Dating/Views/Users/Register.cshtml]
+[D:/Download/ASPNetMVC/WebNangCao/Dating/Dating/Dating/Views/Users/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcUmVnaXN0ZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Download/ASPNetMVC/Dating/Dating/Dating/Views/Users/VerifyCode.cshtml]
+[D:/Download/ASPNetMVC/WebNangCao/Dating/Dating/Dating/Views/Users/UserList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcVXNlckxpc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Download/ASPNetMVC/WebNangCao/Dating/Dating/Dating/Views/Users/VerifyCode.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcVmVyaWZ5Q29kZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Download/ASPNetMVC/Dating/Dating/Dating/Views/_ViewImports.cshtml]
+[D:/Download/ASPNetMVC/WebNangCao/Dating/Dating/Dating/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Download/ASPNetMVC/Dating/Dating/Dating/Views/_ViewStart.cshtml]
+[D:/Download/ASPNetMVC/WebNangCao/Dating/Dating/Dating/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Download/ASPNetMVC/Dating/Dating/Dating/Views/Shared/_Layout.cshtml]
+[D:/Download/ASPNetMVC/WebNangCao/Dating/Dating/Dating/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-qk3n6dwde0

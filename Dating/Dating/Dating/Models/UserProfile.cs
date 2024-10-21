@@ -10,23 +10,27 @@ namespace Dating.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ProfileId { get; set; }
+        public int profile_id { get; set; }
+
+        public int user_profile_id { get; set; }
 
         [MaxLength(100)]
-        public string Occupation { get; set; }
+        public string occupation { get; set; }
 
         [MaxLength(20)]
-        [RegularExpression("single|in a relationship|married|complicated", ErrorMessage = "Tình trạng mối quan hệ không hợp lệ.")]
-        public string RelationshipStatus { get; set; }
+        [RegularExpression("Độc thân|Đang trong mối quạ hệ|Đã kết hôn|Phức tạp", ErrorMessage = "Tình trạng mối quan hệ không hợp lệ.")]
+        public string relationship_status { get; set; }
 
         [MaxLength(100)]
-        public string LookingFor { get; set; }
+        public string looking_for { get; set; }
 
         [MaxLength(100)]
-        public string Hobbies { get; set; }
+        public string hobbies { get; set; }
 
-        public decimal Height { get; set; }
+        public decimal height { get; set; }
 
-        public decimal Weight { get; set; }
+        public decimal weight { get; set; }
+
+        public bool isApproved { get; set; }
     }
 }

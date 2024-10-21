@@ -1,0 +1,50 @@
+﻿@model Dating.Models.UsersModels
+<div class="container">
+    <h2>Chỉnh sửa thông tin người dùng</h2>
+
+    <form asp-action="EditUser" method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="user_id" />
+
+        <div class="form-group">
+            <input asp-for="username" class="form-control" placeholder="Tên người dùng" required />
+            <span asp-validation-for="username" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input asp-for="sdt" class="form-control" placeholder="Số điện thoại" required />
+            <span asp-validation-for="sdt" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <select asp-for="gender" class="form-control" required>
+                <option value="male">Nam</option>
+                <option value="female">Nữ</option>
+                <option value="other">Khác</option>
+            </select>
+            <span asp-validation-for="gender" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input asp-for="date_of_birth" type="date" class="form-control" required />
+            <span asp-validation-for="date_of_birth" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <textarea asp-for="bio" class="form-control" placeholder="Tiểu sử" required></textarea>
+            <span asp-validation-for="bio" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input asp-for="ProfileImage" type="file" class="form-control" accept="image/*" />
+            <span asp-validation-for="ProfileImage" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input asp-for="location" class="form-control" placeholder="Location(Địa chỉ)" required />
+            <span asp-validation-for="location" class="text-danger"></span>
+        </div>
+        <input type="hidden" asp-for="password" value="@Model.password" />
+        <input type="hidden" asp-for="email" value="@Model.email" />
+        <input type="hidden" asp-for="iUsersRoleID" value="@Model.iUsersRoleID" />
+        <input type="hidden" asp-for="latitude" value="@Model.latitude" />
+        <input type="hidden" asp-for="longitude" value="@Model.longitude" />
+        <button type="submit" class="btn btn-primary">Cập nhật</button>
+
+    </form>
+    <a asp-action="EditProfile" asp-route-id="@Model.user_id" class="btn btn-secondary mt-3">Chỉnh sửa hồ sơ</a>
+</div>

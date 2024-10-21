@@ -1,0 +1,48 @@
+﻿@model IEnumerable<UserProfileViewModel>
+
+<!-- Hiển thị danh sách hồ sơ chưa duyệt -->
+<table class="table">
+    <thead>
+        <tr>
+            <th>Ảnh đại diện</th>
+            <th>Tên người dùng</th>
+            <th>Giới tính</th>
+            <th>Nghề nghiệp</th>
+            <th>Mối quan hệ</th>
+            <th>Mục tiêu tìm kiếm</th>
+            <th>Sở thích</th>
+            <th>Chiều cao</th>
+            <th>Cân nặng</th>
+            <th>Tiểu sử</th>
+            <th>Tuổi</th>
+            <th>Quê quán</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var profile in Model)
+        {
+            <tr>
+                <td>
+                    <!-- Hiển thị ảnh đại diện -->
+                    <img src="@profile.ProfilePicture" alt="Ảnh đại diện" style="width:50px; height:50px;" />
+                </td>
+                <td>@profile.Username</td>
+                <td>@profile.Gender</td>
+                <td>@profile.Occupation</td>
+                <td>@profile.RelationshipStatus</td>
+                <td>@profile.LookingFor</td>
+                <td>@profile.Hobbies</td>
+                <td>@profile.Height</td>
+                <td>@profile.Weight</td>
+                <td>@profile.Bio</td>
+                <td>@profile.Age</td>
+                <td>@profile.Location</td>
+                <td>
+                    <!-- Nút duyệt hồ sơ -->
+                    <a asp-action="Approve" asp-route-id="@profile.ProfileId" class="btn btn-success">Duyệt</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

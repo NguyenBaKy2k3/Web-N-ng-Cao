@@ -33,6 +33,8 @@ WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_CATALOG = 'DATING';
 
 DROP TABLE Users
 SELECT*FROM Users
+select*from User_Profile
+
 -- Tạo bảng Users
 CREATE TABLE Users (  -- Bảng chứa thông tin người dùng
     user_id INT PRIMARY KEY IDENTITY(1,1),  -- Khóa chính, ID người dùng tự động tăng
@@ -55,18 +57,19 @@ CREATE TABLE Users (  -- Bảng chứa thông tin người dùng
 
 
 DROP TABLE User_Profile
-
+select*from User_Profile
 -- Tạo bảng User_Profile
 CREATE TABLE User_Profile (  -- Bảng chứa thông tin hồ sơ chi tiết của người dùng
     profile_id INT PRIMARY KEY IDENTITY(1,1),  -- Khóa chính, ID hồ sơ tự động tăng
-    user_id INT,  -- Khóa ngoại liên kết với bảng Users
+    user_profile_id INT,  -- Khóa ngoại liên kết với bảng Users
     occupation NVARCHAR(100),  -- Nghề nghiệp của người dùng
-    relationship_status VARCHAR(20) CHECK (relationship_status IN ('single', 'in a relationship', 'married', 'complicated')),  -- Tình trạng mối quan hệ
-    looking_for NVARCHAR(100),  -- Mục tiêu tìm kiếm của người dùng
+    relationship_status NVARCHAR(20) CHECK (relationship_status IN (N'Độc thân', N'Đang trong mối quan hệ', N'Đã kết hôn', N'Phức tạp')),  -- Tình trạng mối quan hệ
+    looking_for NVARCHAR(100) NOT NULL,  -- Mục tiêu tìm kiếm của người dùng
     hobbies NVARCHAR(100),  -- Sở thích cá nhân
     height DECIMAL(5,2),  -- Chiều cao
     weight DECIMAL(5,2),  -- Cân nặng
-    FOREIGN KEY (user_id) REFERENCES Users(user_id)  -- Ràng buộc khóa ngoại
+	isApproved BIT
+    FOREIGN KEY (user_profile_id) REFERENCES Users(user_id)  -- Ràng buộc khóa ngoại
 );
 
 
@@ -98,14 +101,14 @@ CREATE TABLE MessagesS (  -- Bảng lưu trữ các tin nhắn giữa người d
 
 
 DROP TABLE Likes
-
+select*from Likes
 -- Tạo bảng Likes
 CREATE TABLE Likes (  -- Bảng theo dõi người dùng thích nhau
     like_id INT PRIMARY KEY IDENTITY(1,1),  -- Khóa chính, ID sở thích tự động tăng
-    user_id INT,  -- Khóa ngoại cho người dùng thích
+    userlike_id INT,  -- Khóa ngoại cho người dùng thích
     liked_user_id INT,  -- Khóa ngoại cho người dùng được thích
     created_at DATETIME DEFAULT GETDATE(),  -- Thời gian thích
-    FOREIGN KEY (user_id) REFERENCES Users(user_id),  -- Ràng buộc khóa ngoại
+    FOREIGN KEY (userlike_id) REFERENCES Users(user_id),  -- Ràng buộc khóa ngoại
     FOREIGN KEY (liked_user_id) REFERENCES Users(user_id)  -- Ràng buộc khóa ngoại
 );
 
@@ -115,11 +118,11 @@ DROP TABLE Content
 -- Tạo bảng Photos
 CREATE TABLE Content (  -- Bảng lưu trữ ảnh của người dùng
     content_id INT PRIMARY KEY IDENTITY(1,1),  -- Khóa chính, ID ảnh tự động tăng
-    user_id INT,  -- Khóa ngoại liên kết với bảng Users
+    usercontent_id INT,  -- Khóa ngoại liên kết với bảng Users
     photo_url VARCHAR(255) NOT NULL,  -- Đường dẫn đến ảnh
     is_profile_picture BIT DEFAULT 0,  -- Cờ đánh dấu ảnh đại diện
     uploaded_at DATETIME DEFAULT GETDATE(),  -- Thời gian tải lên ảnh
-    FOREIGN KEY (user_id) REFERENCES Users(user_id)  -- Ràng buộc khóa ngoại
+    FOREIGN KEY (usercontent_id) REFERENCES Users(user_id)  -- Ràng buộc khóa ngoại
 );
 
 

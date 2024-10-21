@@ -62,6 +62,13 @@
 </html>*@
 
 
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    int? userRole = HttpContextAccessor.HttpContext.Session.GetInt32("Role");
+    bool isLoggedIn = HttpContextAccessor.HttpContext.Session.GetString("UserName") != null;
+    int? createProfile = HttpContextAccessor.HttpContext.Session.GetInt32("ProfileCreated");
+}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -151,12 +158,75 @@
             position: relative; /* Để cho phép z-index hoạt động */
             z-index: 1; /* Đặt z-index cao hơn mưa và tuyết */
         }
+
+        /*Menu*/
+        .sidebar {
+            width: 100%;
+            background-color: #f8f9fa;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: center;
+            box-sizing: border-box;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+            .sidebar .nav {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .sidebar .nav-item {
+                margin: 0 15px;
+            }
+
+            .sidebar .nav-link {
+                white-space: nowrap;
+                text-decoration: none;
+                color: #007bff;
+                transition: color 0.3s;
+            }
+
+                .sidebar .nav-link:hover {
+                    color: #0056b3;
+                }
+
     </style>
 </head>
 <body>
     <!-- Containers for snow and rain -->
     <div class="snow-container"></div>
     <div class="rain-container"></div>
+
+    @if (isLoggedIn) // Chỉ hiển thị thanh menu nếu người dùng đã đăng nhập
+    {
+        <div class="sidebar">
+            <div class="nav">
+                <div class="nav-item">
+                    <a class="nav-link" href="@Url.Action("ViewProfile", "Users")">Hồ sơ</a>
+                </div>
+                <div class="nav-item">
+                    <a class="nav-link" href="@Url.Action("Messages", "Users")">Tin nhắn</a>
+                </div>
+                @if (!createProfile.HasValue) // Nếu người dùng chưa có hồ sơ
+                {
+                    <div class="nav-item">
+                        <a class="nav-link" href="@Url.Action("CreateProfile", "Users")">Tạo hồ sơ</a>
+                    </div>
+                }
+                @if (userRole.HasValue && userRole.Value == 1) // Kiểm tra nếu là admin (giả sử 1 là vai trò admin)
+                {
+                    <div class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index", "Users")">Duyệt hồ sơ</a>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+
 
     <!-- Original content -->
     <div class="container">

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Download\\ASPNetMVC\\Dating\\Dating\\Dating\\Dating.csproj": {}
+    "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\Dating.csproj": {}
   },
   "projects": {
-    "D:\\Download\\ASPNetMVC\\Dating\\Dating\\Dating\\Dating.csproj": {
+    "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\Dating.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Download\\ASPNetMVC\\Dating\\Dating\\Dating\\Dating.csproj",
+        "projectUniqueName": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\Dating.csproj",
         "projectName": "Dating",
-        "projectPath": "D:\\Download\\ASPNetMVC\\Dating\\Dating\\Dating\\Dating.csproj",
+        "projectPath": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\Dating.csproj",
         "packagesPath": "C:\\Users\\nguye\\.nuget\\packages\\",
-        "outputPath": "D:\\Download\\ASPNetMVC\\Dating\\Dating\\Dating\\obj\\",
+        "outputPath": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\nguye\\AppData\\Roaming\\NuGet\\NuGet.Config",

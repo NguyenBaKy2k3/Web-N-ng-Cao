@@ -106,7 +106,7 @@
             color: red;
         }
 
-        .super-like {
+        .profile_person {
             color: blue;
         }
 
@@ -116,6 +116,17 @@
     </style>
 </head>
 <body>
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-info">
+            @TempData["Message"]
+        </div>
+    }
+
+    <form id="likeForm" method="post" asp-controller="Users" asp-action="SaveLike">
+        <input type="hidden" name="__RequestVerificationToken" value="@@TokenGenerator.Generate()">
+        <!-- Các phần khác của form -->
+    </form>
     <div class="container">
         <div class="card" id="userCard">
             <img id="profileImage" src="" alt="Profile Image">
@@ -127,7 +138,7 @@
             </div>
             <div class="actions">
                 <button class="reject" onclick="rejectUser()"><img src="https://img.icons8.com/ios-filled/50/ff0000/delete-sign.png" alt="Reject"></button>
-                <button class="super-like" onclick="superLikeUser()"><img src="https://img.icons8.com/ios-filled/50/0000ff/star--v1.png" alt="Super Like"></button>
+                <button class="profile_person" onclick="profile()"><img src="https://img.icons8.com/ios-filled/50/0000ff/star--v1.png" alt="Super Like"></button>
                 <button class="like" onclick="likeUser()"><img src="https://img.icons8.com/ios-filled/50/00ff00/like.png" alt="Like"></button>
             </div>
         </div>
@@ -145,11 +156,10 @@
                 case 'female':
                     return 'Nữ';
                 default:
-                    return 'Khác'; // Hoặc bất kỳ giá trị nào bạn muốn hiển thị
+                    return 'Khác';
             }
         }
 
-        // Hàm hiển thị người dùng hiện tại
         function showUser(index) {
             var user = users[index];
             document.getElementById('profileImage').src = user.profile_picture;
@@ -157,60 +167,85 @@
             document.getElementById('gender').innerText = translateGender(user.gender);
             document.getElementById('bio').innerText = user.bio;
             document.getElementById('location').innerText = user.location;
-            document.getElementById('userCard').style.transform = 'translateX(0)'; // Reset vị trí
+            document.getElementById('userCard').style.transform = 'translateX(0)';
         }
 
-        // Hàm chuyển sang người tiếp theo
         function nextUser() {
             currentIndex++;
             if (currentIndex >= users.length) {
-                currentIndex = 0; // Quay lại người đầu tiên nếu hết danh sách
+                currentIndex = 0;
             }
             showUser(currentIndex);
         }
-        // Hàm xử lý hành động reject
+
         function rejectUser() {
-            document.getElementById('userCard').style.transform = 'translateX(-400px)'; // Di chuyển thẻ sang trái
-            showNotification("Bạn đã bỏ qua " + users[currentIndex].username); // Hiển thị thông báo
-            setTimeout(nextUser, 300); // Chờ 300ms trước khi chuyển sang người tiếp theo
+            document.getElementById('userCard').style.transform = 'translateX(-400px)';
+            showNotification("Bạn đã bỏ qua " + users[currentIndex].username);
+            setTimeout(nextUser, 300);
         }
 
-        // Hàm xử lý hành động like
         function likeUser() {
-            document.getElementById('userCard').style.transform = 'translateX(400px)'; // Di chuyển thẻ sang phải
-            showNotification("Bạn đã thích " + users[currentIndex].username); // Hiển thị thông báo
-            setTimeout(nextUser, 300); // Chờ 300ms trước khi chuyển sang người tiếp theo
+            document.getElementById('userCard').style.transform = 'translateX(400px)';
+            var likedUserId = users[currentIndex].user_id;
+
+            $.ajax({
+                url: '/Users/SaveLike',
+                type: 'post',
+                data: { likedUserId: likedUserId },
+                success: function (data) {
+                    if (data.alreadyLiked) {
+                        showNotification("Bạn đã thích " + users[currentIndex].username + " trước đó.");
+                    } else {
+                        showNotification("Bạn đã thích " + users[currentIndex].username);
+                    }
+                    setTimeout(nextUser, 300);
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', error);
+                    showNotification("Đã xảy ra lỗi khi lưu thông tin." + likedUserId);
+                }
+            });
         }
 
-        // Hàm xử lý hành động super like
-        function superLikeUser() {
-            const message = "Bạn đã siêu thích " + users[currentIndex].username;
-            showNotification(message); // Hiển thị thông báo
-            nextUser(); // Chuyển ngay sang người dùng tiếp theo
+        function profile() {
+            // const message = "Bạn đang xem hồ sơ của " + users[currentIndex].username;
+            // showNotification(message);
+            // nextUser();
+            var likedUserId = users[currentIndex].user_id; 
+
+            $.ajax({
+                url: '/Users/ProfilePerson',  
+                type: 'post',                  
+                data: { likedUserId: likedUserId },  
+                success: function (data) {
+                    $('.profile-container').html(data);
+                    showNotification("Bạn đang xem thông tin hồ sơ: " + users[currentIndex].username);
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', error);
+                    showNotification("Người dùng chưa tạo hồ sơ ");
+                }
+            });
         }
 
-        // Hàm hiển thị thông báo
         function showNotification(message) {
-            // Tạo một thông báo tạm thời
             const notification = document.createElement('div');
             notification.innerText = message;
             notification.style.position = 'fixed';
             notification.style.top = '20px';
             notification.style.right = '20px';
-            notification.style.backgroundColor = 'black'; // Màu nền đen
-            notification.style.color = 'white'; // Màu chữ trắng
+            notification.style.backgroundColor = 'black';
+            notification.style.color = 'white';
             notification.style.padding = '10px 20px';
             notification.style.borderRadius = '5px';
             notification.style.zIndex = '1000';
             document.body.appendChild(notification);
 
-            // Xóa thông báo sau 1 giây
             setTimeout(() => {
                 document.body.removeChild(notification);
-            }, 1000); // Hiển thị thông báo trong 1 giây
+            }, 1000);
         }
 
-        // Thêm sự kiện vuốt
         var userCard = document.getElementById('userCard');
 
         userCard.addEventListener('touchstart', handleTouchStart);
@@ -227,7 +262,7 @@
         function handleTouchStart(event) {
             const touch = event.touches[0];
             touchStartX = touch.clientX;
-            isDragging = true; // Bắt đầu kéo
+            isDragging = true;
         }
 
         function handleTouchMove(event) {
@@ -238,24 +273,23 @@
             const touch = event.touches[0];
             const deltaX = touch.clientX - touchStartX;
 
-            // Nếu vuốt sang trái hoặc sang phải
-            if (Math.abs(deltaX) > 50) { // Kiểm tra nếu đã vuốt đủ xa
+            if (Math.abs(deltaX) > 50) {
                 if (deltaX > 0) {
-                    likeUser(); // Vuốt phải
+                    likeUser();
                 } else {
-                    rejectUser(); // Vuốt trái
+                    rejectUser();
                 }
-                isDragging = false; // Kết thúc kéo
+                isDragging = false;
             }
         }
 
         function handleTouchEnd() {
-            isDragging = false; // Kết thúc kéo
+            isDragging = false;
         }
 
         function handleMouseDown(event) {
             mouseStartX = event.clientX;
-            isDragging = true; // Bắt đầu kéo
+            isDragging = true;
         }
 
         function handleMouseMove(event) {
@@ -265,26 +299,20 @@
 
             const deltaX = event.clientX - mouseStartX;
 
-            // Nếu vuốt sang trái hoặc sang phải
-            if (Math.abs(deltaX) > 50) { // Kiểm tra nếu đã vuốt đủ xa
+            if (Math.abs(deltaX) > 50) {
                 if (deltaX > 0) {
-                    likeUser(); // Vuốt phải
+                    likeUser();
                 } else {
-                    rejectUser(); // Vuốt trái
+                    rejectUser();
                 }
-                isDragging = false; // Kết thúc kéo
+                isDragging = false;
             }
         }
 
         function handleMouseUp() {
-            isDragging = false; // Kết thúc kéo
+            isDragging = false;
         }
 
-
-
-
-
-        // Hiển thị người dùng đầu tiên khi trang được tải
         document.addEventListener('DOMContentLoaded', function () {
             showUser(currentIndex);
         });

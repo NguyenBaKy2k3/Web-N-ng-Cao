@@ -16,6 +16,12 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.LogoutPath = "/Logout";
     });
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
+});
+
+
 // Cấu hình dịch vụ session
 builder.Services.AddDistributedMemoryCache(); // Lưu trữ session trong bộ nhớ
 builder.Services.AddSession(options =>

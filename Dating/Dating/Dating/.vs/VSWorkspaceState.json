@@ -1,10 +1,15 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\bin",
-    "\\bin\\Debug",
-    "\\bin\\Release"
+    "\\Data",
+    "\\Email",
+    "\\Models",
+    "\\obj",
+    "\\obj\\Debug",
+    "\\obj\\Debug\\net8.0",
+    "\\obj\\Release",
+    "\\obj\\Release\\net8.0",
+    "\\Views",
+    "\\wwwroot"
   ],
-  "SelectedNode": "\\Dating.csproj.user",
   "PreviewInSolutionExplorer": false
 }
