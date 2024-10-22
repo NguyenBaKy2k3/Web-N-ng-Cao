@@ -66,7 +66,9 @@
 @{
     int? userRole = HttpContextAccessor.HttpContext.Session.GetInt32("Role");
     bool isLoggedIn = HttpContextAccessor.HttpContext.Session.GetString("UserName") != null;
-    int? createProfile = HttpContextAccessor.HttpContext.Session.GetInt32("ProfileCreated");
+    //int? IsProfileApproved = HttpContextAccessor.HttpContext.Session.GetInt32("IsProfileApproved");
+    var isProfileApprovedString = HttpContextAccessor.HttpContext.Session.GetString("IsProfileApproved");
+    bool isProfileApproved = isProfileApprovedString == "True"; // Chuyển đổi thành bool
 }
 
 <!DOCTYPE html>
@@ -160,7 +162,47 @@
         }
 
         /*Menu*/
+        /* Định dạng chung cho sidebar */
         .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #333;
+            z-index: 1000;
+            padding: 10px;
+        }
+
+        /* Định dạng cho các mục điều hướng */
+        .nav {
+            display: flex;
+            justify-content: space-around; /* Các mục điều hướng cách đều nhau */
+        }
+
+        .nav-item {
+            list-style-type: none;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 10px;
+            transition: background-color 0.3s;
+        }
+
+            /* Hiệu ứng khi hover vào các mục điều hướng */
+            .nav-link:hover {
+                background-color: #555;
+                border-radius: 5px;
+            }
+
+        /* Giữ phần còn lại của trang không bị ảnh hưởng */
+        .container {
+            margin-top: 60px; /* Khoảng cách để không bị che bởi thanh menu */
+        }
+
+        /*.sidebar {
             width: 100%;
             background-color: #f8f9fa;
             padding: 10px 20px;
@@ -192,7 +234,7 @@
 
                 .sidebar .nav-link:hover {
                     color: #0056b3;
-                }
+                }*/
 
     </style>
 </head>
@@ -201,27 +243,31 @@
     <div class="snow-container"></div>
     <div class="rain-container"></div>
 
-    @if (isLoggedIn) // Chỉ hiển thị thanh menu nếu người dùng đã đăng nhập
+    @if (isLoggedIn) 
     {
         <div class="sidebar">
             <div class="nav">
-                <div class="nav-item">
-                    <a class="nav-link" href="@Url.Action("ViewProfile", "Users")">Hồ sơ</a>
-                </div>
-                <div class="nav-item">
-                    <a class="nav-link" href="@Url.Action("Messages", "Users")">Tin nhắn</a>
-                </div>
-                @if (!createProfile.HasValue) // Nếu người dùng chưa có hồ sơ
-                {
-                    <div class="nav-item">
-                        <a class="nav-link" href="@Url.Action("CreateProfile", "Users")">Tạo hồ sơ</a>
-                    </div>
-                }
-                @if (userRole.HasValue && userRole.Value == 1) // Kiểm tra nếu là admin (giả sử 1 là vai trò admin)
+                
+                @if (userRole.HasValue && userRole.Value == 1) 
                 {
                     <div class="nav-item">
                         <a class="nav-link" href="@Url.Action("Index", "Users")">Duyệt hồ sơ</a>
                     </div>
+                }
+                @if (userRole.HasValue && userRole.Value == 2)
+                {
+                    <div class="nav-item">
+                        <a class="nav-link" href="@Url.Action("ViewProfile", "Users")">Hồ sơ</a>
+                    </div>
+                    <div class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Messages", "Users")">Tin nhắn</a>
+                    </div>
+                    @if (!isProfileApproved)
+                    {
+                        <div class="nav-item">
+                            <a class="nav-link" href="@Url.Action("CreateProfile", "Users")">Tạo hồ sơ</a>
+                        </div>
+                    }
                 }
             </div>
         </div>

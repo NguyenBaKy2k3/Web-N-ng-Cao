@@ -1,11 +1,8 @@
 ﻿@model Dating.Models.UserProfileViewModel
 
-
 <div class="profile-container">
     <div class="profile-image-wrapper">
-        
-         <img src="@Model.ProfilePicture" alt="Ảnh đại diện" class="profile-image" />
-        
+        <img src="@Model.ProfilePicture" alt="Ảnh đại diện" class="profile-image" />
     </div>
 
     <div class="profile-name-age">
@@ -24,19 +21,19 @@
         <p><strong>Quê quán:</strong> @Model.Location</p>
     </div>
 
-
 </div>
-
 
 <style>
     .profile-container {
         text-align: center;
-        max-width: 600px;
+        max-width: 400px; /* Giảm chiều ngang của form */
         margin: 0 auto;
         padding: 20px;
         background-color: #f9f9f9;
         border-radius: 10px;
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Thêm bóng cho form */
+        position: relative; /* Để sử dụng cho sự kiện nhấn ra ngoài */
+        z-index: 1; /* Để đảm bảo form hiển thị trên các phần tử khác */
     }
 
     .profile-image-wrapper {
@@ -57,11 +54,11 @@
         margin-bottom: 20px;
     }
 
-    .profile-name-age h2 {
-        font-size: 24px;
-        font-weight: bold;
-        margin: 0;
-    }
+        .profile-name-age h2 {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0;
+        }
 
     .profile-details p {
         font-size: 16px;
@@ -73,3 +70,14 @@
         margin-top: 20px;
     }
 </style>
+
+<script>
+    // Hàm quay lại sự kiện trước đó khi nhấn ra ngoài form
+    document.addEventListener('click', function (event) {
+        const container = document.querySelector('.profile-container');
+        if (!container.contains(event.target)) {
+            // Sử dụng history.go(-1) để quay lại sự kiện trước
+            window.history.go(-1); // Quay lại sự kiện trước
+        }
+    });
+</script>

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "tXgA5EZz5iqSzQwVaXLQLvuMjkau9FeEczjjr68iHUc=",
+  "Hash": "c3m72bkbNCnhjYrJNSqebB2ik9dwMEqICrvTxb2FIqg=",
   "Source": "Dating",
   "BasePath": "_content/Dating",
   "Mode": "Default",
@@ -1250,6 +1250,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\IMG_7175.JPG"
+    },
+    {
+      "Identity": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\uploads\\love.jpg",
+      "SourceId": "Dating",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\",
+      "BasePath": "_content/Dating",
+      "RelativePath": "uploads/love.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\love.jpg"
     },
     {
       "Identity": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\uploads\\my.jpg",

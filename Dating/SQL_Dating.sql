@@ -34,6 +34,9 @@ WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_CATALOG = 'DATING';
 DROP TABLE Users
 SELECT*FROM Users
 select*from User_Profile
+select*from Likes
+select*from Matches
+
 
 -- Tạo bảng Users
 CREATE TABLE Users (  -- Bảng chứa thông tin người dùng
@@ -101,7 +104,6 @@ CREATE TABLE MessagesS (  -- Bảng lưu trữ các tin nhắn giữa người d
 
 
 DROP TABLE Likes
-select*from Likes
 -- Tạo bảng Likes
 CREATE TABLE Likes (  -- Bảng theo dõi người dùng thích nhau
     like_id INT PRIMARY KEY IDENTITY(1,1),  -- Khóa chính, ID sở thích tự động tăng
@@ -110,19 +112,6 @@ CREATE TABLE Likes (  -- Bảng theo dõi người dùng thích nhau
     created_at DATETIME DEFAULT GETDATE(),  -- Thời gian thích
     FOREIGN KEY (userlike_id) REFERENCES Users(user_id),  -- Ràng buộc khóa ngoại
     FOREIGN KEY (liked_user_id) REFERENCES Users(user_id)  -- Ràng buộc khóa ngoại
-);
-
-
-DROP TABLE Content
-
--- Tạo bảng Photos
-CREATE TABLE Content (  -- Bảng lưu trữ ảnh của người dùng
-    content_id INT PRIMARY KEY IDENTITY(1,1),  -- Khóa chính, ID ảnh tự động tăng
-    usercontent_id INT,  -- Khóa ngoại liên kết với bảng Users
-    photo_url VARCHAR(255) NOT NULL,  -- Đường dẫn đến ảnh
-    is_profile_picture BIT DEFAULT 0,  -- Cờ đánh dấu ảnh đại diện
-    uploaded_at DATETIME DEFAULT GETDATE(),  -- Thời gian tải lên ảnh
-    FOREIGN KEY (usercontent_id) REFERENCES Users(user_id)  -- Ràng buộc khóa ngoại
 );
 
 

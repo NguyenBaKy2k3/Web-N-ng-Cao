@@ -11,5 +11,6 @@ namespace Dating.Data
         public DbSet<LikeModels> Likes { get; set; }
         public DbSet<UserProfile> Profiles { get; set; }
         public DbSet<AdminModel> Admins { get; set; }
+        public DbSet<MatchModels> Matches { get; set; }
     }
 }

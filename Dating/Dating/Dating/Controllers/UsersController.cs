@@ -126,6 +126,22 @@ namespace Dating.Controllers
                     HttpContext.Session.SetInt32("Role", user.iUsersRoleID);
 
                     TempData["Role"] = user.iUsersRoleID;
+
+                    // Kiểm tra hồ sơ của người dùng
+                    var userProfile = await _dbContext.Profiles
+                        .SingleOrDefaultAsync(up => up.user_profile_id == user.user_id);
+
+                    // Lưu giá trị isApproved vào session
+                    if (userProfile != null)
+                    {
+                        HttpContext.Session.SetString("IsProfileApproved", userProfile.isApproved ? "True" : "False");
+                    }
+                    else
+                    {
+                        HttpContext.Session.SetString("IsProfileApproved", "False");
+                    }
+
+
                     var verificationCode = new Random().Next(100000, 999999).ToString();
 
                     var emailService = HttpContext.RequestServices.GetService<EmailService>();
@@ -151,7 +167,7 @@ namespace Dating.Controllers
 
                     HttpContext.Session.SetString("VerificationCode", verificationCode);
 
-                    return RedirectToAction("CreateProfile", "Users");
+                    return RedirectToAction("UserList", "Users");
                 }
                 else if (admin != null)
                 {
@@ -171,7 +187,7 @@ namespace Dating.Controllers
                     var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
-                    return RedirectToAction("UserList", "Users");
+                    return RedirectToAction("Index", "Users");
                 }
                 else
                 {
@@ -340,6 +356,23 @@ namespace Dating.Controllers
 
                 _dbContext.Likes.Add(like);
                 _dbContext.SaveChanges();
+
+
+                bool isMatch = _dbContext.Likes.Any(l => l.userlike_id == likedUserId && l.liked_user_id == userId);
+
+                if (isMatch)
+                {
+                    var match = new MatchModels
+                    {
+                        user1_id = userId,
+                        user2_id = likedUserId,
+                        match_date = DateTime.Now
+                    };
+                    _dbContext.Matches.Add(match);
+                    _dbContext.SaveChanges();
+
+                    return Json(new { code = 200, mss = "Match!", alreadyLiked = false });
+                }
             }
 
 
@@ -356,9 +389,10 @@ namespace Dating.Controllers
             return View();
         }
 
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize] 
+        [Authorize]
         public async Task<IActionResult> CreateProfile(UserProfile userProfile)
         {
             if (ModelState.IsValid)
@@ -374,32 +408,35 @@ namespace Dating.Controllers
 
                     if (existingProfile != null)
                     {
+                        HttpContext.Session.SetString("IsProfileApproved", existingProfile.isApproved.ToString());
+
                         if (existingProfile.isApproved)
                         {
-                            HttpContext.Session.SetInt32("ProfileCreated", 1);
                             TempData["Message"] = "Hồ sơ của bạn đã được duyệt trước đó.";
                             return RedirectToAction("UserList");
                         }
-                        else 
+                        else
                         {
                             TempData["Message"] = "Hồ sơ của bạn đang chờ duyệt.";
                             return RedirectToAction("UserList");
                         }
                     }
 
-                    userProfile.user_profile_id = parsedUserId; 
-                    userProfile.isApproved = false; 
+                    userProfile.user_profile_id = parsedUserId;
+                    userProfile.isApproved = false;
 
-                    _dbContext.Add(userProfile); 
-                    await _dbContext.SaveChangesAsync(); 
+                    _dbContext.Add(userProfile);
+                    await _dbContext.SaveChangesAsync();
+
+                    HttpContext.Session.SetString("IsProfileApproved", userProfile.isApproved.ToString());
                     TempData["Message"] = "Hồ sơ của bạn đã được tạo thành công và đang chờ duyệt.";
-                    return RedirectToAction("UserList"); 
+                    return RedirectToAction("UserList");
                 }
 
                 ModelState.AddModelError("", "Không thể xác định người dùng hiện tại.");
             }
 
-            return View(userProfile); 
+            return View(userProfile);
         }
 
 
