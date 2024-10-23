@@ -880,8 +880,33 @@ namespace Dating.Controllers
         }
 
         // Gửi tin nhắn
+        //[HttpPost]
+        //public IActionResult SendMessage(int receiverId, string content)
+        //{
+        //    // Lấy ID người dùng hiện tại
+        //    var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+        //    // Kiểm tra xem userId có hợp lệ hay không
+        //    if (int.TryParse(userId, out int senderId) && !string.IsNullOrEmpty(content))
+        //    {
+        //        // Tạo tin nhắn mới
+        //        var newMessage = new MessagesSModels
+        //        {
+        //            sender_id = senderId,
+        //            receiver_id = receiverId,
+        //            content = content,
+        //            sent_at = DateTime.Now
+        //        };
+
+        //        _dbContext.Messages.Add(newMessage);
+        //        _dbContext.SaveChanges();
+        //    }
+
+        //    return RedirectToAction("Chat", new { receiverId = receiverId });
+        //}
+
         [HttpPost]
-        public IActionResult SendMessage(int receiverId, string content)
+        public JsonResult SendMessage(int receiverId, string content)
         {
             // Lấy ID người dùng hiện tại
             var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
@@ -900,9 +925,18 @@ namespace Dating.Controllers
 
                 _dbContext.Messages.Add(newMessage);
                 _dbContext.SaveChanges();
+
+                // Trả về kết quả thành công với thông tin tin nhắn
+                return Json(new
+                {
+                    success = true,
+                    message = newMessage
+                });
             }
 
-            return RedirectToAction("Chat", new { receiverId = receiverId });
+            // Nếu không thành công, trả về thông báo lỗi
+            return Json(new { success = false, message = "Có lỗi xảy ra khi gửi tin nhắn." });
         }
+
     }
 }

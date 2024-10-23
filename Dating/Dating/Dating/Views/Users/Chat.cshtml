@@ -1,148 +1,224 @@
-﻿@using System.Security.Claims
-@model Dating.Models.ChatViewModel
-@{
-    var currentUserId = 0;
-    var userId = User.FindFirstValue(System.Security.Claims.ClaimTypes.NameIdentifier);
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
 
-    // Kiểm tra xem userId có hợp lệ hay không
-    if (!string.IsNullOrEmpty(userId) && int.TryParse(userId, out currentUserId))
-    {
-        // Chuyển đổi thành công
-    }
-}
+    <!-- Thêm thư viện Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+</head>
+<body>
+    @using System.Security.Claims
+    @model Dating.Models.ChatViewModel
+    @{
+        var currentUserId = 0;
+        var userId = User.FindFirstValue(System.Security.Claims.ClaimTypes.NameIdentifier);
 
-<div class="chat-container">
-    <h2 class="chat-title">@Model.ReceiverUsername</h2>
-    <form action="/Users/Call" method="post" class="call-form">
-        <input type="hidden" name="receiverId" value="@Model.ReceiverId" />
-        <button type="submit" class="call-button" title="Gọi điện">
-            <i class="fas fa-phone-alt"></i> <!-- Icon gọi điện -->
-        </button>
-    </form>
-    <div class="message-list">
-        @foreach (var message in Model.Messages)
+        // Kiểm tra xem userId có hợp lệ hay không
+        if (!string.IsNullOrEmpty(userId) && int.TryParse(userId, out currentUserId))
         {
-            <div class="message-container @(message.sender_id == currentUserId ? "sent" : "received")">
-                @if (message.sender_id == currentUserId)
-                {
-                    <div class="message sent">
-                        <p>@message.content</p>
-                        <span class="message-time">@message.sent_at</span>
-                    </div>
-                }
-                else
-                {
-                    <img src="@Model.SenderProfilePicture" alt="Ảnh đại diện" class="profile-picture received" />
-                    <div class="message received">
-                        <p>@message.content</p>
-                        <span class="message-time">@message.sent_at</span>
-                    </div>
-                }
-            </div>
+            // Chuyển đổi thành công
         }
+    }
+
+    <div class="chat-container">
+        <div class="chat-header">
+            <h2 class="chat-title">@Model.ReceiverUsername</h2>
+            <!-- Nút gọi video sử dụng icon từ Bootstrap Icons -->
+            <form action="/Users/SendMessage" method="post" class="video-call-form">
+                <input type="hidden" name="receiverId" value="@Model.ReceiverId" />
+                <button type="submit" class="video-call-button" title="Gọi video">
+                    <i class="bi bi-camera-video"></i> <!-- Icon gọi video -->
+                </button>
+            </form>
+        </div>
+
+        <div class="message-list" id="messageList">
+            @foreach (var message in Model.Messages)
+            {
+                <div class="message-container @(message.sender_id == currentUserId ? "sent" : "received")">
+                    @if (message.sender_id == currentUserId)
+                    {
+                        <div class="message sent">
+                            <p>@message.content</p>
+                            <span class="message-time">@message.sent_at</span>
+                        </div>
+                    }
+                    else
+                    {
+                        <img src="@Model.SenderProfilePicture" alt="Ảnh đại diện" class="profile-picture received" />
+                        <div class="message received">
+                            <p>@message.content</p>
+                            <span class="message-time">@message.sent_at</span>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+
+        @* <form method="post" action="/Users/SendMessage" id="chatForm">
+            <input type="hidden" name="receiverId" value="@Model.ReceiverId" />
+            <textarea id="messageContent" name="content" placeholder="Nhập tin nhắn..." required></textarea>
+            <button type="submit">Gửi</button>
+        </form> *@
+
+        <form id="chatForm">
+            <input type="hidden" name="receiverId" value="@Model.ReceiverId" />
+            <textarea id="messageContent" name="content" placeholder="Nhập tin nhắn..." required></textarea>
+            <button type="submit">Gửi</button>
+        </form>
     </div>
-    <form method="post" action="/Users/SendMessage">
-        <input type="hidden" name="receiverId" value="@Model.ReceiverId" />
-        <textarea name="content" placeholder="Nhập tin nhắn..." required></textarea>
-        <button type="submit">Gửi</button>
-    </form>
-</div>
 
-<style>
-    /* Style cho khung chat */
-    .chat-container {
-        max-width: 800px;
-        margin: 0 auto;
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    }
+    <style>
+        /* Style cho khung chat */
+        .chat-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
 
-    .chat-title {
-        text-align: center;
-        margin-bottom: 20px;
-    }
+        .chat-title {
+            text-align: center;
+            margin-bottom: 20px;
+        }
 
-    .message-list {
-        max-height: 400px;
-        overflow-y: auto;
-        margin-bottom: 20px;
-    }
+        .message-list {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
 
-    .message-container {
-        display: flex;
-        align-items: flex-end;
-        margin-bottom: 10px;
-    }
+        .message-container {
+            display: flex;
+            align-items: flex-end;
+            margin-bottom: 10px;
+        }
 
-    .message {
-        padding: 10px;
-        border-radius: 10px;
-        max-width: 70%;
-        position: relative;
-        word-wrap: break-word; /* Đảm bảo nội dung không bị tràn */
-    }
+        .message {
+            padding: 10px;
+            border-radius: 10px;
+            max-width: 70%;
+            position: relative;
+            word-wrap: break-word; /* Đảm bảo nội dung không bị tràn */
+        }
 
-    .sent {
-        background-color: #dcf8c6;
-        margin-left: auto; 
-    }
+        .sent {
+            background-color: #dcf8c6;
+            margin-left: auto;
+        }
 
-    .received {
-        background-color: #fff;
-        margin-right: auto; 
-    }
+        .received {
+            background-color: #fff;
+            margin-right: auto;
+        }
 
-    .profile-picture {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        margin-right: 12px;
-    }
+        .profile-picture {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 12px;
+        }
 
-    .message-time {
-        font-size: 10px; 
-        color: #888; 
-        display: block; 
-        margin-top: 5px; 
-    }
+        .message-time {
+            font-size: 10px;
+            color: #888;
+            display: block;
+            margin-top: 5px;
+        }
 
-    textarea {
-        width: 100%;
-        height: 60px;
-        border-radius: 5px;
-        padding: 10px;
-    }
+        textarea {
+            width: 100%;
+            height: 60px;
+            border-radius: 5px;
+            padding: 10px;
+        }
 
-    button {
-        padding: 10px 15px;
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
 
-        button:hover {
-            background-color: #45a049;
+            button:hover {
+                background-color: #45a049;
+            }
+
+        .chat-header {
+            display: flex;
+            justify-content: space-between; 
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 0 20px; 
+        }
+
+        .chat-title {
+            text-align: center; 
+            flex-grow: 1; 
+            margin: 0;
         }
 
 
-    .call-form {
-        display: inline; /* Để giữ nút gọi điện và tiêu đề nằm trên cùng một dòng */
-    }
-
-    .call-button {
-        background-color: transparent; /* Nền trong suốt */
-        border: none; /* Không viền */
-        cursor: pointer; /* Con trỏ thay đổi khi hover */
-        font-size: 20px; /* Kích thước icon */
-        color: #4CAF50; /* Màu sắc icon */
-    }
-
-        .call-button:hover {
-            color: #45a049; /* Màu sắc khi hover */
+        .video-call-button {
+            background-color: transparent;
+            border: none; 
+            cursor: pointer; 
+            font-size: 24px; 
+            color: #4CAF50;
         }
 
-</style>
+    </style>
+
+    <script>
+        document.getElementById('chatForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Ngăn chặn hành vi gửi form mặc định
+
+            // Lấy thông tin từ form
+            const formData = new FormData(this);
+
+            // Gửi yêu cầu AJAX
+            fetch('/Users/SendMessage', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Thêm tin nhắn vào giao diện
+                        const messageList = document.getElementById('messageList');
+                        const newMessageDiv = document.createElement('div');
+                        newMessageDiv.className = 'message-container sent';
+                        newMessageDiv.innerHTML = `
+                            <div class="message sent">
+                                <p>${data.message.content}</p>
+                                <span class="message-time">${new Date(data.message.sent_at).toLocaleString()}</span>
+                            </div>
+                        `;
+                        messageList.appendChild(newMessageDiv);
+                        scrollToBottom(); // Cuộn xuống cuối khung tin nhắn
+                        document.getElementById('messageContent').value = ''; // Xóa nội dung tin nhắn
+                    } else {
+                        alert(data.message); // Hiển thị thông báo lỗi
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
+
+        function scrollToBottom() {
+            var messageList = document.getElementById('messageList');
+            messageList.scrollTop = messageList.scrollHeight; // Cuộn xuống cuối cùng
+        }
+
+        window.onload = function () {
+            scrollToBottom();
+        };
+    </script>
+
+</body>
+</html>
