@@ -32,10 +32,13 @@ FROM INFORMATION_SCHEMA.TABLES
 WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_CATALOG = 'DATING';
 
 DROP TABLE Users
+
 SELECT*FROM Users
 select*from User_Profile
 select*from Likes
 select*from Matches
+select*from Skippe
+select*from MessagesS
 
 
 -- Tạo bảng Users
@@ -67,7 +70,8 @@ CREATE TABLE User_Profile (  -- Bảng chứa thông tin hồ sơ chi tiết c�
     user_profile_id INT,  -- Khóa ngoại liên kết với bảng Users
     occupation NVARCHAR(100),  -- Nghề nghiệp của người dùng
     relationship_status NVARCHAR(20) CHECK (relationship_status IN (N'Độc thân', N'Đang trong mối quan hệ', N'Đã kết hôn', N'Phức tạp')),  -- Tình trạng mối quan hệ
-    looking_for NVARCHAR(100) NOT NULL,  -- Mục tiêu tìm kiếm của người dùng
+    gender_looking NVARCHAR(10) CHECK (gender_looking IN (N'Nam', N'Nữ', N'Khác')) NOT NULL,
+	looking_for NVARCHAR(100) NOT NULL,  -- Mục tiêu tìm kiếm của người dùng
     hobbies NVARCHAR(100),  -- Sở thích cá nhân
     height DECIMAL(5,2),  -- Chiều cao
     weight DECIMAL(5,2),  -- Cân nặng
@@ -88,22 +92,8 @@ CREATE TABLE Matches (  -- Bảng ghi nhận các cặp đôi đã ghép
     FOREIGN KEY (user2_id) REFERENCES Users(user_id)   -- Ràng buộc khóa ngoại
 );
 
-
-DROP TABLE MessagesS
-
--- Tạo bảng Messages
-CREATE TABLE MessagesS (  -- Bảng lưu trữ các tin nhắn giữa người dùng
-    message_id INT PRIMARY KEY IDENTITY(1,1),  -- Khóa chính, ID tin nhắn tự động tăng
-    sender_id INT,  -- Khóa ngoại cho người gửi
-    receiver_id INT,  -- Khóa ngoại cho người nhận
-    content TEXT NOT NULL,  -- Nội dung tin nhắn
-    sent_at DATETIME DEFAULT GETDATE(),  -- Thời gian gửi tin nhắn
-    FOREIGN KEY (sender_id) REFERENCES Users(user_id),  -- Ràng buộc khóa ngoại
-    FOREIGN KEY (receiver_id) REFERENCES Users(user_id)  -- Ràng buộc khóa ngoại
-);
-
-
 DROP TABLE Likes
+drop table Skippe
 -- Tạo bảng Likes
 CREATE TABLE Likes (  -- Bảng theo dõi người dùng thích nhau
     like_id INT PRIMARY KEY IDENTITY(1,1),  -- Khóa chính, ID sở thích tự động tăng
@@ -112,6 +102,31 @@ CREATE TABLE Likes (  -- Bảng theo dõi người dùng thích nhau
     created_at DATETIME DEFAULT GETDATE(),  -- Thời gian thích
     FOREIGN KEY (userlike_id) REFERENCES Users(user_id),  -- Ràng buộc khóa ngoại
     FOREIGN KEY (liked_user_id) REFERENCES Users(user_id)  -- Ràng buộc khóa ngoại
+);
+
+
+
+CREATE TABLE Skippe (  -- Bảng bỏ qua
+    skippe_id INT PRIMARY KEY IDENTITY(1,1),  -- Khóa chính, ID sở thích tự động tăng
+    user_skip_id INT,  -- Khóa ngoại cho người bỏ qua
+    skippe_user_id INT,  -- Khóa ngoại cho người bị bỏ qua
+    FOREIGN KEY (user_skip_id) REFERENCES Users(user_id),  -- Ràng buộc khóa ngoại
+    FOREIGN KEY (skippe_user_id) REFERENCES Users(user_id)  -- Ràng buộc khóa ngoại
+);
+
+
+
+DROP TABLE MessagesS
+
+-- Tạo bảng Messages
+CREATE TABLE MessagesS (  -- Bảng lưu trữ các tin nhắn giữa người dùng
+    message_id INT PRIMARY KEY IDENTITY(1,1),  -- Khóa chính, ID tin nhắn tự động tăng
+    sender_id INT,  -- Khóa ngoại cho người gửi
+    receiver_id INT,  -- Khóa ngoại cho người nhận
+    content NVARCHAR(MAX) NOT NULL,  -- Nội dung tin nhắn
+    sent_at DATETIME DEFAULT GETDATE(),  -- Thời gian gửi tin nhắn
+    FOREIGN KEY (sender_id) REFERENCES Users(user_id),  -- Ràng buộc khóa ngoại
+    FOREIGN KEY (receiver_id) REFERENCES Users(user_id)  -- Ràng buộc khóa ngoại
 );
 
 

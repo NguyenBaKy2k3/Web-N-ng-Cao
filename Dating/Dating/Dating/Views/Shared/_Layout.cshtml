@@ -80,6 +80,8 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Dating.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMM/3e1hI3zZ7dV7L5P9R6iN5Rk6z6tbb5cO+R" crossorigin="anonymous">
+
     <style>
         /* Đặt lại lề và padding cho toàn trang */
         * {
@@ -253,14 +255,22 @@
                     <div class="nav-item">
                         <a class="nav-link" href="@Url.Action("Index", "Users")">Duyệt hồ sơ</a>
                     </div>
+                    <form asp-controller="Users" asp-action="Logout" method="post" class="d-inline logout-button">
+                        <button type="submit" class="btn btn-link text-decoration-none custom-button">
+                            <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                        </button>
+                    </form>
                 }
                 @if (userRole.HasValue && userRole.Value == 2)
                 {
                     <div class="nav-item">
+                        <a class="nav-link" href="@Url.Action("UserList", "Users")">Trang chủ</a>
+                    </div>
+                    <div class="nav-item">
                         <a class="nav-link" href="@Url.Action("ViewProfile", "Users")">Hồ sơ</a>
                     </div>
                     <div class="nav-item">
-                        <a class="nav-link" href="@Url.Action("Messages", "Users")">Tin nhắn</a>
+                        <a class="nav-link" href="@Url.Action("ViewMatches", "Users")">Tin nhắn</a>
                     </div>
                     @if (!isProfileApproved)
                     {
@@ -268,6 +278,11 @@
                             <a class="nav-link" href="@Url.Action("CreateProfile", "Users")">Tạo hồ sơ</a>
                         </div>
                     }
+                    <form asp-controller="Users" asp-action="Logout" method="post" class="d-inline logout-button">
+                        <button type="submit" class="btn btn-link text-decoration-none custom-button">
+                            <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                        </button>
+                    </form>
                 }
             </div>
         </div>

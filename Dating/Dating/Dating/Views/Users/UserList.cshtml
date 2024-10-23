@@ -113,12 +113,78 @@
         .like {
             color: green;
         }
+
+
+
+        #notification-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        #notification-popup {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+            #notification-popup p {
+                margin-bottom: 15px;
+                font-size: 16px;
+            }
+
+            #notification-popup button {
+                padding: 10px 20px;
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+
+                #notification-popup button:hover {
+                    background-color: #45a049;
+                }
+
+        #profile-notification-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        #profile-notification-popup {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            font-size: 18px;
+            color: black;
+        }
+
+
     </style>
 </head>
 <body>
     @if (TempData["Message"] != null)
     {
-        <div class="alert alert-info">
+        <div id="alertMessage" class="alert alert-info">
             @TempData["Message"]
         </div>
     }
@@ -128,6 +194,23 @@
         <!-- Các phần khác của form -->
     </form>
     <div class="container">
+
+        @if (ViewBag.NotificationMessage != null)
+        {
+            <div id="notification-overlay">
+                <div id="notification-popup">
+                    <p>@ViewBag.NotificationMessage</p>
+                </div>
+            </div>
+        }
+
+        <div id="profile-notification-overlay" style="display: none;">
+            <div id="profile-notification-popup">
+                <p>Bạn đã xem hết tất cả hồ sơ hiện có!</p>
+            </div>
+        </div>
+
+
         <div class="card" id="userCard">
             <img id="profileImage" src="" alt="Profile Image">
             <div class="profile-info">
@@ -170,18 +253,47 @@
             document.getElementById('userCard').style.transform = 'translateX(0)';
         }
 
-        function nextUser() {
+        /*function nextUser() {
             currentIndex++;
             if (currentIndex >= users.length) {
                 currentIndex = 0;
             }
             showUser(currentIndex);
+        }*/
+        function nextUser() {
+            currentIndex++;
+            if (currentIndex >= users.length) {
+                document.getElementById("profile-notification-overlay").style.display = 'flex';
+                currentIndex = users.length - 1; // Giữ nguyên chỉ số ở cuối danh sách
+                document.getElementById('userCard').style.display = 'none'; // Ẩn thẻ card khi không còn người để hiển thị
+            } else {
+                document.getElementById("profile-notification-overlay").style.display = 'none'; // Ẩn thông báo khi còn hồ sơ
+                document.getElementById('userCard').style.display = 'block'; // Hiện thẻ card
+                showUser(currentIndex);
+            }
         }
+
+
 
         function rejectUser() {
             document.getElementById('userCard').style.transform = 'translateX(-400px)';
-            showNotification("Bạn đã bỏ qua " + users[currentIndex].username);
-            setTimeout(nextUser, 300);
+            var likedUserId = users[currentIndex].user_id;
+
+            $.ajax({
+                url: '/Users/SaveSkip',
+                type: 'post',
+                data: { likedUserId: likedUserId },
+                success: function (data) {
+                    if (data.alreadyLiked) {
+                        showNotification("Bạn đã bỏ qua " + users[currentIndex].username + ".");
+                    } 
+                    setTimeout(nextUser, 300);
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', error);
+                    showNotification("Đã xảy ra lỗi khi lưu thông tin." + likedUserId);
+                }
+            });
         }
 
         function likeUser() {
@@ -229,7 +341,7 @@
             const notification = document.createElement('div');
             notification.innerText = message;
             notification.style.position = 'fixed';
-            notification.style.top = '20px';
+            notification.style.top = '80px';
             notification.style.right = '20px';
             notification.style.backgroundColor = 'black';
             notification.style.color = 'white';
@@ -313,6 +425,17 @@
         document.addEventListener('DOMContentLoaded', function () {
             showUser(currentIndex);
         });
+
+
+        setTimeout(function () {
+            var alertMessage = document.getElementById('alertMessage');
+            if (alertMessage) {
+                alertMessage.style.display = 'none';
+            }
+        }, 5000);
+
+
+
     </script>
     <!-- Thêm thư viện Bootstrap JS nếu cần -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

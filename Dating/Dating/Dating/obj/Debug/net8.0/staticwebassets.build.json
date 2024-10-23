@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "c3m72bkbNCnhjYrJNSqebB2ik9dwMEqICrvTxb2FIqg=",
+  "Hash": "8abiAc+duWF70/BfiEcMSZvyBLHJINT3ocCflRqvkAo=",
   "Source": "Dating",
   "BasePath": "_content/Dating",
   "Mode": "Default",
@@ -1214,6 +1214,25 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
     },
     {
+      "Identity": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\uploads\\264174218_1011589519407043_2812272667824073190_n.jpg",
+      "SourceId": "Dating",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\",
+      "BasePath": "_content/Dating",
+      "RelativePath": "uploads/264174218_1011589519407043_2812272667824073190_n.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\264174218_1011589519407043_2812272667824073190_n.jpg"
+    },
+    {
       "Identity": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\uploads\\4c7b22f6-90e2-4334-bb37-e63778aba87c.jpg",
       "SourceId": "Dating",
       "SourceType": "Discovered",
@@ -1288,6 +1307,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\my.jpg"
+    },
+    {
+      "Identity": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\uploads\\Screenshot 2023-05-03 210351.png",
+      "SourceId": "Dating",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\",
+      "BasePath": "_content/Dating",
+      "RelativePath": "uploads/Screenshot 2023-05-03 210351.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\Screenshot 2023-05-03 210351.png"
     },
     {
       "Identity": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\uploads\\Screenshot 2023-07-15 225100.png",

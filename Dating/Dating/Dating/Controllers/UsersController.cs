@@ -31,6 +31,11 @@ namespace Dating.Controllers
         }
 
 
+
+
+        //Tạo người dùng mới
+
+
         [HttpGet]
         public IActionResult Register()
         {
@@ -108,6 +113,8 @@ namespace Dating.Controllers
             return View();
         }
 
+
+        //Đăng nhập
 
         [HttpPost]
         [Route("login")]
@@ -203,9 +210,7 @@ namespace Dating.Controllers
             return View();
         }
 
-
-
-
+        //Mã xác nhận
 
         [HttpGet]
         [Route("verifycode")]
@@ -235,10 +240,9 @@ namespace Dating.Controllers
         }
 
 
-
+        //Đăng xuất
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();
@@ -247,10 +251,11 @@ namespace Dating.Controllers
 
             HttpContext.User = new ClaimsPrincipal(new ClaimsIdentity());
 
-            return RedirectToAction("Login");
+            return RedirectToAction("Login", "Users");
         }
 
 
+        //Quên mật khẩu
 
         [HttpGet]
         [Route("forgotpassword")]
@@ -300,6 +305,8 @@ namespace Dating.Controllers
         }
 
 
+        //Random mật khẩu mới
+
         private string GenerateRandomPassword(int length = 8)
         {
             const string validChars = "ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -308,6 +315,29 @@ namespace Dating.Controllers
                 .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
+
+        /*public async Task<IActionResult> UserList()
+        {
+            // Lấy email của người dùng hiện tại từ Claims
+            var currentUserEmail = User.FindFirstValue(ClaimTypes.Email);
+
+            // Tìm người dùng hiện tại dựa trên email
+            var currentUser = await _dbContext.Users
+                .FirstOrDefaultAsync(u => u.email == currentUserEmail);
+
+            // Lấy ID người dùng hiện tại
+            var currentUserId = currentUser?.user_id; // Trường hợp không tìm thấy người dùng, currentUserId sẽ là null
+
+            // Lấy danh sách người dùng mà không bao gồm người dùng hiện tại
+            var users = await _dbContext.Users
+                .Where(u => u.user_id != currentUserId) // Lọc ra người dùng không phải là người đang đăng nhập
+                .ToListAsync();
+
+            return View(users);
+        }*/
+
+
+        //Danh sách người dùng
 
         public async Task<IActionResult> UserList()
         {
@@ -326,10 +356,36 @@ namespace Dating.Controllers
                 .Where(u => u.user_id != currentUserId) // Lọc ra người dùng không phải là người đang đăng nhập
                 .ToListAsync();
 
-            return View(users);
+            // Lấy danh sách ID của những người đã lướt qua hoặc thích
+            var skippedUserIds = await _dbContext.Skips
+                .Where(s => s.user_skip_id == currentUserId)
+                .Select(s => s.skippe_user_id)
+                .ToListAsync();
+
+            var likedUserIds = await _dbContext.Likes
+                .Where(l => l.userlike_id == currentUserId)
+                .Select(l => l.liked_user_id)
+                .ToListAsync();
+
+            // Lọc ra những người đã lướt qua hoặc đã thích
+            var filteredUsers = users
+                .Where(u => !skippedUserIds.Contains(u.user_id) && !likedUserIds.Contains(u.user_id))
+                .ToList();
+
+            // Nếu không còn người dùng nào trong danh sách đã lọc, trả về người cuối cùng trong danh sách gốc
+            if (!filteredUsers.Any() && users.Any())
+            {
+                filteredUsers.Add(users.Last()); // Thêm người cuối cùng vào danh sách
+                ViewBag.NotificationMessage = "Bạn đã xem hết hồ sơ người dùng!";
+            }
+
+
+            return View(filteredUsers);
         }
 
 
+
+        //Lưu người đã thích và match
 
         [HttpPost]
         public JsonResult SaveLike(int likedUserId)
@@ -380,8 +436,41 @@ namespace Dating.Controllers
         }
 
 
+        //Lưu người đã bỏ qua
+
+        [HttpPost]
+        public JsonResult SaveSkip(int likedUserId)
+        {
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (currentUserId == null)
+            {
+                return Json(new { code = 400, mss = "Bạn phải đăng nhập" });
+            }
+
+            int userId = int.Parse(currentUserId);
+
+            bool alreadyLiked = _dbContext.Skips.Any(l => l.user_skip_id == userId && l.skippe_user_id == likedUserId);
+
+            if (!alreadyLiked)
+            {
+                var skips = new SkipModels
+                {
+                    user_skip_id = userId,
+                    skippe_user_id = likedUserId
+                };
+
+                _dbContext.Skips.Add(skips);
+                _dbContext.SaveChanges();
+
+            }
 
 
+            return Json(new { alreadyLiked });
+        }
+
+
+        //Tạo hồ sơ
 
         [Authorize]
         public IActionResult CreateProfile()
@@ -440,6 +529,7 @@ namespace Dating.Controllers
         }
 
 
+        //Danh sách hồ sơ người dùng giành cho Admin
 
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
@@ -469,6 +559,7 @@ namespace Dating.Controllers
             return View(profiles);
         }
 
+        //Duyệt hồ sơ giành cho Admin
 
         public async Task<IActionResult> Approve(int? id)
         {
@@ -493,6 +584,7 @@ namespace Dating.Controllers
         }
 
 
+        //Xem hồ sơ của mình
 
         [Authorize]
         public async Task<IActionResult> ViewProfile(int? id)
@@ -563,7 +655,8 @@ namespace Dating.Controllers
             return View(viewModel);
         }
 
-        
+        //Sửa thông tin người dùng
+
         public IActionResult EditUser(int id)
         {
             var user = _dbContext.Users.Find(id);
@@ -574,6 +667,7 @@ namespace Dating.Controllers
 
             return View(user);
         }
+
 
         
         [HttpPost]
@@ -638,6 +732,7 @@ namespace Dating.Controllers
         }
 
 
+        //Sửa thông tin hồ sơ
         public IActionResult EditProfile(int id)
         {
             var profile = _dbContext.Profiles.FirstOrDefault(p => p.user_profile_id == id);
@@ -652,7 +747,7 @@ namespace Dating.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditProfile(int id, [Bind("profile_id,user_profile_id,occupation,relationship_status,looking_for,hobbies,height,weight,isApproved")] UserProfile updatedProfile)
+        public IActionResult EditProfile(int id, [Bind("profile_id,user_profile_id,occupation,relationship_status,gender_looking,looking_for,hobbies,height,weight,isApproved")] UserProfile updatedProfile)
         {
             var existingProfile = _dbContext.Profiles.FirstOrDefault(p => p.user_profile_id == id);
 
@@ -673,6 +768,7 @@ namespace Dating.Controllers
                     existingProfile.occupation = updatedProfile.occupation;
                     existingProfile.relationship_status = updatedProfile.relationship_status;
                     existingProfile.looking_for = updatedProfile.looking_for;
+                    existingProfile.gender_looking = updatedProfile.gender_looking;
                     existingProfile.hobbies = updatedProfile.hobbies;
                     existingProfile.height = updatedProfile.height;
                     existingProfile.weight = updatedProfile.weight;
@@ -695,7 +791,7 @@ namespace Dating.Controllers
         }
 
 
-
+        //Xem hồ sơ cá nhân của người khác
 
         [HttpPost]
         public async Task<IActionResult> ProfilePerson(int likedUserId)
@@ -730,6 +826,83 @@ namespace Dating.Controllers
         }
 
 
+        [HttpGet]
+        public async Task<IActionResult> ViewMatches()
+        {
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            int userId = int.Parse(currentUserId);
 
+            var matches = await (from match in _dbContext.Matches
+                                 where match.user1_id == userId || match.user2_id == userId
+                                 join user in _dbContext.Users on (match.user1_id == userId ? match.user2_id : match.user1_id) equals user.user_id
+                                 select new MatchViewModel
+                                 {
+                                     MatchId = match.match_id,
+                                     Username = user.username,
+                                     ProfilePicture = user.profile_picture,
+                                     UserId = user.user_id
+                                 }).ToListAsync();
+
+            return View(matches);
+        }
+
+
+
+        // Hiển thị lịch sử chat
+        public IActionResult Chat(int receiverId)
+        {
+            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            int senderId = int.Parse(userId); // Lấy ID người dùng hiện tại
+
+            // Truy vấn các tin nhắn giữa người dùng hiện tại và người nhận
+            var messages = _dbContext.Messages
+                                   .Where(m => (m.sender_id == senderId && m.receiver_id == receiverId) ||
+                                               (m.sender_id == receiverId && m.receiver_id == senderId))
+                                   .OrderBy(m => m.sent_at)
+                                   .ToList();
+            var senderProfilePicture = _dbContext.Users
+            .Where(u => u.user_id == receiverId)
+            .Select(u => u.profile_picture) // Lấy ảnh đại diện của người gửi
+            .FirstOrDefault();
+
+
+            var chatViewModel = new ChatViewModel
+            {
+                Messages = messages,
+                ReceiverId = receiverId,
+                ReceiverUsername = _dbContext.Users.Where(u => u.user_id == receiverId)
+                                                 .Select(u => u.username)
+                                                 .FirstOrDefault(),
+                SenderProfilePicture = senderProfilePicture
+            };
+
+            return View(chatViewModel);
+        }
+
+        // Gửi tin nhắn
+        [HttpPost]
+        public IActionResult SendMessage(int receiverId, string content)
+        {
+            // Lấy ID người dùng hiện tại
+            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+            // Kiểm tra xem userId có hợp lệ hay không
+            if (int.TryParse(userId, out int senderId) && !string.IsNullOrEmpty(content))
+            {
+                // Tạo tin nhắn mới
+                var newMessage = new MessagesSModels
+                {
+                    sender_id = senderId,
+                    receiver_id = receiverId,
+                    content = content,
+                    sent_at = DateTime.Now
+                };
+
+                _dbContext.Messages.Add(newMessage);
+                _dbContext.SaveChanges();
+            }
+
+            return RedirectToAction("Chat", new { receiverId = receiverId });
+        }
     }
 }

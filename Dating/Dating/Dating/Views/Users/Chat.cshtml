@@ -1,0 +1,148 @@
+﻿@using System.Security.Claims
+@model Dating.Models.ChatViewModel
+@{
+    var currentUserId = 0;
+    var userId = User.FindFirstValue(System.Security.Claims.ClaimTypes.NameIdentifier);
+
+    // Kiểm tra xem userId có hợp lệ hay không
+    if (!string.IsNullOrEmpty(userId) && int.TryParse(userId, out currentUserId))
+    {
+        // Chuyển đổi thành công
+    }
+}
+
+<div class="chat-container">
+    <h2 class="chat-title">@Model.ReceiverUsername</h2>
+    <form action="/Users/Call" method="post" class="call-form">
+        <input type="hidden" name="receiverId" value="@Model.ReceiverId" />
+        <button type="submit" class="call-button" title="Gọi điện">
+            <i class="fas fa-phone-alt"></i> <!-- Icon gọi điện -->
+        </button>
+    </form>
+    <div class="message-list">
+        @foreach (var message in Model.Messages)
+        {
+            <div class="message-container @(message.sender_id == currentUserId ? "sent" : "received")">
+                @if (message.sender_id == currentUserId)
+                {
+                    <div class="message sent">
+                        <p>@message.content</p>
+                        <span class="message-time">@message.sent_at</span>
+                    </div>
+                }
+                else
+                {
+                    <img src="@Model.SenderProfilePicture" alt="Ảnh đại diện" class="profile-picture received" />
+                    <div class="message received">
+                        <p>@message.content</p>
+                        <span class="message-time">@message.sent_at</span>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+    <form method="post" action="/Users/SendMessage">
+        <input type="hidden" name="receiverId" value="@Model.ReceiverId" />
+        <textarea name="content" placeholder="Nhập tin nhắn..." required></textarea>
+        <button type="submit">Gửi</button>
+    </form>
+</div>
+
+<style>
+    /* Style cho khung chat */
+    .chat-container {
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .chat-title {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .message-list {
+        max-height: 400px;
+        overflow-y: auto;
+        margin-bottom: 20px;
+    }
+
+    .message-container {
+        display: flex;
+        align-items: flex-end;
+        margin-bottom: 10px;
+    }
+
+    .message {
+        padding: 10px;
+        border-radius: 10px;
+        max-width: 70%;
+        position: relative;
+        word-wrap: break-word; /* Đảm bảo nội dung không bị tràn */
+    }
+
+    .sent {
+        background-color: #dcf8c6;
+        margin-left: auto; 
+    }
+
+    .received {
+        background-color: #fff;
+        margin-right: auto; 
+    }
+
+    .profile-picture {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 12px;
+    }
+
+    .message-time {
+        font-size: 10px; 
+        color: #888; 
+        display: block; 
+        margin-top: 5px; 
+    }
+
+    textarea {
+        width: 100%;
+        height: 60px;
+        border-radius: 5px;
+        padding: 10px;
+    }
+
+    button {
+        padding: 10px 15px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+
+    .call-form {
+        display: inline; /* Để giữ nút gọi điện và tiêu đề nằm trên cùng một dòng */
+    }
+
+    .call-button {
+        background-color: transparent; /* Nền trong suốt */
+        border: none; /* Không viền */
+        cursor: pointer; /* Con trỏ thay đổi khi hover */
+        font-size: 20px; /* Kích thước icon */
+        color: #4CAF50; /* Màu sắc icon */
+    }
+
+        .call-button:hover {
+            color: #45a049; /* Màu sắc khi hover */
+        }
+
+</style>
