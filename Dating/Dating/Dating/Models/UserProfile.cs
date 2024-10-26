@@ -17,8 +17,8 @@ namespace Dating.Models
         [MaxLength(100)]
         public string occupation { get; set; }
 
-        [MaxLength(20)]
-        [RegularExpression("Độc thân|Đang trong mối quạ hệ|Đã kết hôn|Phức tạp", ErrorMessage = "Tình trạng mối quan hệ không hợp lệ.")]
+        [MaxLength(30)]
+        [RegularExpression("Độc thân|Đang trong mối quan hệ|Đã kết hôn|Phức tạp", ErrorMessage = "Tình trạng mối quan hệ không hợp lệ.")]
         public string relationship_status { get; set; }
         [MaxLength(20)]
         [RegularExpression("Nam|Nữ|Khác", ErrorMessage = "Giới tính không hợp lệ.")]

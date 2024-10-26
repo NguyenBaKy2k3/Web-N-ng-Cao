@@ -1,8 +1,12 @@
-﻿using Dating.Data;
+﻿
+using Dating.Data;
 using Dating.Email;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting.Internal;
+using Microsoft.AspNetCore.SignalR;
+using Dating;
+using Dating.Views.signalR.hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,11 +35,13 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true; // Cookie cần thiết cho ứng dụng
 });
 
+builder.Services.AddSignalR();
+builder.Services.AddRazorPages();
+
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddTransient<EmailService>();
 var app = builder.Build();
-
 
 
 // Configure the HTTP request pipeline.
@@ -56,8 +62,14 @@ app.UseSession(); // Thêm dòng này
 app.UseAuthentication(); // Đảm bảo middleware xác thực được thêm vào
 app.UseAuthorization();
 
+
+app.MapRazorPages();
+app.MapHub<ChatHub>("/chatHub"); // Định nghĩa route cho Hub
+app.MapHub<VideoCallHub>("/videoCallHub");
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
 
 app.Run();

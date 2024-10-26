@@ -1,0 +1,86 @@
+﻿@model Dating.Models.ReportsModels
+
+@{
+    ViewData["Title"] = "Báo cáo người dùng";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #ef2a54, #FF3A5C);
+            font-family: Arial, sans-serif;
+        }
+
+        .report-container {
+            width: 400px;
+            margin: 100px auto;
+            padding: 30px;
+            background-color: #333;
+            border-radius: 8px;
+            color: white;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+            font-size: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            border: none;
+            margin-top: 5px;
+        }
+
+        textarea.form-control {
+            height: 100px;
+        }
+
+        .btn-primary {
+            background-color: #ff0066;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background-color: #ff3366;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="report-container">
+        <h2>@ViewData["Title"]</h2>
+
+        <form method="post" action="@Url.Action("SubmitReport", "Users")">
+            <input type="hidden" name="reported_user_id" value="@Model.reported_user_id" />
+
+            <div class="form-group">
+                <label for="reason">Lý do báo cáo:</label>
+                <textarea id="reason" name="reason" class="form-control" required></textarea>
+            </div>
+
+            <button type="submit" class="btn-primary">Gửi báo cáo</button>
+        </form>
+    </div>
+</body>
+</html>

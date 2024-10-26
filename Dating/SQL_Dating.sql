@@ -1,12 +1,11 @@
 ﻿CREATE DATABASE DATING
-
 CREATE TABLE tblRole
 (
 	iRoleID int IDENTITY,
 	sRoleName nvarchar(50),
 	CONSTRAINT PK_tblRole PRIMARY KEY (iRoleID),
 )
-
+drop table tblRole
 CREATE TABLE Ad_Min
 (
 	iAdmin int IDENTITY,
@@ -31,6 +30,8 @@ SELECT TABLE_NAME
 FROM INFORMATION_SCHEMA.TABLES 
 WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_CATALOG = 'DATING';
 
+
+
 DROP TABLE Users
 
 SELECT*FROM Users
@@ -39,6 +40,8 @@ select*from Likes
 select*from Matches
 select*from Skippe
 select*from MessagesS
+select*from Reports
+select*from tblNotification
 
 
 -- Tạo bảng Users
@@ -57,6 +60,7 @@ CREATE TABLE Users (  -- Bảng chứa thông tin người dùng
 	latitude FLOAT,  -- Vĩ độ
 	longitude FLOAT,  -- Kinh độ
 	iUsersRoleID INT,
+	IsActive BIT
 	--PasswordResetToken VARCHAR(100) NULL  -- Token đặt lại mật khẩu
 	CONSTRAINT FK_Users_tblRole FOREIGN KEY (iUsersRoleID) REFERENCES tblRole(iRoleID)
 );
@@ -69,7 +73,7 @@ CREATE TABLE User_Profile (  -- Bảng chứa thông tin hồ sơ chi tiết c�
     profile_id INT PRIMARY KEY IDENTITY(1,1),  -- Khóa chính, ID hồ sơ tự động tăng
     user_profile_id INT,  -- Khóa ngoại liên kết với bảng Users
     occupation NVARCHAR(100),  -- Nghề nghiệp của người dùng
-    relationship_status NVARCHAR(20) CHECK (relationship_status IN (N'Độc thân', N'Đang trong mối quan hệ', N'Đã kết hôn', N'Phức tạp')),  -- Tình trạng mối quan hệ
+    relationship_status NVARCHAR(30) CHECK (relationship_status IN (N'Độc thân', N'Đang trong mối quan hệ', N'Đã kết hôn', N'Phức tạp')),  -- Tình trạng mối quan hệ
     gender_looking NVARCHAR(10) CHECK (gender_looking IN (N'Nam', N'Nữ', N'Khác')) NOT NULL,
 	looking_for NVARCHAR(100) NOT NULL,  -- Mục tiêu tìm kiếm của người dùng
     hobbies NVARCHAR(100),  -- Sở thích cá nhân
@@ -137,27 +141,30 @@ CREATE TABLE Reports (  -- Bảng ghi nhận các báo cáo vi phạm
     report_id INT PRIMARY KEY IDENTITY(1,1),  -- Khóa chính, ID báo cáo tự động tăng
     reporter_id INT,  -- Khóa ngoại cho người báo cáo
     reported_user_id INT,  -- Khóa ngoại cho người bị báo cáo
-    reason TEXT NOT NULL,  -- Lý do báo cáo
+    reason NVARCHAR(MAX) NOT NULL,  -- Lý do báo cáo
     created_at DATETIME DEFAULT GETDATE(),  -- Thời gian tạo báo cáo
     FOREIGN KEY (reporter_id) REFERENCES Users(user_id),  -- Ràng buộc khóa ngoại
     FOREIGN KEY (reported_user_id) REFERENCES Users(user_id)  -- Ràng buộc khóa ngoại
 );
+
+DROP TABLE tblNotification
 
 
 CREATE TABLE tblNotification (  
     notification_id INT PRIMARY KEY IDENTITY(1,1), 
     notification_receiver_id INT, 
     admin_id INT,  
-    notification_content TEXT NOT NULL, 
+    notification_content NVARCHAR(MAX) NOT NULL, 
     created_at DATETIME DEFAULT GETDATE(), 
     FOREIGN KEY (notification_receiver_id) REFERENCES Users(user_id), 
     FOREIGN KEY (admin_id) REFERENCES Ad_Min(iAdmin)  
 );
 
+DROP TABLE Feedback
 
 CREATE TABLE Feedback (  
     feedback_id INT PRIMARY KEY IDENTITY(1,1), 
     user_feeback_id INT, 
-    feedback_content TEXT NOT NULL
+    feedback_content NVARCHAR(MAX) NOT NULL
     FOREIGN KEY (user_feeback_id) REFERENCES Users(user_id)
 );

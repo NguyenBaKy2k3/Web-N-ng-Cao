@@ -10,17 +10,31 @@
     </div>
 
     <div class="profile-details">
-        <p><strong>Nghề nghiệp:</strong> @Model.Occupation</p>
+        <div class="d-flex justify-content-between">
+            <div class="w-50 pr-2">
+                <p><strong>Nghề nghiệp:</strong> @Model.Occupation</p>
+                <p><strong>Tình trạng mối quan hệ:</strong> @Model.RelationshipStatus</p>
+                <p><strong>Mục tiêu tìm kiếm:</strong> @Model.LookingFor</p>
+                <p><strong>Sở thích:</strong> @Model.Hobbies</p>
+                <p><strong>Chiều cao:</strong> @Model.Height cm</p>
+            </div>
+            <div class="w-50 pl-2">
+                <p><strong>Cân nặng:</strong> @Model.Weight kg</p>
+                <p><strong>Giới tính:</strong> @(Model.Gender.ToLower() == "male" ? "Nam" : Model.Gender.ToLower() == "female" ? "Nữ" : "Khác")</p>
+                <p><strong>Tiểu sử:</strong> @Model.Bio</p>
+                <p><strong>Quê quán:</strong> @Model.Location</p>
+            </div>
+        </div>
+        @* <p><strong>Nghề nghiệp:</strong> @Model.Occupation</p>
         <p><strong>Tình trạng mối quan hệ:</strong> @Model.RelationshipStatus</p>
         <p><strong>Mục tiêu tìm kiếm:</strong> @Model.LookingFor</p>
         <p><strong>Sở thích:</strong> @Model.Hobbies</p>
         <p><strong>Chiều cao:</strong> @Model.Height cm</p>
         <p><strong>Cân nặng:</strong> @Model.Weight kg</p>
-        <p><strong>Giới tính:</strong> @Model.Gender</p>
+        <p><strong>Giới tính:</strong> @(Model.Gender.ToLower() == "male" ? "Nam" : Model.Gender.ToLower() == "female" ? "Nữ" : "Khác")</p>
         <p><strong>Tiểu sử:</strong> @Model.Bio</p>
-        <p><strong>Quê quán:</strong> @Model.Location</p>
+        <p><strong>Quê quán:</strong> @Model.Location</p> *@
     </div>
-
 </div>
 
 <style>
@@ -64,7 +78,8 @@
         font-size: 16px;
         margin: 8px 0;
         text-align: left;
-    }
+    } 
+
 
     .btn-primary {
         margin-top: 20px;
@@ -72,12 +87,14 @@
 </style>
 
 <script>
-    // Hàm quay lại sự kiện trước đó khi nhấn ra ngoài form
+    // Hàm để ẩn PartialView khi nhấn ra ngoài form
     document.addEventListener('click', function (event) {
         const container = document.querySelector('.profile-container');
-        if (!container.contains(event.target)) {
-            // Sử dụng history.go(-1) để quay lại sự kiện trước
-            window.history.go(-1); // Quay lại sự kiện trước
+
+        // Kiểm tra nếu nhấn ra ngoài container
+        if (container && !container.contains(event.target)) {
+            // Ẩn container khi nhấn ra ngoài
+            document.getElementById('profile-section').innerHTML = ''; // Xóa nội dung của profile-section
         }
     });
 </script>

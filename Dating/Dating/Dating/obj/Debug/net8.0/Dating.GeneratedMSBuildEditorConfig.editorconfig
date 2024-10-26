@@ -18,8 +18,8 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = D:\Download\ASPNetMVC\WebNangCao\Dating\Dating\Dating
 build_property._RazorSourceGeneratorDebug = 
 
-[D:/Download/ASPNetMVC/WebNangCao/Dating/Dating/Dating/Views/Account/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxJbmRleC5jc2h0bWw=
+[D:/Download/ASPNetMVC/WebNangCao/Dating/Dating/Dating/Views/Home/Account/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBY2NvdW50XEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Download/ASPNetMVC/WebNangCao/Dating/Dating/Dating/Views/Home/Index.cshtml]
@@ -32,6 +32,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Download/ASPNetMVC/WebNangCao/Dating/Dating/Dating/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Download/ASPNetMVC/WebNangCao/Dating/Dating/Dating/Views/Shared/_UserProfilePartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Vc2VyUHJvZmlsZVBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Download/ASPNetMVC/WebNangCao/Dating/Dating/Dating/Views/Shared/_ValidationScriptsPartial.cshtml]
@@ -66,12 +70,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcTG9naW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Download/ASPNetMVC/WebNangCao/Dating/Dating/Dating/Views/Users/ProfilePerson.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcUHJvZmlsZVBlcnNvbi5jc2h0bWw=
+[D:/Download/ASPNetMVC/WebNangCao/Dating/Dating/Dating/Views/Users/Profile_Person.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcUHJvZmlsZV9QZXJzb24uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Download/ASPNetMVC/WebNangCao/Dating/Dating/Dating/Views/Users/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcUmVnaXN0ZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Download/ASPNetMVC/WebNangCao/Dating/Dating/Dating/Views/Users/Report.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcUmVwb3J0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Download/ASPNetMVC/WebNangCao/Dating/Dating/Dating/Views/Users/ReportUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcUmVwb3J0VXNlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Download/ASPNetMVC/WebNangCao/Dating/Dating/Dating/Views/Users/UserList.cshtml]
@@ -80,6 +92,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Download/ASPNetMVC/WebNangCao/Dating/Dating/Dating/Views/Users/VerifyCode.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcVmVyaWZ5Q29kZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Download/ASPNetMVC/WebNangCao/Dating/Dating/Dating/Views/Users/VideoCall.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcVmlkZW9DYWxsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Download/ASPNetMVC/WebNangCao/Dating/Dating/Dating/Views/Users/ViewMatches.cshtml]

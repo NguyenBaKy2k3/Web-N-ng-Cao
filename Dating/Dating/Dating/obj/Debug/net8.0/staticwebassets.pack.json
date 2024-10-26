@@ -13,8 +13,56 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\image\\background1.jpg",
+      "PackagePath": "staticwebassets\\image\\background1.jpg"
+    },
+    {
+      "Id": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\image\\background2.jpg",
+      "PackagePath": "staticwebassets\\image\\background2.jpg"
+    },
+    {
+      "Id": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\image\\duyetprofile.png",
+      "PackagePath": "staticwebassets\\image\\duyetprofile.png"
+    },
+    {
+      "Id": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\image\\feedback (1).png",
+      "PackagePath": "staticwebassets\\image\\feedback (1).png"
+    },
+    {
+      "Id": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\image\\feedback.png",
+      "PackagePath": "staticwebassets\\image\\feedback.png"
+    },
+    {
       "Id": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\image\\henho.png",
       "PackagePath": "staticwebassets\\image\\henho.png"
+    },
+    {
+      "Id": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\image\\home.png",
+      "PackagePath": "staticwebassets\\image\\home.png"
+    },
+    {
+      "Id": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\image\\logout.png",
+      "PackagePath": "staticwebassets\\image\\logout.png"
+    },
+    {
+      "Id": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\image\\profile.png",
+      "PackagePath": "staticwebassets\\image\\profile.png"
+    },
+    {
+      "Id": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\image\\thongbao.png",
+      "PackagePath": "staticwebassets\\image\\thongbao.png"
+    },
+    {
+      "Id": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\image\\thongtin.png",
+      "PackagePath": "staticwebassets\\image\\thongtin.png"
+    },
+    {
+      "Id": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\image\\tinnhan.png",
+      "PackagePath": "staticwebassets\\image\\tinnhan.png"
+    },
+    {
+      "Id": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\image\\users.png",
+      "PackagePath": "staticwebassets\\image\\users.png"
     },
     {
       "Id": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\js\\site.js",

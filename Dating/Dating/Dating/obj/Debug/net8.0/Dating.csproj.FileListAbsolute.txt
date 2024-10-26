@@ -163,3 +163,4 @@ D:\Download\ASPNetMVC\WebNangCao\Dating\Dating\Dating\obj\Debug\net8.0\refint\Da
 D:\Download\ASPNetMVC\WebNangCao\Dating\Dating\Dating\obj\Debug\net8.0\Dating.pdb
 D:\Download\ASPNetMVC\WebNangCao\Dating\Dating\Dating\obj\Debug\net8.0\Dating.genruntimeconfig.cache
 D:\Download\ASPNetMVC\WebNangCao\Dating\Dating\Dating\obj\Debug\net8.0\ref\Dating.dll
+D:\Download\ASPNetMVC\WebNangCao\Dating\Dating\Dating\bin\Debug\net8.0\System.Net.WebSockets.WebSocketProtocol.dll

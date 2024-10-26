@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Call</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+</head>
+<body>
+    <h2>Cuộc gọi video với @ViewBag.ReceiverId</h2>
+    <video id="localVideo" autoplay playsinline></video>
+    <video id="remoteVideo" autoplay playsinline></video>
+
+    <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+    <script>
+        const localVideo = document.getElementById('localVideo');
+        const remoteVideo = document.getElementById('remoteVideo');
+        let localStream;
+        let pc;
+        const configuration = { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] };
+
+        navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+            .then(stream => {
+                localStream = stream;
+                localVideo.srcObject = stream;
+                pc = new RTCPeerConnection(configuration);
+                pc.addStream(localStream);
+                pc.onaddstream = event => {
+                    remoteVideo.srcObject = event.stream;
+                };
+                // Handle signaling here
+            })
+            .catch(error => {
+                console.error('Error accessing media devices.', error);
+            });
+
+        // Handle signaling messages and create offer/answer
+        // You can use WebSocket for signaling
+    </script>
+</body>
+</html>

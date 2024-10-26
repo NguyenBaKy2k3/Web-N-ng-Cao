@@ -1,4 +1,4 @@
-html {
+﻿/*html {
   font-size: 14px;
 }
 
@@ -19,4 +19,169 @@ html {
 
 body {
   margin-bottom: 60px;
+}*/
+
+html {
+    font-size: 16px;
 }
+
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+} 
+/* Tăng cỡ chữ trên màn hình lớn hơn */
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+/* Đảm bảo font-size cho các phần tử tiêu đề và đoạn văn */
+h1 {
+    font-size: 2em; /* Tương ứng với 32px nếu base font-size là 16px */
+}
+
+h2 {
+    font-size: 1.75em; /* Tương ứng với 28px nếu base font-size là 16px */
+}
+
+h3 {
+    font-size: 1.5em; /* Tương ứng với 24px nếu base font-size là 16px */
+}
+
+h4 {
+    font-size: 1.25em; /* Tương ứng với 20px nếu base font-size là 16px */
+}
+
+h5 {
+    font-size: 1.1em; /* Tương ứng với 17.6px nếu base font-size là 16px */
+}
+
+h6 {
+    font-size: 1em; /* Tương ứng với 16px nếu base font-size là 16px */
+}
+
+p {
+    font-size: 1em; /* Tương ứng với 16px nếu base font-size là 16px */
+}
+
+/* Responsive typography */
+@media (max-width: 1200px) {
+    html {
+        font-size: 15px;
+    }
+
+    h1 {
+        font-size: 1.8em;
+    }
+
+    h2 {
+        font-size: 1.6em;
+    }
+
+    h3 {
+        font-size: 1.4em;
+    }
+
+    h4 {
+        font-size: 1.2em;
+    }
+
+    h5 {
+        font-size: 1.05em;
+    }
+}
+
+@media (max-width: 992px) {
+    html {
+        font-size: 14px;
+    }
+
+    h1 {
+        font-size: 1.6em;
+    }
+
+    h2 {
+        font-size: 1.4em;
+    }
+
+    h3 {
+        font-size: 1.3em;
+    }
+
+    h4 {
+        font-size: 1.1em;
+    }
+
+    h5 {
+        font-size: 1em;
+    }
+}
+
+@media (max-width: 768px) {
+    html {
+        font-size: 13px;
+    }
+
+    h1 {
+        font-size: 1.4em;
+    }
+
+    h2 {
+        font-size: 1.2em;
+    }
+
+    h3 {
+        font-size: 1.1em;
+    }
+
+    h4 {
+        font-size: 1em;
+    }
+
+    p {
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 576px) {
+    html {
+        font-size: 12px;
+    }
+
+    h1 {
+        font-size: 1.2em;
+    }
+
+    h2 {
+        font-size: 1.1em;
+    }
+
+    h3 {
+        font-size: 1em;
+    }
+
+    h4 {
+        font-size: 0.9em;
+    }
+
+    p {
+        font-size: 0.8em;
+    }
+}
+
+/* Đảm bảo rằng hình ảnh là responsive */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Đảm bảo rằng body có đủ khoảng trống cho footer */
+body {
+    margin: 0;
+    padding: 0;
+    position: relative;
+    min-height: 100vh;
+}
+
+

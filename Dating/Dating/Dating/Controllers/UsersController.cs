@@ -68,7 +68,8 @@ namespace Dating.Controllers
                     latitude = userViewModel.latitude,
                     longitude = userViewModel.longitude,
                     iUsersRoleID = 2,
-                    created_at = DateTime.Now
+                    created_at = DateTime.Now,
+                    IsActive = true
                 };
 
                 if (userViewModel.ProfileImage != null && userViewModel.ProfileImage.Length > 0)
@@ -129,16 +130,19 @@ namespace Dating.Controllers
 
                 if (user != null)
                 {
+                    if (user.IsActive == false) 
+                    {
+                        ViewBag.ErrorMessage = "Tài khoản của bạn đã bị vô hiệu hóa.";
+                        return View();
+                    }
                     HttpContext.Session.SetString("UserName", user.username.ToString());
                     HttpContext.Session.SetInt32("Role", user.iUsersRoleID);
 
                     TempData["Role"] = user.iUsersRoleID;
 
-                    // Kiểm tra hồ sơ của người dùng
                     var userProfile = await _dbContext.Profiles
                         .SingleOrDefaultAsync(up => up.user_profile_id == user.user_id);
 
-                    // Lưu giá trị isApproved vào session
                     if (userProfile != null)
                     {
                         HttpContext.Session.SetString("IsProfileApproved", userProfile.isApproved ? "True" : "False");
@@ -165,7 +169,7 @@ namespace Dating.Controllers
                     var claims = new List<Claim>
                     {
                         new Claim(ClaimTypes.NameIdentifier, user.user_id.ToString()),
-                        new Claim(ClaimTypes.Email, user.email), 
+                        new Claim(ClaimTypes.Email, user.email),
                         new Claim(ClaimTypes.Name, user.username.ToString())
                     };
 
@@ -338,25 +342,19 @@ namespace Dating.Controllers
 
 
         //Danh sách người dùng
-
+        [Authorize]
         public async Task<IActionResult> UserList()
         {
-            // Lấy email của người dùng hiện tại từ Claims
             var currentUserEmail = User.FindFirstValue(ClaimTypes.Email);
 
-            // Tìm người dùng hiện tại dựa trên email
             var currentUser = await _dbContext.Users
                 .FirstOrDefaultAsync(u => u.email == currentUserEmail);
 
-            // Lấy ID người dùng hiện tại
-            var currentUserId = currentUser?.user_id; // Trường hợp không tìm thấy người dùng, currentUserId sẽ là null
-
-            // Lấy danh sách người dùng mà không bao gồm người dùng hiện tại
+            var currentUserId = currentUser?.user_id; 
             var users = await _dbContext.Users
-                .Where(u => u.user_id != currentUserId) // Lọc ra người dùng không phải là người đang đăng nhập
+                .Where(u => u.user_id != currentUserId) 
                 .ToListAsync();
 
-            // Lấy danh sách ID của những người đã lướt qua hoặc thích
             var skippedUserIds = await _dbContext.Skips
                 .Where(s => s.user_skip_id == currentUserId)
                 .Select(s => s.skippe_user_id)
@@ -367,15 +365,12 @@ namespace Dating.Controllers
                 .Select(l => l.liked_user_id)
                 .ToListAsync();
 
-            // Lọc ra những người đã lướt qua hoặc đã thích
             var filteredUsers = users
                 .Where(u => !skippedUserIds.Contains(u.user_id) && !likedUserIds.Contains(u.user_id))
                 .ToList();
-
-            // Nếu không còn người dùng nào trong danh sách đã lọc, trả về người cuối cùng trong danh sách gốc
             if (!filteredUsers.Any() && users.Any())
             {
-                filteredUsers.Add(users.Last()); // Thêm người cuối cùng vào danh sách
+                filteredUsers.Add(users.Last());
                 ViewBag.NotificationMessage = "Bạn đã xem hết hồ sơ người dùng!";
             }
 
@@ -471,12 +466,39 @@ namespace Dating.Controllers
 
 
         //Tạo hồ sơ
-
+        [HttpGet]
         [Authorize]
-        public IActionResult CreateProfile()
+        public async Task<IActionResult> CreateProfile()
         {
+            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+            if (userId != null)
+            {
+                int parsedUserId = int.Parse(userId);
+
+                var existingProfile = await _dbContext.Profiles
+                    .FirstOrDefaultAsync(up => up.user_profile_id == parsedUserId);
+
+                if (existingProfile != null)
+                {
+                    HttpContext.Session.SetString("IsProfileApproved", existingProfile.isApproved.ToString());
+
+                    if (existingProfile.isApproved)
+                    {
+                        TempData["Message"] = "Hồ sơ của bạn đã được duyệt trước đó.";
+                    }
+                    else
+                    {
+                        TempData["Message"] = "Hồ sơ của bạn đang chờ duyệt.";
+                    }
+
+                    return RedirectToAction("UserList");
+                }
+            }
+
             return View();
         }
+
 
 
         [HttpPost]
@@ -491,25 +513,6 @@ namespace Dating.Controllers
                 if (userId != null)
                 {
                     int parsedUserId = int.Parse(userId);
-
-                    var existingProfile = await _dbContext.Profiles
-                        .FirstOrDefaultAsync(up => up.user_profile_id == parsedUserId);
-
-                    if (existingProfile != null)
-                    {
-                        HttpContext.Session.SetString("IsProfileApproved", existingProfile.isApproved.ToString());
-
-                        if (existingProfile.isApproved)
-                        {
-                            TempData["Message"] = "Hồ sơ của bạn đã được duyệt trước đó.";
-                            return RedirectToAction("UserList");
-                        }
-                        else
-                        {
-                            TempData["Message"] = "Hồ sơ của bạn đang chờ duyệt.";
-                            return RedirectToAction("UserList");
-                        }
-                    }
 
                     userProfile.user_profile_id = parsedUserId;
                     userProfile.isApproved = false;
@@ -629,9 +632,10 @@ namespace Dating.Controllers
                                          Location = user.location
                                      }).FirstOrDefaultAsync();
 
-            if (userProfile == null)
+            if (userProfile == null || userProfile.IsApproved == false)
             {
-                return NotFound("Hồ sơ không tồn tại.");
+                TempData["Message"] = "Hồ sơ của bạn chưa được phê duyệt hoặc không tồn tại. Vui lòng hoàn thiện hồ sơ để sử dụng tính năng này.";
+                return RedirectToAction("CreateProfile", "Users"); 
             }
 
             var viewModel = new UserProfileViewModel
@@ -656,7 +660,7 @@ namespace Dating.Controllers
         }
 
         //Sửa thông tin người dùng
-
+        [Authorize]
         public IActionResult EditUser(int id)
         {
             var user = _dbContext.Users.Find(id);
@@ -669,16 +673,17 @@ namespace Dating.Controllers
         }
 
 
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public IActionResult EditUser(int id, [Bind("user_id,username,sdt,gender,date_of_birth,bio,ProfileImage,location, password, email, iUsersRoleID, latitude, longitude")] UsersModels updatedUser)
         {
             if (id != updatedUser.user_id)
             {
                 return NotFound();
             }
-            
+
             if (ModelState.IsValid)
             {
                 try
@@ -711,7 +716,7 @@ namespace Dating.Controllers
 
                     _dbContext.Update(existingUser);
                     _dbContext.SaveChanges();
-                    TempData["SuccessMessage"] = "Thông tin người dùng đã được cập nhật thành công.";
+                    TempData["Message"] = "Thông tin người dùng đã được cập nhật thành công.";
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -724,7 +729,7 @@ namespace Dating.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(EditUser), new { id = updatedUser.user_id });
+                return RedirectToAction("ViewProfile", "Users", new { id = updatedUser.user_id });
             }
 
             TempData["ErrorMessage"] = "Lỗi khi cập nhật thông tin người dùng.";
@@ -733,6 +738,7 @@ namespace Dating.Controllers
 
 
         //Sửa thông tin hồ sơ
+        [Authorize]
         public IActionResult EditProfile(int id)
         {
             var profile = _dbContext.Profiles.FirstOrDefault(p => p.user_profile_id == id);
@@ -744,9 +750,10 @@ namespace Dating.Controllers
             return View(profile);
         }
 
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public IActionResult EditProfile(int id, [Bind("profile_id,user_profile_id,occupation,relationship_status,gender_looking,looking_for,hobbies,height,weight,isApproved")] UserProfile updatedProfile)
         {
             var existingProfile = _dbContext.Profiles.FirstOrDefault(p => p.user_profile_id == id);
@@ -777,8 +784,8 @@ namespace Dating.Controllers
                     _dbContext.Update(existingProfile);
                     _dbContext.SaveChanges();
 
-                    TempData["SuccessMessage"] = "Thông tin hồ sơ đã được cập nhật thành công.";
-                    return RedirectToAction(nameof(EditUser), new { id = id });
+                    TempData["Message"] = "Thông tin hồ sơ đã được cập nhật thành công.";
+                    return RedirectToAction("ViewProfile", "Users", new { id = existingProfile.user_profile_id });
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -793,40 +800,111 @@ namespace Dating.Controllers
 
         //Xem hồ sơ cá nhân của người khác
 
-        [HttpPost]
-        public async Task<IActionResult> ProfilePerson(int likedUserId)
+        //[HttpPost]
+        //public async Task<IActionResult> ProfilePerson(int likedUserId)
+        //{
+        //    var userProfile = await (from profile in _dbContext.Profiles
+        //                             join user in _dbContext.Users on profile.user_profile_id equals user.user_id
+        //                             where user.user_id == likedUserId
+        //                             select new UserProfileViewModel
+        //                             {
+        //                                 ProfileId = profile.profile_id,
+        //                                 Occupation = profile.occupation,
+        //                                 RelationshipStatus = profile.relationship_status,
+        //                                 LookingFor = profile.looking_for,
+        //                                 Hobbies = profile.hobbies,
+        //                                 Height = profile.height,
+        //                                 Weight = profile.weight,
+        //                                 IsApproved = profile.isApproved,
+        //                                 Username = user.username,
+        //                                 Gender = user.gender,
+        //                                 Bio = user.bio,
+        //                                 ProfilePicture = user.profile_picture,
+        //                                 Age = user.Age,
+        //                                 Location = user.location
+        //                             }).FirstOrDefaultAsync();
+
+
+        //    if (userProfile == null)
+        //    {
+        //        return NotFound("Hồ sơ không tồn tại.");
+        //    }
+
+        //    return View(userProfile);
+        //}
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult Profile_Person(int likedUserId)
         {
-            var userProfile = await (from profile in _dbContext.Profiles
-                                     join user in _dbContext.Users on profile.user_profile_id equals user.user_id
-                                     where user.user_id == likedUserId
-                                     select new UserProfileViewModel
-                                     {
-                                         ProfileId = profile.profile_id,
-                                         Occupation = profile.occupation,
-                                         RelationshipStatus = profile.relationship_status,
-                                         LookingFor = profile.looking_for,
-                                         Hobbies = profile.hobbies,
-                                         Height = profile.height,
-                                         Weight = profile.weight,
-                                         IsApproved = profile.isApproved,
-                                         Username = user.username,
-                                         Gender = user.gender,
-                                         Bio = user.bio,
-                                         ProfilePicture = user.profile_picture,
-                                         Age = user.Age,
-                                         Location = user.location
-                                     }).FirstOrDefaultAsync();
+            var userProfile = (from profile in _dbContext.Profiles
+                               join user in _dbContext.Users on profile.user_profile_id equals user.user_id
+                               where user.user_id == likedUserId
+                               select new UserProfileViewModel
+                               {
+                                   ProfileId = profile.profile_id,
+                                   Occupation = profile.occupation,
+                                   RelationshipStatus = profile.relationship_status,
+                                   LookingFor = profile.looking_for,
+                                   Hobbies = profile.hobbies,
+                                   Height = profile.height,
+                                   Weight = profile.weight,
+                                   IsApproved = profile.isApproved,
+                                   Username = user.username,
+                                   Gender = user.gender,
+                                   Bio = user.bio,
+                                   ProfilePicture = user.profile_picture,
+                                   Age = user.Age,
+                                   Location = user.location
+                               }).FirstOrDefault();
 
             if (userProfile == null)
             {
                 return NotFound("Hồ sơ không tồn tại.");
             }
 
-            return View("ProfilePerson", userProfile);
+            return View(userProfile);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult ProfilePerson(int likedUserId)
+        {
+            var userProfile = (from profile in _dbContext.Profiles
+                               join user in _dbContext.Users on profile.user_profile_id equals user.user_id
+                               where user.user_id == likedUserId
+                               select new UserProfileViewModel
+                               {
+                                   ProfileId = profile.profile_id,
+                                   Occupation = profile.occupation,
+                                   RelationshipStatus = profile.relationship_status,
+                                   LookingFor = profile.looking_for,
+                                   Hobbies = profile.hobbies,
+                                   Height = profile.height,
+                                   Weight = profile.weight,
+                                   IsApproved = profile.isApproved,
+                                   Username = user.username,
+                                   Gender = user.gender,
+                                   Bio = user.bio,
+                                   ProfilePicture = user.profile_picture,
+                                   Age = user.Age,
+                                   Location = user.location
+                               }).FirstOrDefault();
+
+            if (userProfile == null)
+            {
+                return NotFound("Hồ sơ không tồn tại.");  // Trả về lỗi nếu không tìm thấy hồ sơ
+            }
+
+            // Trả về partial view chứa dữ liệu hồ sơ
+            return PartialView("_UserProfilePartial", userProfile);  // Lưu ý: PartialView này sẽ chứa dữ liệu hồ sơ
         }
 
 
+
+
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> ViewMatches()
         {
             var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -849,6 +927,7 @@ namespace Dating.Controllers
 
 
         // Hiển thị lịch sử chat
+        [Authorize]
         public IActionResult Chat(int receiverId)
         {
             var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
@@ -906,6 +985,7 @@ namespace Dating.Controllers
         //}
 
         [HttpPost]
+        [Authorize]
         public JsonResult SendMessage(int receiverId, string content)
         {
             // Lấy ID người dùng hiện tại
@@ -938,5 +1018,70 @@ namespace Dating.Controllers
             return Json(new { success = false, message = "Có lỗi xảy ra khi gửi tin nhắn." });
         }
 
+
+
+
+        // Phương thức hiển thị form báo cáo
+        [HttpGet]
+        [Authorize]
+        public IActionResult ReportUser(int reportedUserId)
+        {
+            // Tạo model báo cáo và truyền ID người bị báo cáo sang view
+            var reportModel = new ReportsModels
+            {
+                reported_user_id = reportedUserId
+            };
+            return View(reportModel);
+        }
+
+        // Phương thức lưu báo cáo
+        [HttpPost]
+        [Authorize]
+        public IActionResult SubmitReport(ReportsModels report)
+        {
+            // Lấy ID của người báo cáo từ thông tin đăng nhập
+            var reporterId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (string.IsNullOrEmpty(reporterId) || !int.TryParse(reporterId, out int reporterIdParsed))
+            {
+                return BadRequest("Không thể xác định người báo cáo.");
+            }
+
+            // Lưu thông tin báo cáo vào model
+            report.reporter_id = reporterIdParsed;
+            report.created_at = DateTime.Now;
+
+            // Lưu vào database
+            _dbContext.Reports.Add(report);
+            _dbContext.SaveChanges();
+
+            return RedirectToAction("ViewMatches", "Users"); // Điều hướng về trang chủ sau khi báo cáo
+        }
+
+
+
+        public async Task<IActionResult> Report()
+        {
+            // Lấy tất cả báo cáo
+            var reports = await _dbContext.Reports.ToListAsync();
+
+            // Lấy danh sách ID của người bị báo cáo
+            var reportedUserIds = reports.Select(r => r.reported_user_id).Distinct().ToList();
+
+            // Lấy thông tin người dùng bị báo cáo
+            var reportedUsers = await _dbContext.Users
+                .Where(u => reportedUserIds.Contains(u.user_id))
+                .ToListAsync();
+
+            // Tạo danh sách kết quả với tên người bị báo cáo và số lần họ bị báo cáo
+            var reportCounts = reportedUsers.Select(user => new
+            {
+                ReportedUserId = user.user_id,
+                ReportedUserName = user.username,
+                ReportCount = reports.Count(r => r.reported_user_id == user.user_id)
+            }).ToList();
+
+            return View(reportCounts); // Trả về danh sách người bị báo cáo với số lần bị báo cáo
+        }
     }
 }

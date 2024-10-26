@@ -56,6 +56,7 @@ namespace Dating.Models
         public double latitude { get; set; }  // Vĩ độ
 
         public double longitude { get; set; }  // Kinh độ
+        public bool IsActive { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime created_at { get; set; } = DateTime.Now; // Thời gian tạo tài khoản

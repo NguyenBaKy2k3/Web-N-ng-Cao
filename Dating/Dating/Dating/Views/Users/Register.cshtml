@@ -125,25 +125,22 @@
     <script>
         document.getElementById("nextButton").addEventListener("click", function () {
             var form = document.getElementById("registerForm");
-            var inputs = document.querySelectorAll('#basicInfo input'); // Chỉ lấy các input trong phần thông tin cơ bản
-            var isValid = true; // Biến kiểm tra tính hợp lệ
+            var inputs = document.querySelectorAll('#basicInfo input'); 
+            var isValid = true; 
 
             inputs.forEach(function (input) {
                 if (!input.value) {
-                    // Đặt thông báo tùy chỉnh nếu trường chưa điền
                     input.setCustomValidity("Bạn chưa điền trường: " + input.getAttribute('placeholder'));
-                    input.reportValidity(); // Hiển thị thông báo
-                    input.focus(); // Focus vào trường chưa điền
+                    input.reportValidity(); 
+                    input.focus(); 
                     isValid = false;
-                    return false; // Dừng lại khi gặp trường chưa được điền
+                    return false;
                 } else {
-                    // Đặt lại thông báo mặc định khi trường đã điền
                     input.setCustomValidity('');
                 }
             });
 
             if (isValid) {
-                // Nếu tất cả các trường đã hợp lệ, chuyển sang phần thông tin bổ sung
                 document.getElementById("basicInfo").classList.add("hidden");
                 document.getElementById("additionalInfo").classList.remove("hidden");
             }
@@ -151,8 +148,6 @@
 
 
 
-
-        // Hàm hiển thị mật khẩu khi focus và ẩn khi blur
         function togglePasswordVisibility(isFocused) {
             var passwordField = document.getElementById("password");
             if (isFocused) {
@@ -162,7 +157,6 @@
             }
         }
 
-        // Lấy vị trí người dùng khi tải trang
         window.onload = function () {
             getLocation();
         };

@@ -1,16 +1,17 @@
 ﻿@model Dating.Models.UserProfile
-<div class="container">
+<div class="edit-container">
     <h2>Chỉnh sửa thông tin hồ sơ</h2>
 
     <form asp-action="EditProfile" method="post" enctype="multipart/form-data">
         <input type="hidden" asp-for="profile_id" />
 
         <div class="form-group">
-            <input asp-for="occupation" class="form-control" placeholder="Tên người dùng" required />
+            <label asp-for="occupation">Nghề nghiệp</label>
+            <input asp-for="occupation" class="form-control" placeholder="Nghề nghiệp" required />
             <span asp-validation-for="occupation" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="relationship_status"></label>
+            <label asp-for="relationship_status">Tình trạng mối quan hệ</label>
             <select asp-for="relationship_status" class="form-control">
                 <option value="">-- Chọn tình trạng mối quan hệ --</option>
                 <option value="Độc thân">Độc thân</option>
@@ -20,31 +21,83 @@
             </select>
             <span asp-validation-for="relationship_status" class="text-danger"></span>
         </div>
-
         <div class="form-group">
-            <label asp-for="looking_for"></label>
+            <label asp-for="gender_looking">Giới tính muốn kết nối</label>
+            <select asp-for="gender_looking" class="form-control" required>
+                <option value="Nam">Nam</option>
+                <option value="Nữ">Nữ</option>
+                <option value="Khác">Khác</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label asp-for="looking_for">Mục tiêu tìm kiếm</label>
             <input asp-for="looking_for" class="form-control" />
         </div>
 
         <div class="form-group">
-            <label asp-for="hobbies"></label>
-            <input asp-for="hobbies" class="form-control" />
+            <label asp-for="hobbies">Sở thích</label>
+            <input asp-for="hobbies" class="form-control" placeholder="Sở thích" />
         </div>
 
         <div class="form-group">
-            <label asp-for="height"></label>
-            <input asp-for="height" class="form-control" />
+            <label asp-for="height">Chiều cao</label>
+            <input asp-for="height" class="form-control" placeholder="Chiều cao" />
         </div>
 
         <div class="form-group">
-            <label asp-for="weight"></label>
-            <input asp-for="weight" class="form-control" />
+            <label asp-for="weight">Cân nặng</label>
+            <input asp-for="weight" class="form-control" placeholder="Cân nặng" />
         </div>
 
         <input type="hidden" asp-for="user_profile_id" value="@Model.user_profile_id" />
         <input type="hidden" asp-for="isApproved" value="@Model.isApproved" />
 
-        <button type="submit" class="btn btn-primary">Cập nhật</button>
-
+        <button type="submit" class="btn-primary">Cập nhật</button>
     </form>
 </div>
+
+<style>
+    body {
+        background: linear-gradient(135deg, #ef2a54, #FF3A5C);
+        font-family: Arial, sans-serif;
+    }
+
+    .edit-container {
+        width: 400px; /* Giảm chiều rộng của container */
+        margin: 50px auto; /* Giảm khoảng cách trên và dưới */
+        padding: 10px; /* Giảm padding bên trong */
+        background-color: #333;
+        border-radius: 8px;
+        color: white;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+        font-size: 16px;
+        margin-top: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 8px; /* Giảm khoảng cách giữa các nhóm */
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 8px; /* Giảm padding cho các trường nhập */
+        border-radius: 4px;
+        border: none;
+        margin-top: 5px;
+    }
+
+    .btn-primary {
+        background-color: #ff0066;
+        color: white;
+        border: none;
+        padding: 8px; /* Giảm padding cho nút */
+        width: 100%;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 15px; /* Giảm khoảng cách trên của nút */
+    }
+
+    .text-danger {
+        color: #ff0000;
+    }
+</style>

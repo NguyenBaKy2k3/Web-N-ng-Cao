@@ -4,6 +4,12 @@
     var userId = User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
 }
 
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success" id="successMessage">
+        @TempData["Message"]
+    </div>
+}
 <div class="profile-container">
     <div class="profile-image-wrapper">
         @if (!string.IsNullOrEmpty(Model.ProfilePicture))
@@ -27,19 +33,51 @@
         <p><strong>Sở thích:</strong> @Model.Hobbies</p>
         <p><strong>Chiều cao:</strong> @Model.Height cm</p>
         <p><strong>Cân nặng:</strong> @Model.Weight kg</p>
-        <p><strong>Giới tính:</strong> @Model.Gender</p>
+        <p><strong>Giới tính:</strong> @(Model.Gender.ToLower() == "male" ? "Nam" : Model.Gender.ToLower() == "female" ? "Nữ" : "Khác")</p>
         <p><strong>Tiểu sử:</strong> @Model.Bio</p>
         <p><strong>Quê quán:</strong> @Model.Location</p>
     </div>
 
-    <div class="d-flex justify-content-between mt-3">
-        <a class="btn btn-warning" href="@Url.Action("EditUser", "Users", new { id =  userId})">Sửa</a>
+    <div class="button-container">
+        <a class="btn btn-secondary" href="@Url.Action("UserList", "Users", new { id = userId })">Thoát</a>
+        <a class="btn btn-secondary" href="@Url.Action("EditUser", "Users", new { id = userId })">Sửa</a>
     </div>
 
 </div>
 
 
 <style>
+    .button-container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px; 
+    }
+
+    .btn-secondary {
+        background-color: #6c757d; 
+        color: white;
+        border: none; 
+        flex: 1; 
+        margin: 0 10px; 
+    }
+
+        .btn-secondary:hover {
+            background-color: #5a6268; 
+            color: white; 
+        }
+    #successMessage {
+        position: fixed; 
+        right: -300px; 
+        top: 20px; 
+        width: 300px;
+        padding: 15px; 
+        background-color: #000; 
+        color: white; 
+        border-radius: 5px; 
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
+        transition: right 0.5s ease; 
+        margin-top: 100px;
+    }
     .profile-container {
         text-align: center; 
         max-width: 600px;
@@ -84,3 +122,16 @@
         margin-top: 20px;
     }
 </style>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var successMessage = document.getElementById('successMessage');
+
+        if (successMessage) {
+            successMessage.style.right = '20px'; 
+
+            setTimeout(function () {
+                successMessage.style.right = '-300px'; 
+            }, 3000);
+        }
+    });
+</script>
