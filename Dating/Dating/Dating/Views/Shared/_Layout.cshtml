@@ -6,7 +6,7 @@
     bool isLoggedIn = HttpContextAccessor.HttpContext.Session.GetString("UserName") != null;
     //int? IsProfileApproved = HttpContextAccessor.HttpContext.Session.GetInt32("IsProfileApproved");
     var isProfileApprovedString = HttpContextAccessor.HttpContext.Session.GetString("IsProfileApproved");
-    bool isProfileApproved = isProfileApprovedString == "True"; // Chuyển đổi thành bool
+    bool isProfileApproved = isProfileApprovedString == "True"; 
 }
 
 <!DOCTYPE html>
@@ -22,22 +22,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <style>
-        /* Đặt lại lề và padding cho toàn trang */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        /* Đảm bảo trang không bị cuộn dọc */
         body {
-            overflow: hidden; /* Ẩn cuộn nếu có nội dung tràn ra */
-            min-height: 100vh; /* Đảm bảo chiều cao tối thiểu */
+            overflow: hidden;
+            min-height: 100vh; 
             display: flex;
             justify-content: center;
             align-items: center;
             background: linear-gradient(135deg, #ef2a54, #FF3A5C);
-            position: relative; /* Để tạo hiệu ứng tuyết và mưa */
+            position: relative;
         }
 
         .snow-container, .rain-container {
@@ -45,10 +43,10 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 100vh; /* Chiều cao toàn bộ màn hình */
-            pointer-events: none; /* Không ảnh hưởng đến sự kiện chuột */
+            height: 100vh; 
+            pointer-events: none;
             overflow: hidden;
-            z-index: 0; /* Đặt z-index thấp hơn */
+            z-index: 0; 
         }
 
         /* Bông tuyết */
@@ -59,13 +57,13 @@
             height: 10px;
             background-color: white;
             opacity: 0.8;
-            animation: fall linear infinite; /* Hiệu ứng rơi */
+            animation: fall linear infinite; 
             clip-path: polygon(
                 50% 0%,  61% 35%,  98% 35%, 
                 68% 57%,  79% 91%,  50% 70%, 
                 21% 91%,  32% 57%,  2% 35%, 
                 39% 35%
-            ); /* Tạo hình bông tuyết 5 cánh */
+            ); 
         }
 
         @@keyframes fall {
@@ -73,7 +71,7 @@
                 transform: translateY(0);
             }
             100% {
-                transform: translateY(100vh); /* Rơi xuống đáy màn hình */
+                transform: translateY(100vh); 
             }
         }
 
@@ -84,7 +82,7 @@
             width: 2px;
             height: 20px;
             background-color: rgba(255, 255, 255, 0.5);
-            animation: rain-fall linear infinite; /* Hiệu ứng rơi */
+            animation: rain-fall linear infinite;
         }
 
         @@keyframes rain-fall {
@@ -92,18 +90,16 @@
                 transform: translateY(0);
             }
             100% {
-                transform: translateY(100vh); /* Rơi xuống đáy màn hình */
+                transform: translateY(100vh); 
             }
         }
 
-        /* Container cho nội dung chính */
         .container {
-            position: relative; /* Để cho phép z-index hoạt động */
+            position: relative; 
             z-index: 1; /* Đặt z-index cao hơn mưa và tuyết */
         }
 
         /*Menu*/
-        /* Định dạng chung cho sidebar */
         .sidebar {
             position: fixed;
             top: 0;
@@ -117,7 +113,7 @@
         /* Định dạng cho các mục điều hướng */
         .nav {
             display: flex;
-            justify-content: space-around; /* Các mục điều hướng cách đều nhau */
+            justify-content: space-around; 
         }
 
         .nav-item {
@@ -176,12 +172,50 @@
             }
         
 
+        .background-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .background-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; 
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+            .background-image.active {
+                opacity: 1; 
+            }
+
+
+        .background-container img {
+            width: 100%;
+            height: 100vh;
+            object-fit: cover;
+            opacity: 0.3; 
+            transition: opacity 1s ease-in-out; 
+            filter: blur(8px); 
+        }
 
     </style>
 </head>
 <body>
-    <div class="snow-container"></div>
-    <div class="rain-container"></div>
+    <div class="background-container">
+        <img src="~/image/background1.jpg" class="background-image active" alt="Background 1" />
+        <img src="~/image/background2.jpg" class="background-image" alt="Background 2" />
+    </div>
+    @* <div class="snow-container"></div>
+    <div class="rain-container"></div> *@
 
     @if (isLoggedIn) 
     {
@@ -195,6 +229,9 @@
                     </div>
                     <div class="nav-item">
                         <a class="nav-link" href="@Url.Action("Report", "Users")"><img src="~/image/feedback (1).png" alt="" /></a>
+                    </div>
+                    <div class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Report", "Users")"><img src="~/image/feedback_admin.png" alt="" /></a>
                     </div>
                     <form asp-controller="Users" asp-action="Logout" method="post" class="d-inline logout-button">
                         <button type="submit" class="btn btn-link text-decoration-none custom-button">
@@ -219,6 +256,9 @@
                             <a class="nav-link" href="@Url.Action("CreateProfile", "Users")"><img src="~/image/thongtin.png" alt="" /></a>
                         </div>
                     }
+                    <div class="nav-item">
+                        <a class="nav-link" href="@Url.Action("CreateProfile", "Users")"><img src="~/image/feedback_user.png" alt="" /></a>
+                    </div>
                     <form asp-controller="Users" asp-action="Logout" method="post" class="d-inline logout-button">
                         <button type="submit" class="btn btn-link text-decoration-none custom-button">
                             <i class="fas fa-sign-out-alt"></i><img src="~/image/logout.png" alt="" />
@@ -253,18 +293,18 @@
             snowflake.classList.add('snow');
 
             // Đặt kích thước ngẫu nhiên cho bông tuyết
-            const size = Math.random() * 10 + 10; // Kích thước từ 10px đến 20px
+            const size = Math.random() * 10 + 10; 
             snowflake.style.width = size + 'px';
             snowflake.style.height = size + 'px';
-            snowflake.style.left = Math.random() * 100 + 'vw'; // Đặt vị trí ngang ngẫu nhiên
-            snowflake.style.animationDuration = (Math.random() * 3 + 2) + 's'; // Thay đổi thời gian rơi ngẫu nhiên
+            snowflake.style.left = Math.random() * 100 + 'vw'; 
+            snowflake.style.animationDuration = (Math.random() * 3 + 2) + 's'; 
 
             snowContainer.appendChild(snowflake);
 
             // Xóa tuyết khi nó đã rơi xong
             setTimeout(() => {
                 snowflake.remove();
-            }, 5000); // Thời gian rơi
+            }, 5000); 
         }
 
         function createRaindrop() {
@@ -272,20 +312,31 @@
             raindrop.classList.add('rain');
 
             // Đặt kích thước ngẫu nhiên cho giọt mưa
-            raindrop.style.left = Math.random() * 100 + 'vw'; // Đặt vị trí ngang ngẫu nhiên
-            raindrop.style.animationDuration = (Math.random() * 1 + 0.5) + 's'; // Thay đổi thời gian rơi ngẫu nhiên
-            raindrop.style.height = Math.random() * 10 + 10 + 'px'; // Kích thước từ 10px đến 20px
+            raindrop.style.left = Math.random() * 100 + 'vw'; 
+            raindrop.style.animationDuration = (Math.random() * 1 + 0.5) + 's'; 
+            raindrop.style.height = Math.random() * 10 + 10 + 'px'; 
 
             rainContainer.appendChild(raindrop);
 
             // Xóa giọt mưa khi nó đã rơi xong
             setTimeout(() => {
                 raindrop.remove();
-            }, 2000); // Thời gian rơi
+            }, 2000); 
         }
 
-        setInterval(createSnowflake, 200); // Tạo tuyết mới mỗi 200ms
-        setInterval(createRaindrop, 100); // Tạo mưa mới mỗi 100ms
+        const backgroundImages = document.querySelectorAll('.background-image');
+        let currentIndex = 0;
+
+        function changeBackground() {
+            backgroundImages[currentIndex].classList.remove('active');
+            currentIndex = (currentIndex + 1) % backgroundImages.length; 
+            backgroundImages[currentIndex].classList.add('active');
+        }
+
+        setInterval(changeBackground, 5000);
+
+        setInterval(createSnowflake, 200); 
+        setInterval(createRaindrop, 100); 
     </script>
 
     @await RenderSectionAsync("Scripts", required: false)

@@ -1,8 +1,4 @@
-﻿
-@{
-    Layout = null;
-}
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -10,65 +6,95 @@
     <title>Login</title>
     <style>
         body {
-            background: linear-gradient(135deg, #ef2a54, #FF3A5C); /* Giữ gradient với màu mới */
+            background: linear-gradient(135deg, #a2b9bc, #b2ad7f);
             font-family: Arial, sans-serif;
             margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            color: white;
+            color: #333;
         }
-
 
         .container {
             text-align: center;
             width: 100%;
-            max-width: 400px; /* Giới hạn chiều rộng của container */
+            max-width: 400px;
             margin: auto;
             z-index: 1;
         }
 
-            .container img {
-                width: 100%; /* Đảm bảo logo chiếm toàn bộ chiều rộng */
-                max-width: 500px; /* Giới hạn chiều rộng của logo */
-                margin-bottom: 4rem; /* Khoảng cách dưới logo */
-                border-radius: 50%; /* Làm cho logo hình tròn */
-                object-fit: cover; /* Đảm bảo hình ảnh không bị méo */
+        .container img {
+            width: 100%;
+            max-width: 300px;
+            margin-bottom: 2rem;
+            /* border-radius: 50%; */
+            object-fit: cover;
+            opacity: 0; 
+            transform: translateY(-50px);
+            animation: slideDown 1s ease forwards; 
+        }
+
+        @@keyframes slideDown {
+            to {
+                transform: translateY(0); 
+                opacity: 1; 
             }
+        }
 
+        .container h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(-50px);
+            animation: slideDown 1s ease forwards 0.3s;
+            font-weight: bolder;
+            background-color: white; 
+            color: #333;
+            padding: 10px 20px; 
+            border-radius: 50px;
+            display: inline-block; 
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
 
-            .container h1 {
-                font-size: 2rem;
-                margin-bottom: 1rem;
-            }
+        .container button {
+            background-color: white;
+            color: #5a5a5a;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-bottom: 20px;
+            width: 50%;
+            max-width: 300px;
+            opacity: 0;
+            transform: translateY(-50px);
+            animation: slideDown 1s ease forwards 0.6s; 
+            transition: transform 0.3s;
+            font-weight: bold;
+        }
 
-            .container button {
-                background-color: white;
-                color: #FF3A5C;
-                border: none;
-                padding: 10px 20px;
-                border-radius: 50px;
-                font-size: 1.2rem;
-                cursor: pointer;
-                margin-bottom: 20px; /* Khoảng cách giữa nút và link */
-                width: 50%; /* Chiều rộng giảm xuống 50% */
-                max-width: 300px; /* Giới hạn chiều rộng tối đa để tránh quá rộng */
-            }
+        .container button:hover {
+            transform: scale(1.1);
+        }
 
-
-            .container a {
-                display: block;
-                margin-top: 10px;
-                color: #fff;
-                text-decoration: none;
-                font-size: 0.9rem;
-            }
+        .container a {
+            display: block;
+            margin-top: 10px;
+            color: #333;
+            text-decoration: none;
+            font-size: 0.9rem;
+            opacity: 0;
+            transform: translateY(-50px);
+            animation: slideDown 1s ease forwards 0.9s; 
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <img src="~/image/henho.png" alt="Logo">
+        <img src="~/image/logodating.png" alt="Logo">
+        <h1>CHÀO MỪNG</h1>
         <a href="/Login"><button>Đăng nhập</button></a>
         <a href="/Users/Register"><button>Đăng ký ngay</button></a>
     </div>

@@ -33,12 +33,32 @@
       "PackagePath": "staticwebassets\\image\\feedback.png"
     },
     {
+      "Id": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\image\\feedback_admin.png",
+      "PackagePath": "staticwebassets\\image\\feedback_admin.png"
+    },
+    {
+      "Id": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\image\\feedback_user.png",
+      "PackagePath": "staticwebassets\\image\\feedback_user.png"
+    },
+    {
+      "Id": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\image\\friend.png",
+      "PackagePath": "staticwebassets\\image\\friend.png"
+    },
+    {
+      "Id": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\image\\friends.jpg",
+      "PackagePath": "staticwebassets\\image\\friends.jpg"
+    },
+    {
       "Id": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\image\\henho.png",
       "PackagePath": "staticwebassets\\image\\henho.png"
     },
     {
       "Id": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\image\\home.png",
       "PackagePath": "staticwebassets\\image\\home.png"
+    },
+    {
+      "Id": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\image\\logodating.png",
+      "PackagePath": "staticwebassets\\image\\logodating.png"
     },
     {
       "Id": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\image\\logout.png",
