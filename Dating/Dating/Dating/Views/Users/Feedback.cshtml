@@ -1,0 +1,212 @@
+﻿@* @model Dating.Models.FeedbackModels
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Phản hồi</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        #successMessage {
+            position: fixed;
+            right: -300px;
+            top: 20px;
+            width: 300px;
+            padding: 15px;
+            background-color: #000;
+            color: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            transition: right 0.5s ease;
+            margin-top: 100px;
+        }
+
+        .exit-icon {
+            position: fixed;
+            top: 100px;
+            left: 25px;
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var successMessage = document.getElementById('successMessage');
+
+            if (successMessage) {
+                successMessage.style.right = '20px';
+
+                setTimeout(function () {
+                    successMessage.style.right = '-300px';
+                }, 3000);
+            }
+        });
+        function exitFeedback() {
+            window.location.href = "/Users/Userlist"; 
+        }
+    </script>
+</head>
+<body>
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success" id="successMessage">
+            @TempData["Message"]
+        </div>
+    }
+    <img src="~/image/exit.png" alt="Thoát" class="exit-icon" onclick="exitFeedback()" title="Thoát">
+
+    <div class="container mt-5">
+        <h2 class="text-center">Gửi Phản Hồi</h2>
+        <form asp-action="Feedback" method="post">
+            
+            <div class="form-group">
+                <label for="feedback_content">Nội Dung Phản Hồi</label>
+                <textarea asp-for="feedback_content" class="form-control" placeholder="Nhập phản hồi"></textarea>
+                <span asp-validation-for="feedback_content" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Gửi Phản Hồi</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+</body>
+</html>
+ *@
+
+ @model Dating.Models.FeedbackModels
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Phản hồi</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #ef2a54, #FF3A5C);
+            font-family: Arial, sans-serif;
+        }
+
+        .feedback-container {
+            width: 400px;
+            margin: 100px auto;
+            padding: 30px;
+            background-color: #333;
+            border-radius: 8px;
+            color: white;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+            font-size: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+            .form-group label {
+                font-weight: bold;
+            }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            border: none;
+            margin-top: 5px;
+        }
+
+        textarea.form-control {
+            height: 100px;
+        }
+
+        .btn-primary {
+            background-color: #ff0066;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+            .btn-primary:hover {
+                background-color: #ff3366;
+            }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #successMessage {
+            position: fixed;
+            right: -300px;
+            top: 20px;
+            width: 300px;
+            padding: 15px;
+            background-color: #000;
+            color: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            transition: right 0.5s ease;
+            margin-top: 100px;
+        }
+
+        .exit-icon {
+            position: fixed;
+            top: 100px;
+            left: 25px;
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var successMessage = document.getElementById('successMessage');
+
+            if (successMessage) {
+                successMessage.style.right = '20px';
+
+                setTimeout(function () {
+                    successMessage.style.right = '-300px';
+                }, 3000);
+            }
+        });
+        function exitFeedback() {
+            window.location.href = "/Users/Userlist";
+        }
+    </script>
+</head>
+<body>
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success" id="successMessage">
+            @TempData["Message"]
+        </div>
+    }
+    <img src="~/image/exit.png" alt="Thoát" class="exit-icon" onclick="exitFeedback()" title="Thoát">
+
+    <div class="feedback-container">
+        <h2>Gửi Phản Hồi</h2>
+        <form asp-action="Feedback" method="post">
+            <div class="form-group">
+                <textarea asp-for="feedback_content" class="form-control" placeholder="Nhập phản hồi"></textarea>
+                <span asp-validation-for="feedback_content" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn-primary">Gửi Phản Hồi</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+</body>
+</html>

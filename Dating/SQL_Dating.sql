@@ -33,6 +33,14 @@ WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_CATALOG = 'DATING';
 
 
 DROP TABLE Users
+DROP TABLE User_Profile
+DROP TABLE Matches
+DROP TABLE Likes
+drop table Skippe
+DROP TABLE MessagesS
+DROP TABLE Reports
+DROP TABLE tblNotification
+DROP TABLE Feedback
 
 SELECT*FROM Users
 select*from User_Profile
@@ -42,6 +50,7 @@ select*from Skippe
 select*from MessagesS
 select*from Reports
 select*from tblNotification
+select*from Feedback
 
 
 -- Tạo bảng Users
@@ -65,9 +74,11 @@ CREATE TABLE Users (  -- Bảng chứa thông tin người dùng
 	CONSTRAINT FK_Users_tblRole FOREIGN KEY (iUsersRoleID) REFERENCES tblRole(iRoleID)
 );
 
+UPDATE User_Profile
+SET isApproved = 1
+WHERE profile_id = 2;
 
-DROP TABLE User_Profile
-select*from User_Profile
+
 -- Tạo bảng User_Profile
 CREATE TABLE User_Profile (  -- Bảng chứa thông tin hồ sơ chi tiết của người dùng
     profile_id INT PRIMARY KEY IDENTITY(1,1),  -- Khóa chính, ID hồ sơ tự động tăng
@@ -84,7 +95,7 @@ CREATE TABLE User_Profile (  -- Bảng chứa thông tin hồ sơ chi tiết c�
 );
 
 
-DROP TABLE Matches
+
 
 -- Tạo bảng Matches
 CREATE TABLE Matches (  -- Bảng ghi nhận các cặp đôi đã ghép
@@ -96,8 +107,7 @@ CREATE TABLE Matches (  -- Bảng ghi nhận các cặp đôi đã ghép
     FOREIGN KEY (user2_id) REFERENCES Users(user_id)   -- Ràng buộc khóa ngoại
 );
 
-DROP TABLE Likes
-drop table Skippe
+
 -- Tạo bảng Likes
 CREATE TABLE Likes (  -- Bảng theo dõi người dùng thích nhau
     like_id INT PRIMARY KEY IDENTITY(1,1),  -- Khóa chính, ID sở thích tự động tăng
@@ -120,7 +130,7 @@ CREATE TABLE Skippe (  -- Bảng bỏ qua
 
 
 
-DROP TABLE MessagesS
+
 
 -- Tạo bảng Messages
 CREATE TABLE MessagesS (  -- Bảng lưu trữ các tin nhắn giữa người dùng
@@ -143,11 +153,12 @@ CREATE TABLE Reports (  -- Bảng ghi nhận các báo cáo vi phạm
     reported_user_id INT,  -- Khóa ngoại cho người bị báo cáo
     reason NVARCHAR(MAX) NOT NULL,  -- Lý do báo cáo
     created_at DATETIME DEFAULT GETDATE(),  -- Thời gian tạo báo cáo
+	processed BIT,
     FOREIGN KEY (reporter_id) REFERENCES Users(user_id),  -- Ràng buộc khóa ngoại
     FOREIGN KEY (reported_user_id) REFERENCES Users(user_id)  -- Ràng buộc khóa ngoại
 );
 
-DROP TABLE tblNotification
+
 
 
 CREATE TABLE tblNotification (  
@@ -156,6 +167,7 @@ CREATE TABLE tblNotification (
     admin_id INT,  
     notification_content NVARCHAR(MAX) NOT NULL, 
     created_at DATETIME DEFAULT GETDATE(), 
+	is_read BIT,
     FOREIGN KEY (notification_receiver_id) REFERENCES Users(user_id), 
     FOREIGN KEY (admin_id) REFERENCES Ad_Min(iAdmin)  
 );
@@ -165,6 +177,7 @@ DROP TABLE Feedback
 CREATE TABLE Feedback (  
     feedback_id INT PRIMARY KEY IDENTITY(1,1), 
     user_feeback_id INT, 
-    feedback_content NVARCHAR(MAX) NOT NULL
+    feedback_content NVARCHAR(MAX) NOT NULL,
+	time_feedback DATETIME DEFAULT GETDATE()
     FOREIGN KEY (user_feeback_id) REFERENCES Users(user_id)
 );

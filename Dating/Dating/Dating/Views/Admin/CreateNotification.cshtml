@@ -1,0 +1,133 @@
+﻿@model Dating.Models.NotificationModels
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thêm Thông Báo</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #ef2a54, #FF3A5C);
+            font-family: Arial, sans-serif;
+        }
+
+        .notification-container {
+            width: 400px;
+            margin: 100px auto;
+            padding: 30px;
+            background-color: #333;
+            border-radius: 8px;
+            color: white;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+            font-size: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            border: none;
+            margin-top: 5px;
+        }
+
+        textarea.form-control {
+            height: 100px;
+        }
+
+        .form-check {
+            margin-bottom: 15px;
+        }
+
+        .form-check-label {
+            font-weight: bold;
+            margin-left: 5px;
+        }
+
+        .btn-primary {
+            background-color: #ff0066;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background-color: #ff3366;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #successMessage {
+            position: fixed;
+            right: -300px;
+            top: 20px;
+            width: 300px;
+            padding: 15px;
+            background-color: #000;
+            color: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            transition: right 0.5s ease;
+            margin-top: 100px;
+        }
+        
+    </style>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var successMessage = document.getElementById('successMessage');
+
+            if (successMessage) {
+                successMessage.style.right = '20px';
+
+                setTimeout(function () {
+                    successMessage.style.right = '-300px';
+                }, 3000);
+            }
+        });
+    </script>
+</head>
+<body>
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success" id="successMessage">
+            @TempData["Message"]
+        </div>
+    }
+    <div class="notification-container">
+        <h2>Thêm Thông Báo</h2>
+
+        <form asp-action="CreateNotification" method="post">
+            <div class="form-group">
+                <label for="notification_content">Nội Dung Thông Báo</label>
+                <textarea class="form-control" asp-for="notification_content" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="notification_receiver_ids">ID Người Nhận (Ngăn cách nhau bằng dấu phẩy)</label>
+                <input type="text" class="form-control" id="notification_receiver_ids" name="notification_receiver_ids" />
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="SendToAll" name="SendToAll" value="true" />
+                <label class="form-check-label" for="SendToAll">Gửi cho tất cả người dùng</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Gửi Thông Báo</button>
+        </form>
+    </div>
+
+</body>
+</html>

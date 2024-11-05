@@ -105,7 +105,7 @@
             top: 0;
             left: 0;
             width: 100%;
-            background-color: #333;
+            background-color: #CCCCCC;
             z-index: 1000;
             padding: 10px;
         }
@@ -214,8 +214,8 @@
         <img src="~/image/background1.jpg" class="background-image active" alt="Background 1" />
         <img src="~/image/background2.jpg" class="background-image" alt="Background 2" />
     </div>
-    @* <div class="snow-container"></div>
-    <div class="rain-container"></div> *@
+    <div class="snow-container"></div>
+    <div class="rain-container"></div>
 
     @if (isLoggedIn) 
     {
@@ -228,14 +228,17 @@
                         <a class="nav-link" href="@Url.Action("Index", "Users")"><img src="~/image/users.png" alt="" /></a>
                     </div>
                     <div class="nav-item">
-                        <a class="nav-link" href="@Url.Action("Report", "Users")"><img src="~/image/feedback (1).png" alt="" /></a>
+                        <a class="nav-link" href="@Url.Action("Report", "Users")"><img src="~/image/phanhoi.png" alt="" /></a>
                     </div>
                     <div class="nav-item">
-                        <a class="nav-link" href="@Url.Action("Report", "Users")"><img src="~/image/feedback_admin.png" alt="" /></a>
+                        <a class="nav-link" href="@Url.Action("Index", "Admin")"><img src="~/image/feedback (1).png" alt="" /></a>
+                    </div>
+                    <div class="nav-item">
+                        <a class="nav-link" href="@Url.Action("CreateNotification", "Admin")"><img src="~/image/thongbao.png" alt="" /></a>
                     </div>
                     <form asp-controller="Users" asp-action="Logout" method="post" class="d-inline logout-button">
                         <button type="submit" class="btn btn-link text-decoration-none custom-button">
-                            <i class="fas fa-sign-out-alt"></i> <img src="~/image/logout.png" alt="" />
+                            <i class="fas fa-sign-out-alt"></i> <img src="~/image/sign-out-alt.png" alt="" />
                         </button>
                     </form>
                 }
@@ -257,11 +260,14 @@
                         </div>
                     }
                     <div class="nav-item">
-                        <a class="nav-link" href="@Url.Action("CreateProfile", "Users")"><img src="~/image/feedback_user.png" alt="" /></a>
+                        <a class="nav-link" href="@Url.Action("Feedback", "Users")"><img src="~/image/phanhoi.png" alt="" /></a>
+                    </div>
+                    <div class="nav-item">
+                        <a class="nav-link" href="@Url.Action("UserNotifications", "Users")"><img src="~/image/thongbao.png" alt="" /></a>
                     </div>
                     <form asp-controller="Users" asp-action="Logout" method="post" class="d-inline logout-button">
                         <button type="submit" class="btn btn-link text-decoration-none custom-button">
-                            <i class="fas fa-sign-out-alt"></i><img src="~/image/logout.png" alt="" />
+                            <i class="fas fa-sign-out-alt"></i><img src="~/image/sign-out-alt.png" alt="" />
                         </button>
                     </form>
                 }

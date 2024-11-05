@@ -15,6 +15,7 @@ using SendGrid.Helpers.Mail;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Google.Apis.Util;
+using System.Diagnostics;
 
 namespace Dating.Controllers
 {
@@ -255,7 +256,7 @@ namespace Dating.Controllers
 
             HttpContext.User = new ClaimsPrincipal(new ClaimsIdentity());
 
-            return RedirectToAction("Login", "Users");
+            return RedirectToAction("Index", "Home");
         }
 
 
@@ -893,11 +894,10 @@ namespace Dating.Controllers
 
             if (userProfile == null)
             {
-                return NotFound("Hồ sơ không tồn tại.");  // Trả về lỗi nếu không tìm thấy hồ sơ
+                return NotFound("Hồ sơ không tồn tại.");  
             }
 
-            // Trả về partial view chứa dữ liệu hồ sơ
-            return PartialView("_UserProfilePartial", userProfile);  // Lưu ý: PartialView này sẽ chứa dữ liệu hồ sơ
+            return PartialView("_UserProfilePartial", userProfile); 
         }
 
 
@@ -931,9 +931,8 @@ namespace Dating.Controllers
         public IActionResult Chat(int receiverId)
         {
             var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
-            int senderId = int.Parse(userId); // Lấy ID người dùng hiện tại
+            int senderId = int.Parse(userId); 
 
-            // Truy vấn các tin nhắn giữa người dùng hiện tại và người nhận
             var messages = _dbContext.Messages
                                    .Where(m => (m.sender_id == senderId && m.receiver_id == receiverId) ||
                                                (m.sender_id == receiverId && m.receiver_id == senderId))
@@ -941,7 +940,7 @@ namespace Dating.Controllers
                                    .ToList();
             var senderProfilePicture = _dbContext.Users
             .Where(u => u.user_id == receiverId)
-            .Select(u => u.profile_picture) // Lấy ảnh đại diện của người gửi
+            .Select(u => u.profile_picture) 
             .FirstOrDefault();
 
 
@@ -990,11 +989,8 @@ namespace Dating.Controllers
         {
             // Lấy ID người dùng hiện tại
             var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
-
-            // Kiểm tra xem userId có hợp lệ hay không
             if (int.TryParse(userId, out int senderId) && !string.IsNullOrEmpty(content))
             {
-                // Tạo tin nhắn mới
                 var newMessage = new MessagesSModels
                 {
                     sender_id = senderId,
@@ -1006,7 +1002,6 @@ namespace Dating.Controllers
                 _dbContext.Messages.Add(newMessage);
                 _dbContext.SaveChanges();
 
-                // Trả về kết quả thành công với thông tin tin nhắn
                 return Json(new
                 {
                     success = true,
@@ -1014,7 +1009,6 @@ namespace Dating.Controllers
                 });
             }
 
-            // Nếu không thành công, trả về thông báo lỗi
             return Json(new { success = false, message = "Có lỗi xảy ra khi gửi tin nhắn." });
         }
 
@@ -1026,7 +1020,6 @@ namespace Dating.Controllers
         [Authorize]
         public IActionResult ReportUser(int reportedUserId)
         {
-            // Tạo model báo cáo và truyền ID người bị báo cáo sang view
             var reportModel = new ReportsModels
             {
                 reported_user_id = reportedUserId
@@ -1039,7 +1032,6 @@ namespace Dating.Controllers
         [Authorize]
         public IActionResult SubmitReport(ReportsModels report)
         {
-            // Lấy ID của người báo cáo từ thông tin đăng nhập
             var reporterId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             if (string.IsNullOrEmpty(reporterId) || !int.TryParse(reporterId, out int reporterIdParsed))
@@ -1047,33 +1039,29 @@ namespace Dating.Controllers
                 return BadRequest("Không thể xác định người báo cáo.");
             }
 
-            // Lưu thông tin báo cáo vào model
             report.reporter_id = reporterIdParsed;
             report.created_at = DateTime.Now;
+            report.processed = false;
 
-            // Lưu vào database
             _dbContext.Reports.Add(report);
             _dbContext.SaveChanges();
+            TempData["Message"] = "Gửi báo cáo người dùng thành công!";
 
-            return RedirectToAction("ViewMatches", "Users"); // Điều hướng về trang chủ sau khi báo cáo
+            return RedirectToAction("ViewMatches", "Users"); 
         }
 
 
-
+        [Authorize]
         public async Task<IActionResult> Report()
         {
-            // Lấy tất cả báo cáo
             var reports = await _dbContext.Reports.ToListAsync();
 
-            // Lấy danh sách ID của người bị báo cáo
             var reportedUserIds = reports.Select(r => r.reported_user_id).Distinct().ToList();
 
-            // Lấy thông tin người dùng bị báo cáo
             var reportedUsers = await _dbContext.Users
                 .Where(u => reportedUserIds.Contains(u.user_id))
                 .ToListAsync();
 
-            // Tạo danh sách kết quả với tên người bị báo cáo và số lần họ bị báo cáo
             var reportCounts = reportedUsers.Select(user => new
             {
                 ReportedUserId = user.user_id,
@@ -1081,7 +1069,95 @@ namespace Dating.Controllers
                 ReportCount = reports.Count(r => r.reported_user_id == user.user_id)
             }).ToList();
 
-            return View(reportCounts); // Trả về danh sách người bị báo cáo với số lần bị báo cáo
+            return View(reportCounts);
         }
+
+        
+        
+        //Phản hồi
+
+        [HttpGet]
+        public IActionResult Feedback()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult Feedback(FeedbackModels feedbackModels)
+        {
+            var feedbackterId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+            if (ModelState.IsValid)
+            {
+                if (feedbackterId != null)
+                {
+                    var feedback = new FeedbackModels
+                    {
+                        user_feeback_id = int.Parse(feedbackterId),
+                        feedback_content = feedbackModels.feedback_content,
+                        time_feedback = DateTime.Now
+                    };
+                    _dbContext.Feedback.Add(feedback);
+                    _dbContext.SaveChanges();
+                    TempData["Message"] = "Đã ghi nhận phản hồi từ bạn.";
+                    return RedirectToAction("Feedback");
+                }
+            }
+            else
+            {
+                
+            }
+            return View(feedbackModels);
+        }
+
+
+
+        //Danh sách thông báo
+        public IActionResult UserNotifications()
+        {
+            MarkNotificationsAsRead();
+
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (int.TryParse(userIdClaim, out int userId))
+            {
+                var userNotifications = _dbContext.Notification
+                    .Where(n => n.notification_receiver_id == userId)
+                    .OrderByDescending(n => n.created_at)
+                    .ToList();
+
+                // Gán giá trị cho Session.HasUnreadNotifications
+                HttpContext.Session.SetString("HasUnreadNotifications", userNotifications.Any(n => n.is_read == false).ToString());
+                return View(userNotifications);
+            }
+
+            ModelState.AddModelError("", "Không thể xác định ID người dùng.");
+            return View();
+        }
+
+
+
+
+        public IActionResult MarkNotificationsAsRead()
+        {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (int.TryParse(userIdClaim, out int userId))
+            {
+                var unreadNotifications = _dbContext.Notification
+                    .Where(n => n.notification_receiver_id == userId && n.is_read == false)
+                    .ToList();
+
+                foreach (var notification in unreadNotifications)
+                {
+                    notification.is_read = true;
+                }
+
+                _dbContext.SaveChanges();
+            }
+
+            return RedirectToAction("UserNotifications");
+        }
+
+
     }
 }

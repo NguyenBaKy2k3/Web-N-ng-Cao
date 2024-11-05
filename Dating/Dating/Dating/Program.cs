@@ -5,8 +5,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting.Internal;
 using Microsoft.AspNetCore.SignalR;
-using Dating;
-using Dating.Views.signalR.hubs;
+using Dating.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -64,8 +63,7 @@ app.UseAuthorization();
 
 
 app.MapRazorPages();
-app.MapHub<ChatHub>("/chatHub"); // Định nghĩa route cho Hub
-app.MapHub<VideoCallHub>("/videoCallHub");
+app.MapHub<ChatHub>("/chathub"); // Định nghĩa route cho Hub
 
 app.MapControllerRoute(
     name: "default",

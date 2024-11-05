@@ -25,6 +25,10 @@
       "PackagePath": "staticwebassets\\image\\duyetprofile.png"
     },
     {
+      "Id": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\image\\exit.png",
+      "PackagePath": "staticwebassets\\image\\exit.png"
+    },
+    {
       "Id": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\image\\feedback (1).png",
       "PackagePath": "staticwebassets\\image\\feedback (1).png"
     },
@@ -65,8 +69,16 @@
       "PackagePath": "staticwebassets\\image\\logout.png"
     },
     {
+      "Id": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\image\\phanhoi.png",
+      "PackagePath": "staticwebassets\\image\\phanhoi.png"
+    },
+    {
       "Id": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\image\\profile.png",
       "PackagePath": "staticwebassets\\image\\profile.png"
+    },
+    {
+      "Id": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\image\\sign-out-alt.png",
+      "PackagePath": "staticwebassets\\image\\sign-out-alt.png"
     },
     {
       "Id": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\image\\thongbao.png",
@@ -317,8 +329,16 @@
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
+      "Id": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\uploads\\1.jpg",
+      "PackagePath": "staticwebassets\\uploads\\1.jpg"
+    },
+    {
       "Id": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\uploads\\264174218_1011589519407043_2812272667824073190_n.jpg",
       "PackagePath": "staticwebassets\\uploads\\264174218_1011589519407043_2812272667824073190_n.jpg"
+    },
+    {
+      "Id": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\uploads\\341960256_774621487398336_5571873322765802303_n.jpg",
+      "PackagePath": "staticwebassets\\uploads\\341960256_774621487398336_5571873322765802303_n.jpg"
     },
     {
       "Id": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\uploads\\4c7b22f6-90e2-4334-bb37-e63778aba87c.jpg",
@@ -329,12 +349,20 @@
       "PackagePath": "staticwebassets\\uploads\\IMG_7175.JPG"
     },
     {
+      "Id": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\uploads\\NMT_6181.jpg",
+      "PackagePath": "staticwebassets\\uploads\\NMT_6181.jpg"
+    },
+    {
       "Id": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\uploads\\Screenshot 2023-05-03 210351.png",
       "PackagePath": "staticwebassets\\uploads\\Screenshot 2023-05-03 210351.png"
     },
     {
       "Id": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\uploads\\Screenshot 2023-07-15 225100.png",
       "PackagePath": "staticwebassets\\uploads\\Screenshot 2023-07-15 225100.png"
+    },
+    {
+      "Id": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\uploads\\h.jpg",
+      "PackagePath": "staticwebassets\\uploads\\h.jpg"
     },
     {
       "Id": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\wwwroot\\uploads\\love.jpg",

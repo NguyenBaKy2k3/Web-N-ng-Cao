@@ -54,6 +54,8 @@
             margin-top: 20px;
             margin-bottom: 20px;
             border-radius: 0.5rem;
+            overflow-y: auto;
+            max-height: 500px;
         }
 
         @@media (max-width: 768px) {
@@ -61,13 +63,23 @@
                 font-size: 12px; 
                 padding: 0.5rem; 
             }
+        }
+        .title-box {
+            background-color: white;
+            color: black;
+            padding: 10px 20px;
+            display: inline-block;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border-radius: 0.5rem;
+        }
 
     </style>
 </head>
 <body>
 
-    <div class="container mt-5 table-fixed">
-        <h2 class="text-center">Danh Sách Hồ Sơ Chưa Duyệt</h2>
+    <div class="container mt-5 table-fixed text-center">
+        <h2 class="title-box">Danh Sách Hồ Sơ Chưa Duyệt</h2>
         <div class="table-container">
             <table class="table table-striped table-bordered">
                 <thead>

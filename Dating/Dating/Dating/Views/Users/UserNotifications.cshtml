@@ -1,0 +1,97 @@
+﻿@model IEnumerable<Dating.Models.NotificationModels>
+
+<style>
+    body {
+        background-color: #18191a;
+        color: #e4e6eb;
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding-top: 50px;
+    }
+
+    h2 {
+        font-size: 24px;
+        color: #e4e6eb;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .notification-card {
+        background-color: #242526;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+        max-width: 600px;
+        width: 100%;
+        margin-top: 20px;
+        margin: auto;
+        overflow-y: auto;
+        max-height: 600px;
+    }
+
+    .list-group {
+        padding: 0;
+        list-style-type: none;
+    }
+
+    .list-group-item {
+        background-color: #3a3b3c;
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        color: #e4e6eb;
+        position: relative;
+    }
+
+        .list-group-item strong {
+            font-size: 15px;
+            color: #e4e6eb;
+            font-weight: bold;
+        }
+
+    .notification-content {
+        margin-top: 5px;
+        color: #b0b3b8;
+        font-size: 14px;
+    }
+
+    .notification-time {
+        color: #2d88ff;
+        font-size: 12px;
+        margin-top: 5px;
+    }
+
+        .notification-time strong {
+            font-size: 12px;
+        }
+    .no-notifications {
+        text-align: center;
+        color: #b0b3b8;
+        font-size: 16px;
+    }
+</style>
+
+<div class="notification-card">
+    <h2>Thông Báo Của Bạn</h2>
+
+    @if (Model.Any())
+    {
+        <ul class="list-group">
+            @foreach (var notification in Model)
+            {
+                <li class="list-group-item">
+                    <div class="notification-content">
+                        <strong>Nội Dung:</strong> @notification.notification_content <br />
+                        <span class="notification-time"><strong>Ngày Gửi:</strong> @notification.created_at.ToString("dd/MM/yyyy HH:mm")</span>
+                    </div>
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p class="no-notifications">Không có thông báo nào.</p>
+    }
+</div>

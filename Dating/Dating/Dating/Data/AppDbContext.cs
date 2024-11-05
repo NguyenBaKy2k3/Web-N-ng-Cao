@@ -16,5 +16,6 @@ namespace Dating.Data
         public DbSet<MessagesSModels> Messages { get; set; }
         public DbSet<ReportsModels> Reports { get; set; }
         public DbSet<NotificationModels> Notification { get; set; }
+        public DbSet<FeedbackModels> Feedback { get; set; }
     }
 }

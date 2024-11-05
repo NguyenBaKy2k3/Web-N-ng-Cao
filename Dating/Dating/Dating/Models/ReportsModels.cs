@@ -14,5 +14,6 @@ namespace Dating.Models
         [Required]
         public string reason { get; set; }
         public DateTime created_at { get; set; }
+        public bool processed { get; set; }
     }
 }
