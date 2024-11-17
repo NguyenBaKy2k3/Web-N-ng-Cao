@@ -138,7 +138,7 @@ namespace Dating.Controllers
                     }
                     HttpContext.Session.SetString("UserName", user.username.ToString());
                     HttpContext.Session.SetInt32("Role", user.iUsersRoleID);
-
+                    HttpContext.Session.SetInt32("UserId", user.user_id);
                     TempData["Role"] = user.iUsersRoleID;
 
                     var userProfile = await _dbContext.Profiles
@@ -366,8 +366,30 @@ namespace Dating.Controllers
                 .Select(l => l.liked_user_id)
                 .ToListAsync();
 
+            // Lấy giới tính muốn tìm kiếm từ UserProfiles
+            var currentUserProfile = await _dbContext.Profiles
+                .FirstOrDefaultAsync(up => up.user_profile_id == currentUserId);
+            var genderLooking = currentUserProfile?.gender_looking;
+
+            // Ánh xạ từ giá trị tiếng Việt sang giá trị tiếng Anh
+            string mappedGenderLooking = genderLooking switch
+            {
+                "Nam" => "male",
+                "Nữ" => "female",
+                "Khác" => "other",
+                _ => null
+            };
+
+            if (mappedGenderLooking == null)
+            {
+                // Nếu không ánh xạ được, trả về thông báo lỗi
+                ViewBag.NotificationMessage = "Giới tính muốn tìm kiếm không hợp lệ.";
+                return View(new List<UsersModels>());
+            }
+
+
             var filteredUsers = users
-                .Where(u => !skippedUserIds.Contains(u.user_id) && !likedUserIds.Contains(u.user_id))
+                .Where(u => !skippedUserIds.Contains(u.user_id) && !likedUserIds.Contains(u.user_id) && u.gender == mappedGenderLooking)
                 .ToList();
             if (!filteredUsers.Any() && users.Any())
             {
@@ -1066,9 +1088,9 @@ namespace Dating.Controllers
             {
                 ReportedUserId = user.user_id,
                 ReportedUserName = user.username,
-                ReportCount = reports.Count(r => r.reported_user_id == user.user_id)
+                ReportCount = reports.Count(r => r.reported_user_id == user.user_id),
+                Processed = !reports.Any(r => r.reported_user_id == user.user_id && r.processed == false)
             }).ToList();
-
             return View(reportCounts);
         }
 

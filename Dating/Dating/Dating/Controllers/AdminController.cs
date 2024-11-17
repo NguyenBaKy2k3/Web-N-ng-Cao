@@ -45,7 +45,12 @@ namespace Dating.Controllers
                     userToDisable.IsActive = false;
                 }
             }
+            foreach (var report in reports)
+            {
+                report.processed = true;
+            }
 
+            TempData["Message"] = "Xử lý thành công.";
             _dbContext.SaveChanges();
 
             return RedirectToAction("Report", "Users"); 
@@ -74,7 +79,7 @@ namespace Dating.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateNotification(NotificationModels notification, string notification_receiver_ids, bool SendToAll)
+        public IActionResult CreateNotification(NotificationModels notification, string? notification_receiver_ids, bool SendToAll)
         {
             if (ModelState.IsValid && (SendToAll || !string.IsNullOrWhiteSpace(notification_receiver_ids)))
             {

@@ -18,7 +18,10 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Dating.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMM/3e1hI3zZ7dV7L5P9R6iN5Rk6z6tbb5cO+R" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="5e2ESR8Ycmos6g3gAKr1Jvwye8sW4U1u/cAKulfVJnkakCcMqhOudbtPnvJ+nbv7" crossorigin="anonymous">
+
+@*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMM/3e1hI3zZ7dV7L5P9R6iN5Rk6z6tbb5cO+R" crossorigin="anonymous"> *@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <style>
@@ -267,7 +270,7 @@
                     </div>
                     <form asp-controller="Users" asp-action="Logout" method="post" class="d-inline logout-button">
                         <button type="submit" class="btn btn-link text-decoration-none custom-button">
-                            <i class="fas fa-sign-out-alt"></i><img src="~/image/sign-out-alt.png" alt="" />
+                            <img src="~/image/sign-out-alt.png" alt="" />
                         </button>
                     </form>
                 }

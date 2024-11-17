@@ -95,7 +95,9 @@ CREATE TABLE User_Profile (  -- Bảng chứa thông tin hồ sơ chi tiết c�
 );
 
 
-
+DROP TABLE Matches
+DROP TABLE Likes
+drop table Skippe
 
 -- Tạo bảng Matches
 CREATE TABLE Matches (  -- Bảng ghi nhận các cặp đôi đã ghép
@@ -106,7 +108,6 @@ CREATE TABLE Matches (  -- Bảng ghi nhận các cặp đôi đã ghép
     FOREIGN KEY (user1_id) REFERENCES Users(user_id),  -- Ràng buộc khóa ngoại
     FOREIGN KEY (user2_id) REFERENCES Users(user_id)   -- Ràng buộc khóa ngoại
 );
-
 
 -- Tạo bảng Likes
 CREATE TABLE Likes (  -- Bảng theo dõi người dùng thích nhau

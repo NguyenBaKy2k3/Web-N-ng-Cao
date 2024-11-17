@@ -65,10 +65,43 @@
                 padding: 0.5rem;
             }
         }
+
+        #successMessage {
+            position: fixed;
+            right: -300px;
+            top: 20px;
+            width: 300px;
+            padding: 15px;
+            background-color: #000;
+            color: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            transition: right 0.5s ease;
+            margin-top: 100px;
+        }
     </style>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var successMessage = document.getElementById('successMessage');
+
+            if (successMessage) {
+                successMessage.style.right = '20px';
+
+                setTimeout(function () {
+                    successMessage.style.right = '-300px';
+                }, 3000);
+            }
+        });
+    </script>
 </head>
 <body>
-
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success" id="successMessage">
+            @TempData["Message"]
+        </div>
+    }
     <div class="container mt-5 table-fixed">
         <h2 class="text-center">Danh Sách Báo Cáo Vi Phạm</h2>
         <div class ="table-container">
@@ -84,16 +117,21 @@
                     @foreach (var report in Model)
                     {
                         <tr>
-                            <td>@report.ReportedUserName</td> 
-                            <td>@report.ReportCount</td> 
+                            <td>@report.ReportedUserName</td>
+                            <td>@report.ReportCount</td>
                             <td>
                                 <form action="@Url.Action("ProcessReports", "Admin")" method="post">
                                     <input type="hidden" name="reportedUserId" value="@report.ReportedUserId" />
-                                    <button type="submit" class="btn btn-warning">
-                                        Xử Lý
-                                    </button>
+                                    @if (report.Processed)
+                                    {
+                                        <button type="button" class="btn btn-secondary" disabled>Đã Xử Lý</button>
+                                    }
+                                    else
+                                    {
+                                        <button type="submit" class="btn btn-warning">Xử Lý</button>
+                                    }
                                 </form>
-                            </td> 
+                            </td>
                         </tr>
                     }
                 </tbody>

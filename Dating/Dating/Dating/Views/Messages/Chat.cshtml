@@ -1,0 +1,213 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    int? UserId = HttpContextAccessor.HttpContext.Session.GetInt32("UserId");
+}
+@model Dating.Models.UsersModels
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+    <style>
+        .chat-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .message-list {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
+        .message-container {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+        }
+
+        .message {
+            padding: 10px;
+            border-radius: 10px;
+            background-color: #e1f7d5;
+            max-width: 70%;
+            word-wrap: break-word;
+        }
+
+        .sent {
+            align-self: flex-end;
+            background-color: #cfe9ff;
+        }
+
+        .received {
+            align-self: flex-start;
+        }
+
+        .message-time {
+            font-size: 10px;
+            color: #888;
+            margin-top: 5px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 60px;
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="chat-container">
+        <h2>Nhắn tin với @Model.username</h2>
+        <div class="message-list" id="messagesList">
+        </div>
+
+        <form id="sendMessageForm">
+            <input type="hidden" id="receiverId" value="@Model.user_id" />
+            <textarea id="message" placeholder="Nhập tin nhắn..." required></textarea>
+            <button type="submit">Gửi</button>
+        </form>
+    </div>
+
+    @section Scripts {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.0/signalr.min.js"></script>
+        <script>
+            // Kết nối với SignalR Hub
+            console.log("Kết nối tới SignalR Hub...");
+            var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+            var userId = @UserId ?? 0;
+            console.log("UserId:", userId);
+            // Lấy userId của người dùng hiện tại và receiverId từ Razor model
+            var receiverId = parseInt(document.getElementById("receiverId").value);
+            console.log("User ID:", userId, "| Receiver ID:", receiverId);
+
+            // Hàm tải lịch sử tin nhắn
+            function loadChatHistory() {
+                console.log("Tải lịch sử tin nhắn...");
+                fetch(`/Messages/GetChatHistory?&receiverId=${receiverId}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            console.error("Lỗi phản hồi từ máy chủ:", response.statusText);
+                            throw new Error(response.statusText);
+                        }
+                        return response.json();
+                    })
+                    .then(messages => {
+                        console.log("Lịch sử tin nhắn nhận được:", messages);
+                        var messagesList = document.getElementById("messagesList");
+                        messagesList.innerHTML = ""; // Xóa nội dung cũ
+
+                        // Hiển thị từng tin nhắn
+                        messages.forEach(msg => {
+                            console.log("Xử lý tin nhắn:", msg);
+                            var messageContainer = document.createElement("div");
+                            messageContainer.classList.add("message-container");
+
+                            var messageElement = document.createElement("div");
+                            messageElement.classList.add("message");
+                            if (msg.sender_id == userId) {
+                                messageElement.classList.add("sent");
+                            } else {
+                                messageElement.classList.add("received");
+                            }
+                            messageElement.innerHTML = "<p>" + msg.message_text + "</p>";
+                            messageContainer.appendChild(messageElement);
+
+                            // Thêm thời gian gửi tin nhắn
+                            var timeElement = document.createElement("span");
+                            timeElement.classList.add("message-time");
+                            timeElement.textContent = msg.sent_at;
+                            messageContainer.appendChild(timeElement);
+
+                            messagesList.appendChild(messageContainer);
+                        });
+
+                        // Tự động cuộn xuống cuối danh sách
+                        messagesList.scrollTop = messagesList.scrollHeight;
+                        console.log("Đã cuộn xuống cuối danh sách tin nhắn.");
+                    })
+                    .catch(error => console.error('Error loading chat history:', error));
+            }
+
+            // Lắng nghe sự kiện nhận tin nhắn
+            connection.on("ReceiveMessage", function (senderId, message, timestamp) {
+                console.log("Nhận tin nhắn từ:", senderId, "| Nội dung:", message, "| Thời gian:", timestamp);
+
+                var messageContainer = document.createElement("div");
+                messageContainer.classList.add("message-container");
+
+                var messageElement = document.createElement("div");
+                messageElement.classList.add("message");
+                if (senderId == userId) {
+                    messageElement.classList.add("sent");
+                } else {
+                    messageElement.classList.add("received");
+                }
+                messageElement.innerHTML = "<p>" + message + "</p>";
+                messageContainer.appendChild(messageElement);
+
+                // Thêm thời gian gửi tin nhắn
+                var timeElement = document.createElement("span");
+                timeElement.classList.add("message-time");
+                timeElement.textContent = timestamp;
+                messageContainer.appendChild(timeElement);
+
+                document.getElementById("messagesList").appendChild(messageContainer);
+                document.getElementById("messagesList").scrollTop = document.getElementById("messagesList").scrollHeight;
+                console.log("Tin nhắn mới đã được thêm vào danh sách.");
+            });
+
+            // Khởi động kết nối và tải lịch sử tin nhắn
+            connection.start()
+                .then(() => {
+                    console.log("Kết nối tới SignalR thành công.");
+                    loadChatHistory();
+                })
+                .catch(function (err) {
+                    console.error("Lỗi khi kết nối tới SignalR:", err.toString());
+                });
+
+            // Gửi tin nhắn khi form được gửi
+            document.getElementById("sendMessageForm").addEventListener("submit", function (event) {
+                event.preventDefault();
+
+                var message = document.getElementById("message").value;
+                console.log("Gửi tin nhắn:", message);
+
+                connection.invoke("SendMessage", receiverId, message)
+                    .then(() => console.log("Tin nhắn đã được gửi tới Receiver ID:", receiverId))
+                    .catch(function (err) {
+                        console.error("Lỗi khi gửi tin nhắn:", err.toString());
+                    });
+
+                document.getElementById("message").value = ""; // Xóa nội dung sau khi gửi
+                console.log("Đã xóa nội dung khung nhập tin nhắn.");
+            });
+        </script>
+
+    }
+</body>
+</html>

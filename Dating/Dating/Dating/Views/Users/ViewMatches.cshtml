@@ -16,7 +16,7 @@
             @foreach (var match in Model)
             {
                 <div class="card">
-                    <a href="@Url.Action("Chat", new { receiverId = match.UserId })">
+                    <a href="@Url.Action("Chat", "Messages", new { id = match.UserId })">
                         <!-- Thay đổi ở đây -->
                         <img src="@match.ProfilePicture" alt="Ảnh đại diện" class="profile-picture" />
                         <div class="user-info">

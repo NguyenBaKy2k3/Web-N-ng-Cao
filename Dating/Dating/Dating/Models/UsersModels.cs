@@ -12,7 +12,7 @@ namespace Dating.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int user_id { get; set; } // ID người dùng, tự tăng
+        public int user_id { get; set; } 
 
         [Required(ErrorMessage = "Tên người dùng là bắt buộc.")]
         [StringLength(50, ErrorMessage = "Tên người dùng không quá 50 ký tự.")]
@@ -21,7 +21,7 @@ namespace Dating.Models
         [Required(ErrorMessage = "Số điện thoại là bắt buộc.")]
         [Phone(ErrorMessage = "Số điện thoại không hợp lệ.")]
         [StringLength(12, ErrorMessage = "Số điện thoại không quá 12 ký tự.")]
-        public string sdt { get; set; } // Số điện thoại
+        public string sdt { get; set; } 
 
         [Required(ErrorMessage = "Email là bắt buộc.")]
         [EmailAddress(ErrorMessage = "Email không hợp lệ.")]
@@ -34,38 +34,36 @@ namespace Dating.Models
 
         public int iUsersRoleID { get; set; }
 
-        // Các trường bổ sung
         [Required(ErrorMessage = "Giới tính là bắt buộc.")]
         [StringLength(10, ErrorMessage = "Giới tính không hợp lệ.")]
-        public string gender { get; set; } // Giới tính: male, female, other
+        public string gender { get; set; } 
 
         [Required(ErrorMessage = "Ngày sinh là bắt buộc.")]
         [DataType(DataType.Date)]
-        public DateTime date_of_birth { get; set; } // Ngày sinh
+        public DateTime date_of_birth { get; set; } 
 
         [StringLength(500, ErrorMessage = "Tiểu sử không được quá 500 ký tự.")]
-        public string bio { get; set; } // Thông tin tiểu sử
+        public string bio { get; set; }
 
         [StringLength(255)]
         [ValidateNever]
-        public string profile_picture { get; set; } // Đường dẫn ảnh đại diện
+        public string profile_picture { get; set; } 
 
         [StringLength(100)]
-        public string location { get; set; } // Địa điểm
+        public string location { get; set; } 
 
-        public double latitude { get; set; }  // Vĩ độ
+        public double latitude { get; set; }  
 
-        public double longitude { get; set; }  // Kinh độ
+        public double longitude { get; set; } 
         public bool IsActive { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime created_at { get; set; } = DateTime.Now; // Thời gian tạo tài khoản
+        public DateTime created_at { get; set; } = DateTime.Now; 
 
         [NotMapped]
         [ValidateNever]
         public IFormFile ProfileImage { get; set; } // Tệp ảnh đại diện, không lưu trong cơ sở dữ liệu
 
-        // Tính tuổi nhưng không lưu vào cơ sở dữ liệu
         [NotMapped]
         public int Age
         {
