@@ -48,11 +48,11 @@ namespace Dating.Hubs
 
                     _dbContext.Messages.Add(newMessage);
                     await _dbContext.SaveChangesAsync();
-
+                    var timestamp = newMessage.sent_at;
                     // Gửi tin nhắn đến người nhận qua SignalR
                     //Console.WriteLine($"Sending message to user {receiverId.ToString()} (UserIdentifier: {Context.UserIdentifier})");
                     //await Clients.User(receiverId.ToString()).SendAsync("ReceiveMessage", senderId, message);
-                    await Clients.All.SendAsync("ReceiveMessage", senderId, message);
+                    await Clients.All.SendAsync("ReceiveMessage", senderId, message, timestamp);
 
                 }
                 else

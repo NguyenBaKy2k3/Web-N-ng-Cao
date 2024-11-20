@@ -53,9 +53,9 @@ namespace Dating.Controllers
 
                 _dbContext.Messages.Add(newMessage); // Thêm tin nhắn vào cơ sở dữ liệu
                 await _dbContext.SaveChangesAsync(); // Lưu thay đổi
-
+                var timestamp = newMessage.sent_at;
                 // Gửi tin nhắn đến người nhận qua SignalR
-                await _hubContext.Clients.User(receiver.user_id.ToString()).SendAsync("ReceiveMessage", senderId, message);
+                await _hubContext.Clients.User(receiver.user_id.ToString()).SendAsync("ReceiveMessage", senderId, message, timestamp);
             }
 
             // Sau khi gửi tin nhắn, chuyển hướng người dùng đến trang chat
@@ -73,7 +73,11 @@ namespace Dating.Controllers
                 .Select(m => new {
                     sender_id = m.sender_id,
                     message_text = m.content,
-                    sent_at = m.sent_at.ToString("HH:mm:ss") // Định dạng thời gian
+                    sent_at = m.sent_at.ToString("HH:mm:ss"), // Định dạng thời gian
+                    avatar_url = _dbContext.Users
+                        .Where(u => u.user_id == m.sender_id)
+                        .Select(u => u.profile_picture) // Lấy ảnh đại diện từ bảng Users
+                        .FirstOrDefault() ?? "/images/default-avatar.png"
                 })
                 .ToListAsync();
             ViewBag.UserId = userId;

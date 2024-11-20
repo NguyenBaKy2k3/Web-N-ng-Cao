@@ -76,6 +76,13 @@
         button:hover {
             background-color: #45a049;
         }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 12px;
+        }
     </style>
 </head>
 <body>
@@ -126,6 +133,13 @@
                             var messageContainer = document.createElement("div");
                             messageContainer.classList.add("message-container");
 
+                            if (msg.sender_id == receiverId) {
+                                var avatar = document.createElement("img");
+                                avatar.src = msg.avatar_url || "/path/to/default-avatar.jpg"; // Đường dẫn avatar mặc định nếu không có ảnh
+                                avatar.classList.add("avatar");
+                                messageContainer.appendChild(avatar);
+                            }
+
                             var messageElement = document.createElement("div");
                             messageElement.classList.add("message");
                             if (msg.sender_id == userId) {
@@ -158,6 +172,13 @@
 
                 var messageContainer = document.createElement("div");
                 messageContainer.classList.add("message-container");
+
+                if (senderId == receiverId) {
+                    var avatar = document.createElement("img");
+                    avatar.src = avatarUrl || "/path/to/default-avatar.jpg"; // Đường dẫn avatar mặc định nếu không có ảnh
+                    avatar.classList.add("avatar");
+                    messageContainer.appendChild(avatar);
+                }
 
                 var messageElement = document.createElement("div");
                 messageElement.classList.add("message");
