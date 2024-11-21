@@ -12,7 +12,7 @@
     <title>Chat</title>
     <style>
         .chat-container {
-            max-width: 600px;
+            max-width: 800px;
             margin: 0 auto;
             background-color: #f9f9f9;
             padding: 20px;
@@ -27,9 +27,13 @@
         }
 
         .message-container {
-            display: flex;
+            /* display: flex;
             flex-direction: column;
+            margin-bottom: 10px; */
+            display: flex;
+            align-items: flex-start;
             margin-bottom: 10px;
+            flex-direction: column;
         }
 
         .message {
@@ -37,7 +41,10 @@
             border-radius: 10px;
             background-color: #e1f7d5;
             max-width: 70%;
+            position: relative;
             word-wrap: break-word;
+            display: inline-block; 
+            padding: 8px 12px;
         }
 
         .sent {
@@ -55,7 +62,7 @@
             margin-top: 5px;
         }
 
-        textarea {
+        /* textarea {
             width: 100%;
             height: 60px;
             border-radius: 5px;
@@ -75,20 +82,96 @@
 
         button:hover {
             background-color: #45a049;
+        } */
+        #sendMessageForm {
+            display: flex;
+            justify-content: space-between; 
+            align-items: center; 
+            margin-top: 10px;
         }
 
+        textarea {
+            width: 80%;
+            height: 60px;
+            border-radius: 10px; 
+            padding: 10px;
+            margin-right: 10px; 
+            border: 1px solid #ccc; 
+            resize: none;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 10px; 
+            cursor: pointer;
+        }
+
+            button:hover {
+                background-color: #45a049;
+            }
         .avatar {
             width: 40px;
             height: 40px;
             border-radius: 50%;
             margin-right: 12px;
         }
+
+
+        .chat-title {
+            flex-grow: 1;
+            text-align: center;
+            margin-bottom: 20px;
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .chat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 0 20px;
+        }
+
+        .report-icon {
+            margin-left: 15px;
+            color: red;
+            font-size: 20px; /* Tăng kích thước để icon dễ nhìn */
+            text-decoration: none;
+            display: inline-flex; /* Đảm bảo icon và nội dung được hiển thị đúng */
+            align-items: center; /* Căn giữa hình ảnh */
+        }
+
+            .report-icon:hover {
+                color: darkred;
+            }
+
+            /* Điều chỉnh cho image nếu bạn sử dụng ảnh thay vì icon */
+            .report-icon img {
+                width: 20px; /* Điều chỉnh kích thước ảnh */
+                height: auto; /* Giữ tỷ lệ ảnh */
+            }
+
     </style>
 </head>
 <body>
 
     <div class="chat-container">
-        <h2>Nhắn tin với @Model.username</h2>
+        <div class="chat-header">
+            <a href="@Url.Action("Profile_Person", "Users", new { likedUserId = Model.user_id })" class="chat-title">
+                @Model.username
+            </a>
+            <a href="@Url.Action("ReportUser", "Users", new { reportedUserId = Model.user_id })" class="report-icon">
+                <img src="~/image/feedback.png" alt="Feedback" />
+            </a>
+
+        </div>
+        @* <h2>Nhắn tin với @Model.username</h2> *@
         <div class="message-list" id="messagesList">
         </div>
 
@@ -167,7 +250,7 @@
             }
 
             // Lắng nghe sự kiện nhận tin nhắn
-            connection.on("ReceiveMessage", function (senderId, message, timestamp) {
+            connection.on("ReceiveMessage", function (senderId, message, timestamp, senderAvatar) {
                 console.log("Nhận tin nhắn từ:", senderId, "| Nội dung:", message, "| Thời gian:", timestamp);
 
                 var messageContainer = document.createElement("div");
@@ -175,7 +258,7 @@
 
                 if (senderId == receiverId) {
                     var avatar = document.createElement("img");
-                    avatar.src = avatarUrl || "/path/to/default-avatar.jpg"; // Đường dẫn avatar mặc định nếu không có ảnh
+                    avatar.src = senderAvatar || "/path/to/default-avatar.jpg"; // Đường dẫn avatar mặc định nếu không có ảnh
                     avatar.classList.add("avatar");
                     messageContainer.appendChild(avatar);
                 }
@@ -191,15 +274,27 @@
                 messageContainer.appendChild(messageElement);
 
                 // Thêm thời gian gửi tin nhắn
+                var formattedTime = formatTimestamp(timestamp);
                 var timeElement = document.createElement("span");
                 timeElement.classList.add("message-time");
-                timeElement.textContent = timestamp;
+                timeElement.textContent = formattedTime;
                 messageContainer.appendChild(timeElement);
 
                 document.getElementById("messagesList").appendChild(messageContainer);
                 document.getElementById("messagesList").scrollTop = document.getElementById("messagesList").scrollHeight;
                 console.log("Tin nhắn mới đã được thêm vào danh sách.");
             });
+
+            // Hàm định dạng thời gian
+            function formatTimestamp(timestamp) {
+                var date = new Date(timestamp); // Chuyển đổi timestamp thành đối tượng Date
+
+                var hours = date.getHours().toString().padStart(2, '0'); // Lấy giờ, đảm bảo luôn có 2 chữ số
+                var minutes = date.getMinutes().toString().padStart(2, '0'); // Lấy phút, đảm bảo luôn có 2 chữ số
+                var seconds = date.getSeconds().toString().padStart(2, '0'); // Lấy giây, đảm bảo luôn có 2 chữ số
+
+                return hours + ":" + minutes + ":" + seconds; // Trả về định dạng giờ:phút:giây
+            }
 
             // Khởi động kết nối và tải lịch sử tin nhắn
             connection.start()

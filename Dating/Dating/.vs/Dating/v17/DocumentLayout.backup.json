@@ -3,20 +3,12 @@
   "WorkspaceRootPath": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B9B94A30-B5D6-4798-B737-BF36DBB83887}|Dating\\Dating.csproj|d:\\download\\aspnetmvc\\webnangcao\\dating\\dating\\dating\\views\\messages\\chat.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{B9B94A30-B5D6-4798-B737-BF36DBB83887}|Dating\\Dating.csproj|solutionrelative:dating\\views\\messages\\chat.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{B9B94A30-B5D6-4798-B737-BF36DBB83887}|Dating\\Dating.csproj|d:\\download\\aspnetmvc\\webnangcao\\dating\\dating\\dating\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{B9B94A30-B5D6-4798-B737-BF36DBB83887}|Dating\\Dating.csproj|solutionrelative:dating\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B9B94A30-B5D6-4798-B737-BF36DBB83887}|Dating\\Dating.csproj|d:\\download\\aspnetmvc\\webnangcao\\dating\\dating\\dating\\views\\users\\chat.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{B9B94A30-B5D6-4798-B737-BF36DBB83887}|Dating\\Dating.csproj|solutionrelative:dating\\views\\users\\chat.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B9B94A30-B5D6-4798-B737-BF36DBB83887}|Dating\\Dating.csproj|d:\\download\\aspnetmvc\\webnangcao\\dating\\dating\\dating\\hubs\\chathub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B9B94A30-B5D6-4798-B737-BF36DBB83887}|Dating\\Dating.csproj|solutionrelative:dating\\hubs\\chathub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B9B94A30-B5D6-4798-B737-BF36DBB83887}|Dating\\Dating.csproj|d:\\download\\aspnetmvc\\webnangcao\\dating\\dating\\dating\\controllers\\messagescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B9B94A30-B5D6-4798-B737-BF36DBB83887}|Dating\\Dating.csproj|solutionrelative:dating\\controllers\\messagescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B9B94A30-B5D6-4798-B737-BF36DBB83887}|Dating\\Dating.csproj|d:\\download\\aspnetmvc\\webnangcao\\dating\\dating\\dating\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B9B94A30-B5D6-4798-B737-BF36DBB83887}|Dating\\Dating.csproj|solutionrelative:dating\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -39,53 +31,26 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Chat.cshtml",
-              "DocumentMoniker": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\Views\\Users\\Chat.cshtml",
-              "RelativeDocumentMoniker": "Dating\\Views\\Users\\Chat.cshtml",
-              "ToolTip": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\Views\\Users\\Chat.cshtml",
-              "RelativeToolTip": "Dating\\Views\\Users\\Chat.cshtml",
-              "ViewState": "AgIAAGwAAAAAAAAAAAAAAHoAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-19T10:13:39.418Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "MessagesController.cs",
-              "DocumentMoniker": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\Controllers\\MessagesController.cs",
-              "RelativeDocumentMoniker": "Dating\\Controllers\\MessagesController.cs",
-              "ToolTip": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\Controllers\\MessagesController.cs",
-              "RelativeToolTip": "Dating\\Controllers\\MessagesController.cs",
-              "ViewState": "AgIAADsAAAAAAAAAAAAgwE8AAABJAAAAAAAAAA==",
+              "Title": "UsersController.cs",
+              "DocumentMoniker": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\Controllers\\UsersController.cs",
+              "RelativeDocumentMoniker": "Dating\\Controllers\\UsersController.cs",
+              "ToolTip": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\Controllers\\UsersController.cs",
+              "RelativeToolTip": "Dating\\Controllers\\UsersController.cs",
+              "ViewState": "AgIAAIMAAAAAAAAAAAAQwIsAAABMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-19T10:03:00.962Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ChatHub.cs",
-              "DocumentMoniker": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\Hubs\\ChatHub.cs",
-              "RelativeDocumentMoniker": "Dating\\Hubs\\ChatHub.cs",
-              "ToolTip": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\Hubs\\ChatHub.cs",
-              "RelativeToolTip": "Dating\\Hubs\\ChatHub.cs",
-              "ViewState": "AgIAACQAAAAAAAAAAAAYwCIAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-19T09:58:17.36Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-21T04:02:06.058Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Chat.cshtml",
-              "DocumentMoniker": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\Views\\Messages\\Chat.cshtml",
-              "RelativeDocumentMoniker": "Dating\\Views\\Messages\\Chat.cshtml",
-              "ToolTip": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\Views\\Messages\\Chat.cshtml*",
-              "RelativeToolTip": "Dating\\Views\\Messages\\Chat.cshtml*",
-              "ViewState": "AgIAAKAAAAAAAAAAAAAAAK0AAAAvAAAAAAAAAA==",
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "Dating\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "D:\\Download\\ASPNetMVC\\WebNangCao\\Dating\\Dating\\Dating\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "Dating\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAF0BAAAAAAAAAAAAAGwBAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-18T14:44:24.57Z",
+              "WhenOpened": "2024-11-20T18:16:40.391Z",
               "EditorCaption": ""
             }
           ]

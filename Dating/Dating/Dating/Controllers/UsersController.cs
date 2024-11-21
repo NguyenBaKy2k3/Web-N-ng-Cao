@@ -139,6 +139,7 @@ namespace Dating.Controllers
                     HttpContext.Session.SetString("UserName", user.username.ToString());
                     HttpContext.Session.SetInt32("Role", user.iUsersRoleID);
                     HttpContext.Session.SetInt32("UserId", user.user_id);
+                    HttpContext.Session.SetString("Avatar", user.profile_picture.ToString());
                     TempData["Role"] = user.iUsersRoleID;
 
                     var userProfile = await _dbContext.Profiles

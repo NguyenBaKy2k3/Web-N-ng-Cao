@@ -7,6 +7,8 @@
     //int? IsProfileApproved = HttpContextAccessor.HttpContext.Session.GetInt32("IsProfileApproved");
     var isProfileApprovedString = HttpContextAccessor.HttpContext.Session.GetString("IsProfileApproved");
     bool isProfileApproved = isProfileApprovedString == "True"; 
+    var userName = HttpContextAccessor.HttpContext.Session.GetString("UserName");
+    var userAvatar = HttpContextAccessor.HttpContext.Session.GetString("Avatar");
 }
 
 <!DOCTYPE html>
@@ -110,7 +112,8 @@
             width: 100%;
             background-color: #CCCCCC;
             z-index: 1000;
-            padding: 10px;
+            padding: 5px 10px; /* Giảm padding theo chiều dọc */
+            height: auto;
         }
 
         /* Định dạng cho các mục điều hướng */
@@ -170,7 +173,7 @@
 
             
             .logout-button:hover {
-                background-color: #555; 
+                background-color: #444444;
                 border-radius: 5px;
             }
         
@@ -210,6 +213,32 @@
             filter: blur(8px); 
         }
 
+        .nav-item-custom {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        .nav-link-custom {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .avatar-image {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .user-name-custom {
+            font-weight: bold;
+            color: black;
+            font-size: 16px;
+        }
+
     </style>
 </head>
 <body>
@@ -241,12 +270,29 @@
                     </div>
                     <form asp-controller="Users" asp-action="Logout" method="post" class="d-inline logout-button">
                         <button type="submit" class="btn btn-link text-decoration-none custom-button">
-                            <i class="fas fa-sign-out-alt"></i> <img src="~/image/sign-out-alt.png" alt="" />
+                            <img src="~/image/sign-out-alt.png" alt="" />
                         </button>
                     </form>
                 }
                 @if (userRole.HasValue && userRole.Value == 2)
                 {
+                    <div class="nav-item-custom">
+                        <span class="nav-link-custom">
+                            @if (!string.IsNullOrEmpty(userAvatar))
+                            {
+                                <img src="@userAvatar" alt="Avatar" class="avatar-image" />
+                            }
+                            @if (!string.IsNullOrEmpty(userName))
+                            {
+                                <span class="user-name-custom">@userName</span>
+                            }
+                            else
+                            {
+                                <span class="user-name-custom">Không có tên người dùng</span>
+                            }
+                        </span>
+                    </div>
+
                     <div class="nav-item">
                         <a class="nav-link" href="@Url.Action("UserList", "Users")"><img src="~/image/home.png" alt="" /></a>
                     </div>

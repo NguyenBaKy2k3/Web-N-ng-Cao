@@ -27,7 +27,7 @@ namespace Dating.Hubs
 
                 // Lấy UserId từ session
                 var senderId = httpContext.Session.GetInt32("UserId");
-
+                var sender = await _dbContext.Users.FindAsync(senderId);
                 if (senderId == null)
                 {
                     await Clients.Caller.SendAsync("ReceiveMessage", "Server", "User not found!");
@@ -49,10 +49,11 @@ namespace Dating.Hubs
                     _dbContext.Messages.Add(newMessage);
                     await _dbContext.SaveChangesAsync();
                     var timestamp = newMessage.sent_at;
+                    var senderAvatar = sender.profile_picture;
                     // Gửi tin nhắn đến người nhận qua SignalR
                     //Console.WriteLine($"Sending message to user {receiverId.ToString()} (UserIdentifier: {Context.UserIdentifier})");
                     //await Clients.User(receiverId.ToString()).SendAsync("ReceiveMessage", senderId, message);
-                    await Clients.All.SendAsync("ReceiveMessage", senderId, message, timestamp);
+                    await Clients.All.SendAsync("ReceiveMessage", senderId, message, timestamp, senderAvatar);
 
                 }
                 else
